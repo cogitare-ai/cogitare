@@ -1,14 +1,15 @@
-from cogitare.core.feedback import Feedback
+from cogitare import utils
 
 
-class PeriodicFeedback(Feedback):
+class PeriodicFeedback(object):
 
     def __init__(self, interval, feedback):
+        utils.assert_raise(interval < 1, ValueError, 'Interval must greater or equal to 1')
         self.interval = interval
+        self.feedback = feedback
         self._current_iter = 0
-        assert isinstance(feedback, Feedback)
 
-    def update(self, *args, **kwargs):
+    def __call__(self, *args, **kwargs):
         self._current_iter += 1
         if self._current_iter % self.interval == 0:
-            self.feedback.update(*args, **kwargs)
+            utils.call_feedback(self.feedback)

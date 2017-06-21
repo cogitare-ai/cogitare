@@ -1,11 +1,14 @@
-from cogitare.core.feedback import Feedback
 from tqdm import tqdm
 
 
-class ProgressBarFeedback(Feedback):
+class ProgressBarFeedback(object):
 
-    def __init__(self, total, description, position):
-        self.bar = tqdm(total=total, description=description, position=position)
+    def __init__(self, total, *args, **kwargs):
+        self.total = total
+        self.bar = tqdm(total=total, *args, **kwargs)
 
-    def update(self, *args, **kwargs):
+    def __call__(self, idx=None, *args, **kwargs):
+        if idx == self.total:
+            self.bar.last_print_n = 1
+            self.bar.n = 1
         self.bar.update()

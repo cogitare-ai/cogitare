@@ -1,15 +1,7 @@
-from cogitare import config
-from cogitare.core.feedback import Feedback
 from torch.nn import Module
 
 
-def get_verbosity(verbose=None):
-    """if verbose is None, returns the default verbosity from config
-    """
-    if verbose is None:
-        return config['VERBOSE']
-    else:
-        return bool(verbose) is True
+_CUDA_ENABLED = False
 
 
 def not_training(func):
@@ -38,21 +30,49 @@ def training(func):
     return f
 
 
-def get_epoch_feedback(feedback=None):
-    """if feedback is None, returns the default epoch feedback system from the config.
+def call_feedback(feedback, *args, **kwargs):
+    """call the feedback, and if it's iterable, iterates over it and call all instances
     """
     if feedback is None:
-        return config['FEEDBACK_EPOCH']
+        return False
+    if callable(feedback):
+        feedback(*args, **kwargs)
+    elif isinstance(feedback, (list, tuple)):
+        for feed in feedback:
+            call_feedback(feed, *args, **kwargs)
     else:
-        assert isinstance(feedback, Feedback)
-        return feedback
+        raise ValueError('feedback is neither callable nor list')
 
 
-def get_batch_feedback(feedback=None):
-    """if feedback is None, returns the default batch feedback system from the config.
+def call_watchdog(watchdog, *args, **kwargs):
+    """call the Watchdog, and if it's iterable, iterates over it and call all instances.
+    If any of them returns True, this caller will return True, indicating that the model
+    should stop the training process.
     """
-    if feedback is None:
-        return config['FEEDBACK_BATCH']
+    if watchdog is None:
+        return False
+    if callable(watchdog):
+        return watchdog(*args, **kwargs)
+    elif isinstance(watchdog, (list, tuple)):
+        if any([call_watchdog(watcher, *args, **kwargs) for watcher in watchdog]):
+            return True
     else:
-        assert isinstance(feedback, Feedback)
-        return feedback
+        raise ValueError('watchdog is neither callable nor list')
+
+
+def assert_raise(valid, exception, msg):
+    """if boolean is False, raises a excetion using the provided message
+    """
+    if not valid:
+        raise exception(msg)
+
+
+def get_cuda(cuda=None):
+    if cuda is None:
+        return _CUDA_ENABLED
+    return cuda
+
+
+def set_cuda(cuda):
+    global _CUDA_ENABLED
+    _CUDA_ENABLED = cuda
