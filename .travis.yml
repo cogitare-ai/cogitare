@@ -1,0 +1,15 @@
+language: python
+python: 3.6
+sudo: false
+env:
+ - TOXENV=py27
+ - TOXENV=py36
+install:
+ - pip install -U tox twine wheel codecov flake8
+script: tox
+after_success:
+  - codecov
+  - flake8 cogitare/
+cache:
+  directories:
+    - $HOME/.cache/pip
