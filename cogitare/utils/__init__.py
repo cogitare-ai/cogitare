@@ -36,7 +36,7 @@ def call_feedback(feedback, *args, **kwargs):
     if feedback is None:
         return False
     if callable(feedback):
-        feedback(*args, **kwargs)
+        return feedback(*args, **kwargs)
     elif isinstance(feedback, (list, tuple)):
         for feed in feedback:
             call_feedback(feed, *args, **kwargs)
@@ -54,7 +54,7 @@ def call_watchdog(watchdog, *args, **kwargs):
     if callable(watchdog):
         return watchdog(*args, **kwargs)
     elif isinstance(watchdog, (list, tuple)):
-        if any([call_watchdog(watcher, *args, **kwargs) for watcher in watchdog]):
+        if any([call_watchdog(watcher, *args, **kwargs) is True for watcher in watchdog]):
             return True
     else:
         raise ValueError('watchdog is neither callable nor list')
@@ -68,11 +68,13 @@ def assert_raise(valid, exception, msg):
 
 
 def get_cuda(cuda=None):
+    """get Cogitare default cuda enabled/disabled."""
     if cuda is None:
         return _CUDA_ENABLED
     return cuda
 
 
 def set_cuda(cuda):
+    """set Cogitare default cuda enabled/disabled."""
     global _CUDA_ENABLED
     _CUDA_ENABLED = cuda
