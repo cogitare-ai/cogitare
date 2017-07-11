@@ -1,4 +1,8 @@
 import torch
+from cogitare.core import Model
+
+
+__all__ = ['Model']
 
 
 def seed(value):

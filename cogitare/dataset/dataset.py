@@ -88,14 +88,13 @@ class Dataset(object):
                 raise ValueError(msg)
 
     def __len__(self):
-        self.__raise_if_callable('Unable to get the dataset length using '
-                                 'callable data providers')
-        tensor = self.inputs if not callable(self.inputs) else self.targets
+        if self.total_samples is None:
+            raise ValueError('You must set the total_samples')
 
         if self.drop_last:
-            return len(tensor) // self.batch_size
+            return self.total_samples // self.batch_size
         else:
-            return (len(tensor) + self.batch_size - 1) // self.batch_size
+            return (self.total_samples + self.batch_size - 1) // self.batch_size
 
     def reset(self):
         self._current_batch = 0

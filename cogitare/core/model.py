@@ -23,25 +23,40 @@ class Model(nn.Module):
     def loss(self):
         pass
 
-    def _to_tensor(self, list):
-        item = list[0]
-        if torch.is_tensor(item):
-            for l in list:
-                l.unsqueeze_(0)
-            return torch.cat(list)
-        elif isinstance(item, int):
-            return torch.LongTensor(list)
-        elif isinstance(item, float):
-            return torch.DoubleTensor(list)
+    def _to_tensor(self, input, tensor_klass=None):
+        # if list, cast it to the compatible tensor type
+        tensor = None
+
+        if isinstance(input, list):
+            item = input[0]
+
+            if torch.is_tensor(item):
+                for l in input:
+                    l.unsqueeze_(0)
+                tensor = torch.cat(input)
+            elif isinstance(item, int):
+                tensor = torch.LongTensor(input)
+            elif isinstance(item, float):
+                tensor = torch.DoubleTensor(input)
+            else:
+                raise ValueError('Invalid data type: {}'.format(type(item)))
+        elif torch.is_tensor(input):
+            tensor = input
         else:
-            raise ValueError('Invalid data type: {}'.format(type(item)))
+            raise ValueError('Invalid data type: {}'.format(type(input)))
+
+        if tensor_klass:
+            tensor = tensor.type_as(tensor_klass())
+
+        if self._enables_cuda:
+            tensor = tensor.cuda()
+
+        return tensor
 
     @training
     def learn(self, dataset, optimizer, max_epochs=50, epoch_feedback='default',
-              batch_feedback='default', epoch_watchdog=None, batch_watchdog=None):
-
-        if self._enables_cuda:
-            self.cuda()
+              batch_feedback='default', epoch_watchdog=None, batch_watchdog=None,
+              input_type=None, target_type=None):
 
         if epoch_feedback == 'default':
             epoch_feedback = [
@@ -62,19 +77,10 @@ class Model(nn.Module):
 
             for idx, (input, target) in enumerate(dataset):
                 idx += 1
-                if isinstance(input, list):
-                    input = self._to_tensor(input)
-
-                if isinstance(target, list):
-                    target = self._to_tensor(target)
-
-                input = input.float()
-                if self._enables_cuda:
-                    input, target = input.cuda(), target.cuda()
+                input = Variable(self._to_tensor(input, input_type))
+                target = Variable(self._to_tensor(target, target_type))
 
                 optimizer.zero_grad()
-
-                input, target = Variable(input), Variable(target)
 
                 output = self.forward(input)
                 loss = self.loss(output, target)
