@@ -33,14 +33,14 @@ class DataSet(object):
 
             self.container.append(d)
 
-            if indices is None:
-                indices = d._indices
-            else:
-                d._indices = indices
-
         l0 = len(self.container[0])
         for c in self.container[1:]:
             utils.assert_raise(len(c) == l0, ValueError, 'All data must have the same length!')
+
+        indices = list(range(self.container[0].total_samples))
+
+        for c in self.container:
+            c._indices = indices
 
         self.reset()
 

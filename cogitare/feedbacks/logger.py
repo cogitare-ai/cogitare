@@ -1,12 +1,15 @@
+from cogitare.core import PluginInterface
 import math
 import time
 from tqdm import tqdm
 import sys
 
 
-class LoggerFeedback(object):
+class LoggerFeedback(PluginInterface):
 
-    def __init__(self, title='[Logger]', msg='Loss: %.06f', show_time=True, output_file=None):
+    def __init__(self, freq=1, title='[Logger]', msg='Loss: %.06f', show_time=True, output_file=None):
+        super(LoggerFeedback, self).__init__(freq)
+
         self.title = title
         self.msg = msg
         self.show_time = show_time
@@ -24,7 +27,7 @@ class LoggerFeedback(object):
         seconds = seconds % 60
         return '%dm %ds' % (minutes, seconds)
 
-    def __call__(self, loss, *args, **kwargs):
+    def function(self, loss, *args, **kwargs):
         log = '%s %s %s' % (self.title, self.msg, self._time_spent())
         log = log % loss
 

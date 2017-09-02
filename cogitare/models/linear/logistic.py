@@ -1,7 +1,9 @@
+import torch
 from cogitare.core.model import Model
 import torch.nn.functional as F
 import torch.nn as nn
 from cogitare import utils
+from torch.autograd import Variable
 
 
 class LogisticRegression(Model):
@@ -23,11 +25,14 @@ class LogisticRegression(Model):
 
         self.linear = nn.Linear(input_size, num_classes, bias)
 
-    def forward(self, x):
+    def forward(self, sample):
+        x = Variable(utils.to_tensor(sample[0], torch.FloatTensor, self.use_cuda))
         x = x.view(x.size(0), -1)
         data = F.dropout(x, self.arguments['dropout'])
         out = self.linear(data)
         return F.log_softmax(out)
 
-    def loss(self, output, expected):
+    def loss(self, output, sample):
+        expected = Variable(utils.to_tensor(sample[1], torch.LongTensor, self.use_cuda))
+
         return F.nll_loss(output, expected)

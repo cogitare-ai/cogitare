@@ -46,6 +46,9 @@ class _DataHolder(object):
         return self.get_sample(self.indices[key])
 
     def _get_batch(self):
+        if self._requires_reset:
+            self.reset()
+
         data = []
 
         batch_size = min(self._batch_size, self._remaining_samples)
@@ -77,9 +80,6 @@ class _DataHolder(object):
             return (self.total_samples + self._batch_size - 1) // self._batch_size
 
     def __iter__(self):
-        if self._requires_reset:
-            self.reset()
-
         return self
 
     def __next__(self):

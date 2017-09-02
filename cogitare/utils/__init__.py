@@ -1,3 +1,4 @@
+import torch
 from torch.nn import Module
 
 
@@ -30,34 +31,35 @@ def training(func):
     return f
 
 
-def call_feedback(feedback, *args, **kwargs):
-    """call the feedback, and if it's iterable, iterates over it and call all instances
-    """
-    if feedback is None:
-        return False
-    if callable(feedback):
-        return feedback(*args, **kwargs)
-    elif isinstance(feedback, (list, tuple)):
-        for feed in feedback:
-            call_feedback(feed, *args, **kwargs)
-    else:
-        raise ValueError('feedback is neither callable nor list')
+def to_tensor(data, tensor_klass=None, use_cuda=None):
+    # if list, cast it to the compatible tensor type
+    tensor = None
 
+    if isinstance(data, list):
+        item = data[0]
 
-def call_watchdog(watchdog, *args, **kwargs):
-    """call the Watchdog, and if it's iterable, iterates over it and call all instances.
-    If any of them returns True, this caller will return True, indicating that the model
-    should stop the training process.
-    """
-    if watchdog is None:
-        return False
-    if callable(watchdog):
-        return watchdog(*args, **kwargs)
-    elif isinstance(watchdog, (list, tuple)):
-        if any([call_watchdog(watcher, *args, **kwargs) is True for watcher in watchdog]):
-            return True
+        if torch.is_tensor(item):
+            for l in data:
+                l.unsqueeze_(0)
+            tensor = torch.cat(data)
+        elif isinstance(item, int):
+            tensor = torch.LongTensor(data)
+        elif isinstance(item, float):
+            tensor = torch.DoubleTensor(data)
+        else:
+            raise ValueError('Invalid data type: {}'.format(type(item)))
+    elif torch.is_tensor(data):
+        tensor = data
     else:
-        raise ValueError('watchdog is neither callable nor list')
+        raise ValueError('Invalid data type: {}'.format(type(data)))
+
+    if tensor_klass:
+        tensor = tensor.type_as(tensor_klass())
+
+    if get_cuda(use_cuda):
+        tensor = tensor.cuda()
+
+    return tensor
 
 
 def assert_raise(valid, exception, msg):

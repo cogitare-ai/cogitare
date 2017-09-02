@@ -1,19 +1,26 @@
-import torch
 from torch import nn
-from cogitare.utils import not_training, training, call_feedback, call_watchdog
+from cogitare.utils import not_training, training
 from abc import ABCMeta, abstractmethod
 from six import add_metaclass
-from torch.autograd import Variable
 from cogitare.feedbacks import LoggerFeedback, ProgressBarFeedback, PlottingFeedback
 from cogitare import utils
+from cogitare.core.plugin_interface import PluginInterface
+from collections import OrderedDict
 
 
 @add_metaclass(ABCMeta)
 class Model(nn.Module):
 
+    valid_hooks = ('on_start', 'on_start_epoch', 'on_start_batch',
+                   'on_end_batch', 'on_end_epoch', 'on_end')
+
     def __init__(self, cuda=None):
         super(Model, self).__init__()
-        self._enables_cuda = utils.get_cuda(cuda)
+        self.use_cuda = utils.get_cuda(cuda)
+        self.state = {}
+        self.status = {}
+        self.plugins = dict((name, OrderedDict()) for name in self.valid_hooks)
+        self._requires_register_default = False
 
     @abstractmethod
     def forward(self):
@@ -23,67 +30,88 @@ class Model(nn.Module):
     def loss(self):
         pass
 
-    def _to_tensor(self, input, tensor_klass=None):
-        # if list, cast it to the compatible tensor type
-        tensor = None
+    def _register_default_plugins(self):
+        self._requires_register_default = False
+        self.register_plugin([
+            LoggerFeedback(title='[%s]' % self.__class__.__name__),
+            ProgressBarFeedback(total=self.state['max_epochs'], indice_name='current_epoch',
+                                desc='epoch', leave=True),
+            PlottingFeedback()
+        ], 'on_end_epoch')
 
-        if isinstance(input, list):
-            item = input[0]
+        self.register_plugin([
+            ProgressBarFeedback(total=self.state['num_batches'], indice_name='current_batch',
+                                desc='batch', leave=True)
+        ], 'on_end_batch')
 
-            if torch.is_tensor(item):
-                for l in input:
-                    l.unsqueeze_(0)
-                tensor = torch.cat(input)
-            elif isinstance(item, int):
-                tensor = torch.LongTensor(input)
-            elif isinstance(item, float):
-                tensor = torch.DoubleTensor(input)
-            else:
-                raise ValueError('Invalid data type: {}'.format(type(item)))
-        elif torch.is_tensor(input):
-            tensor = input
-        else:
-            raise ValueError('Invalid data type: {}'.format(type(input)))
+    def register_default_plugins(self):
+        self._requires_register_default = True
 
-        if tensor_klass:
-            tensor = tensor.type_as(tensor_klass())
+    def register_plugin(self, plugin, hook):
+        utils.assert_raise(hook in self.valid_hooks, ValueError,
+                           'Expected on of the following hooks: ' + ', '.join(self.valid_hooks))
 
-        if self._enables_cuda:
-            tensor = tensor.cuda()
+        if not isinstance(plugin, list):
+            plugin = [plugin]
 
-        return tensor
+        container = self.plugins[hook]
+
+        for p in plugin:
+            if not isinstance(p, PluginInterface):
+                p = PluginInterface.from_function(p)
+
+            if p.name in container:
+                raise ValueError('A plugin with name "{}" already exists'.format(p.name))
+
+            container[p.name] = p
+
+    def hook(self, name):
+        for key, plugin in self.plugins[name].items():
+            status = plugin(**self.state)
+
+            self.status[name + '_' + key] = status
 
     @training
-    def learn(self, dataset, optimizer, max_epochs=50, epoch_feedback='default',
-              batch_feedback='default', epoch_watchdog=None, batch_watchdog=None,
-              input_type=None, target_type=None):
+    def learn(self, dataset, optimizer, max_epochs=50):
+        if self.use_cuda:
+            self.cuda()
+        self.state = {
+            'max_epochs': max_epochs,
+            'num_batches': len(dataset),
+            'model': self,
+            'current_batch': 0,
+            'current_epoch': 0,
+            'sample': None,
+            'output': None,
+            'loss': None
+        }
 
-        if epoch_feedback == 'default':
-            epoch_feedback = [
-                LoggerFeedback(title='[%s]' % self.__class__.__name__),
-                ProgressBarFeedback(total=max_epochs, desc='epoch', leave=True),
-                PlottingFeedback()
-            ]
+        if self._requires_register_default:
+            self._register_default_plugins()
 
-        if batch_feedback == 'default':
-            batch_feedback = [
-                ProgressBarFeedback(total=len(dataset), desc='batch', leave=True),
-            ]
+        self.hook('on_start')
 
         for epoch in range(1, max_epochs + 1):
+            self.state['current_epoch'] = epoch
+            self.state['current_batch'] = 0
+            self.state['sample'] = None
+            self.state['output'] = None
+
+            self.hook('on_start_epoch')
             total_loss = 0
             total_samples = 0
-            batch_size = len(dataset)
 
-            for idx, (input, target) in enumerate(dataset):
+            for idx, sample in enumerate(dataset):
                 idx += 1
-                input = Variable(self._to_tensor(input, input_type))
-                target = Variable(self._to_tensor(target, target_type))
+
+                self.state['current_batch'] = idx
+                self.state['sample'] = sample
+                self.hook('on_start_batch')
 
                 optimizer.zero_grad()
 
-                output = self.forward(input)
-                loss = self.loss(output, target)
+                output = self.forward(sample)
+                loss = self.loss(output, sample)
 
                 loss.backward()
                 optimizer.step()
@@ -91,16 +119,20 @@ class Model(nn.Module):
                 loss = loss.data[0]
                 total_loss += loss
                 total_samples += 1
-                call_feedback(batch_feedback, instance=self, idx=idx, input=input,
-                              output=output, target=target, loss=loss, max_idx=batch_size)
-                if call_watchdog(batch_watchdog) is True:
-                    return False
+
+                self.state['loss'] = loss
+                self.state['output'] = output
+                self.hook('on_end_batch')
 
             total_loss /= total_samples
-            call_feedback(epoch_feedback, instance=self, idx=epoch, loss=total_loss,
-                          max_idx=max_epochs)
-            if call_watchdog(epoch_watchdog) is True:
-                return False
+
+            self.state['current_batch'] = 0
+            self.state['sample'] = None
+            self.state['output'] = None
+            self.state['loss'] = total_loss
+            self.hook('on_end_epoch')
+
+        self.hook('on_end')
         return True
 
     @not_training

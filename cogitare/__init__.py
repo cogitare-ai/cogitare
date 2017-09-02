@@ -1,8 +1,9 @@
 import torch
+from cogitare.core import PluginInterface
 from cogitare.core import Model
 
 
-__all__ = ['Model']
+__all__ = ['Model', 'PluginInterface']
 
 
 def seed(value):

@@ -1,10 +1,14 @@
 from cogitare import utils
+from cogitare.core import PluginInterface
 import matplotlib.pyplot as plt
 
 
-class PlottingMatplotlibFeedback(object):
+class PlottingMatplotlibFeedback(PluginInterface):
 
     def __init__(self, title, style='ggplot', *args, **kwargs):
+        freq = kwargs.pop('freq', 1)
+        super(PlottingMatplotlibFeedback, self).__init__(freq)
+
         plt.ion()
         plt.style.use(style)
         self.fig, self.ax = plt.subplots()
@@ -17,11 +21,11 @@ class PlottingMatplotlibFeedback(object):
         self.y = None
         self.line = None
 
-    def __call__(self, idx, loss, max_idx, *args, **kwargs):
+    def function(self, current_epoch, loss, max_epochs, *args, **kwargs):
         if self.y is None:
-            self.y = list(range(1, max_idx + 1))
+            self.y = list(range(1, max_epochs + 1))
 
-        for pos in range(idx - 1, max_idx):
+        for pos in range(current_epoch - 1, max_epochs):
             self.y[pos] = loss
 
         if self.line is None:
@@ -29,7 +33,6 @@ class PlottingMatplotlibFeedback(object):
 
         self.ax.set_ylim([0, max(self.y)])
         self.line.set_ydata(self.y)
-        # plt.show()
         self.fig.canvas.draw()
 
 
