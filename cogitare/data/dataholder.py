@@ -41,8 +41,6 @@ class _DataHolder(object):
         return '{} with {}x{} samples'.format(type(self).__name__, len(self), self._batch_size)
 
     def __getitem__(self, key):
-        utils.assert_raise(0 <= key < self.total_samples, IndexError, 'Invalid index')
-
         return self.get_sample(self.indices[key])
 
     def _get_batch(self):
@@ -137,8 +135,6 @@ class CallableHolder(_DataHolder):
 
     @property
     def total_samples(self):
-        utils.assert_raise(self._total_samples is None, ValueError,
-                           'You must define the "total_samples" value')
         return self._total_samples
 
     @total_samples.setter
@@ -149,8 +145,9 @@ class CallableHolder(_DataHolder):
         self._remaining_samples = total_samples
 
     def __init__(self, *args, **kwargs):
+        total_samples = kwargs.pop('total_samples', None)
         super(CallableHolder, self).__init__(*args, **kwargs)
-        self._total_samples = None
+        self._total_samples = total_samples
 
     def get_sample(self, key):
         return self._data(key)

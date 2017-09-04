@@ -12,8 +12,10 @@ def not_training(func):
         assert isinstance(self, Module)
         default = self.training
         self.train(False)
-        func(self, *args, **kwargs)
+        value = func(self, *args, **kwargs)
         self.train(default)
+
+        return value
 
     return f
 
@@ -25,8 +27,10 @@ def training(func):
         assert isinstance(self, Module)
         default = self.training
         self.train(True)
-        func(self, *args, **kwargs)
+        value = func(self, *args, **kwargs)
         self.train(default)
+
+        return value
 
     return f
 

@@ -5,9 +5,17 @@ import matplotlib.pyplot as plt
 
 class PlottingMatplotlibFeedback(PluginInterface):
 
-    def __init__(self, title, style='ggplot', *args, **kwargs):
+    def __init__(self, data_source, max_epochs, title, data_label=None, style='ggplot', *args, **kwargs):
         freq = kwargs.pop('freq', 1)
         super(PlottingMatplotlibFeedback, self).__init__(freq)
+
+        self.data_source = data_source
+        self.max_epochs = max_epochs
+
+        if data_label is None:
+            data_label = dict((d, d) for d in data_source)
+
+        self.data_label = data_label
 
         plt.ion()
         plt.style.use(style)
@@ -18,21 +26,30 @@ class PlottingMatplotlibFeedback(PluginInterface):
         if 'xlabel' in kwargs:
             plt.xlabel(kwargs['xlabel'])
 
-        self.y = None
-        self.line = None
+        self.y = dict((d, [0] * max_epochs) for d in data_source)
+        self.line = dict((d, None) for d in data_source)
 
-    def function(self, current_epoch, loss, max_epochs, *args, **kwargs):
-        if self.y is None:
-            self.y = list(range(1, max_epochs + 1))
+    def function(self, current_epoch, *args, **kwargs):
+        max_y = 0
+        for d in self.data_source:
+            if d not in kwargs:
+                continue
 
-        for pos in range(current_epoch - 1, max_epochs):
-            self.y[pos] = loss
+            if kwargs[d] is None:
+                continue
 
-        if self.line is None:
-            self.line, = self.ax.plot(self.y, '.-')
+            data = self.y[d]
 
-        self.ax.set_ylim([0, max(self.y)])
-        self.line.set_ydata(self.y)
+            for pos in range(current_epoch - 1, self.max_epochs):
+                data[pos] = kwargs[d]
+
+            if self.line[d] is None:
+                self.line[d], = self.ax.plot(self.y[d], '.-', label=self.data_label[d])
+                self.ax.legend(loc='upper right')
+
+            max_y = max(max_y, max(self.y[d]))
+            self.line[d].set_ydata(self.y[d])
+        self.ax.set_ylim([0, max_y])
         self.fig.canvas.draw()
 
 

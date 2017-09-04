@@ -36,7 +36,8 @@ class Model(nn.Module):
             LoggerFeedback(title='[%s]' % self.__class__.__name__),
             ProgressBarFeedback(total=self.state['max_epochs'], indice_name='current_epoch',
                                 desc='epoch', leave=True),
-            PlottingFeedback()
+            PlottingFeedback(data_source=['loss', 'validation_loss'],
+                             max_epochs=self.state['max_epochs'])
         ], 'on_end_epoch')
 
         self.register_plugin([
@@ -72,9 +73,10 @@ class Model(nn.Module):
             self.status[name + '_' + key] = status
 
     @training
-    def learn(self, dataset, optimizer, max_epochs=50):
+    def learn(self, dataset, optimizer, validation_dataset=None, max_epochs=50):
         if self.use_cuda:
             self.cuda()
+
         self.state = {
             'max_epochs': max_epochs,
             'num_batches': len(dataset),
@@ -83,7 +85,8 @@ class Model(nn.Module):
             'current_epoch': 0,
             'sample': None,
             'output': None,
-            'loss': None
+            'loss': None,
+            'validation_loss': None
         }
 
         if self._requires_register_default:
@@ -130,6 +133,10 @@ class Model(nn.Module):
             self.state['sample'] = None
             self.state['output'] = None
             self.state['loss'] = total_loss
+
+            if validation_dataset:
+                self.state['validation_loss'] = self.evaluate(validation_dataset)
+
             self.hook('on_end_epoch')
 
         self.hook('on_end')
@@ -139,5 +146,14 @@ class Model(nn.Module):
     def predict(self, x):
         return self.forward(x)
 
-    def evaluate(self):
-        pass
+    @not_training
+    def evaluate(self, dataset):
+        total_loss = 0
+
+        for sample in dataset:
+            output = self.forward(sample)
+            loss = self.loss(output, sample)
+
+            total_loss += loss.data[0]
+
+        return total_loss / len(dataset)
