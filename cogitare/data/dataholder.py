@@ -5,6 +5,7 @@ from abc import ABCMeta, abstractmethod
 from cogitare import utils
 from six import add_metaclass
 import numpy
+from dask import threaded, delayed, compute
 
 
 @add_metaclass(ABCMeta)
@@ -47,8 +48,6 @@ class _DataHolder(object):
         if self._requires_reset:
             self.reset()
 
-        data = []
-
         batch_size = min(self._batch_size, self._remaining_samples)
 
         if batch_size < self._batch_size and self._drop_last:
@@ -59,13 +58,13 @@ class _DataHolder(object):
             self._requires_reset = True
             raise StopIteration
 
-        for i in range(batch_size):
-            data.append(self[self._current_batch * self._batch_size + i])
+        jobs = (delayed(self.__getitem__)(self._current_batch * self._batch_size + i) for i in range(batch_size))
+        results = compute(jobs, get=threaded.get)[0]
 
         self._current_batch += 1
         self._remaining_samples -= batch_size
 
-        return data
+        return results
 
     @abstractmethod
     def get_sample(self, key):

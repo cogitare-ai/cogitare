@@ -1,5 +1,5 @@
 from torch import nn
-from cogitare.utils import not_training, training
+from cogitare.utils import not_training, training, StopTraining
 from abc import ABCMeta, abstractmethod
 from six import add_metaclass
 from cogitare.feedbacks import LoggerFeedback, ProgressBarFeedback, PlottingFeedback
@@ -12,7 +12,8 @@ from collections import OrderedDict
 class Model(nn.Module):
 
     valid_hooks = ('on_start', 'on_start_epoch', 'on_start_batch',
-                   'on_end_batch', 'on_end_epoch', 'on_end')
+                   'on_end_batch', 'on_end_epoch', 'on_end',
+                   'before_backward', 'before_step')
 
     def __init__(self, cuda=None):
         super(Model, self).__init__()
@@ -74,73 +75,78 @@ class Model(nn.Module):
 
     @training
     def learn(self, dataset, optimizer, validation_dataset=None, max_epochs=50):
-        if self.use_cuda:
-            self.cuda()
+        try:
+            if self.use_cuda:
+                self.cuda()
 
-        self.state = {
-            'max_epochs': max_epochs,
-            'num_batches': len(dataset),
-            'model': self,
-            'current_batch': 0,
-            'current_epoch': 0,
-            'sample': None,
-            'output': None,
-            'loss': None,
-            'validation_loss': None
-        }
+            self.state = {
+                'max_epochs': max_epochs,
+                'num_batches': len(dataset),
+                'model': self,
+                'current_batch': 0,
+                'current_epoch': 0,
+                'sample': None,
+                'output': None,
+                'loss': None,
+                'validation_loss': None
+            }
 
-        if self._requires_register_default:
-            self._register_default_plugins()
+            if self._requires_register_default:
+                self._register_default_plugins()
 
-        self.hook('on_start')
+            self.hook('on_start')
 
-        for epoch in range(1, max_epochs + 1):
-            self.state['current_epoch'] = epoch
-            self.state['current_batch'] = 0
-            self.state['sample'] = None
-            self.state['output'] = None
+            for epoch in range(1, max_epochs + 1):
+                self.state['current_epoch'] = epoch
+                self.state['current_batch'] = 0
+                self.state['sample'] = None
+                self.state['output'] = None
 
-            self.hook('on_start_epoch')
-            total_loss = 0
-            total_samples = 0
+                self.hook('on_start_epoch')
+                total_loss = 0
+                total_samples = 0
 
-            for idx, sample in enumerate(dataset):
-                idx += 1
+                for idx, sample in enumerate(dataset):
+                    idx += 1
 
-                self.state['current_batch'] = idx
-                self.state['sample'] = sample
-                self.hook('on_start_batch')
+                    self.state['current_batch'] = idx
+                    self.state['sample'] = sample
+                    self.hook('on_start_batch')
 
-                optimizer.zero_grad()
+                    optimizer.zero_grad()
 
-                output = self.forward(sample)
-                loss = self.loss(output, sample)
+                    output = self.forward(sample)
+                    loss = self.loss(output, sample)
 
-                loss.backward()
-                optimizer.step()
+                    self.hook('before_backward')
+                    loss.backward()
+                    self.hook('before_step')
+                    optimizer.step()
 
-                loss = loss.data[0]
-                total_loss += loss
-                total_samples += 1
+                    loss = loss.data[0]
+                    total_loss += loss
+                    total_samples += 1
 
-                self.state['loss'] = loss
-                self.state['output'] = output
-                self.hook('on_end_batch')
+                    self.state['loss'] = loss
+                    self.state['output'] = output
+                    self.hook('on_end_batch')
 
-            total_loss /= total_samples
+                total_loss /= total_samples
 
-            self.state['current_batch'] = 0
-            self.state['sample'] = None
-            self.state['output'] = None
-            self.state['loss'] = total_loss
+                self.state['current_batch'] = 0
+                self.state['sample'] = None
+                self.state['output'] = None
+                self.state['loss'] = total_loss
 
-            if validation_dataset:
-                self.state['validation_loss'] = self.evaluate(validation_dataset)
+                if validation_dataset:
+                    self.state['validation_loss'] = self.evaluate(validation_dataset)
 
-            self.hook('on_end_epoch')
+                self.hook('on_end_epoch')
 
-        self.hook('on_end')
-        return True
+            self.hook('on_end')
+            return True
+        except StopTraining:
+            return False
 
     @not_training
     def predict(self, x):

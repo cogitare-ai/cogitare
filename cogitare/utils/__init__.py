@@ -5,6 +5,10 @@ from torch.nn import Module
 _CUDA_ENABLED = False
 
 
+class StopTraining(Exception):
+    pass
+
+
 def not_training(func):
     """decorator do disable the training during execution. Must be used inside a Module class
     """
