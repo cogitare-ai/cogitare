@@ -1,4 +1,5 @@
 import torch
+import numpy as np
 from torch.nn import Module
 
 
@@ -43,10 +44,21 @@ def to_tensor(data, tensor_klass=None, use_cuda=None):
     # if list, cast it to the compatible tensor type
     tensor = None
 
+    def get_first_item(data_list, depth=0):
+        depth += 1
+        if isinstance(data_list, list):
+            if len(data_list) == 0:
+                raise ValueError('Empty list')
+
+            return get_first_item(data_list[0], depth)
+        return data_list, depth
+
     if isinstance(data, list):
-        item = data[0]
+        item, depth = get_first_item(data)
 
         if torch.is_tensor(item):
+            if depth != 2:
+                raise ValueError('Cannot convert nested list of tensors')
             for l in data:
                 l.unsqueeze_(0)
             tensor = torch.cat(data)
@@ -54,12 +66,16 @@ def to_tensor(data, tensor_klass=None, use_cuda=None):
             tensor = torch.LongTensor(data)
         elif isinstance(item, float):
             tensor = torch.DoubleTensor(data)
+        elif isinstance(item, np.ndarray):
+            tensor = torch.from_numpy(np.stack(data))
         else:
-            raise ValueError('Invalid data type: {}'.format(type(item)))
+            raise ValueError('Invalid data type: {}'.format(type(item).__name__))
+    elif isinstance(data, np.ndarray):
+        tensor = torch.from_numpy(data)
     elif torch.is_tensor(data):
         tensor = data
     else:
-        raise ValueError('Invalid data type: {}'.format(type(data)))
+        raise ValueError('Invalid data type: {}'.format(type(data).__name__))
 
     if tensor_klass:
         tensor = tensor.type_as(tensor_klass())

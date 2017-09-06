@@ -15,9 +15,8 @@ class Model(nn.Module):
                    'on_end_batch', 'on_end_epoch', 'on_end',
                    'before_backward', 'before_step')
 
-    def __init__(self, cuda=None):
+    def __init__(self):
         super(Model, self).__init__()
-        self.use_cuda = utils.get_cuda(cuda)
         self.state = {}
         self.status = {}
         self.plugins = dict((name, OrderedDict()) for name in self.valid_hooks)
@@ -76,9 +75,6 @@ class Model(nn.Module):
     @training
     def learn(self, dataset, optimizer, validation_dataset=None, max_epochs=50):
         try:
-            if self.use_cuda:
-                self.cuda()
-
             self.state = {
                 'max_epochs': max_epochs,
                 'num_batches': len(dataset),

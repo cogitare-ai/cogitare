@@ -1,116 +1,13 @@
-import unittest
+import torch
+import numpy as np
 import mock as m
 from cogitare import utils
 import pytest
 import torch.nn as nn
+from tests.common import TestCase
 
 
-class TestUtils(unittest.TestCase):
-
-    def test_call_feedback_raises(self):
-        with pytest.raises(ValueError) as info:
-            utils.call_feedback('test')
-        self.assertIn('callable nor list', str(info.value))
-
-        def f():
-            return 'test'
-
-        with pytest.raises(ValueError) as info:
-            utils.call_feedback([f, 'test'])
-        self.assertIn('callable nor list', str(info.value))
-
-        with pytest.raises(ValueError) as info:
-            utils.call_feedback([f, [f, f, 'test']])
-        self.assertIn('callable nor list', str(info.value))
-
-    def test_call_feedback_ignores_empty(self):
-        out = utils.call_feedback(None)
-        self.assertEqual(out, False)
-
-    def test_call_feedback_call(self):
-        def function(*args, **kwargs):
-            pass
-
-        f = m.create_autospec(function, return_value=None)
-        utils.call_feedback(f)
-        f.assert_any_call()
-
-    def test_call_feedback_list_call(self):
-        def f1(*args, **kwargs):
-            pass
-
-        def f2(*args, **kwargs):
-            pass
-
-        def f3(*args, **kwargs):
-            pass
-
-        def f4(*args, **kwargs):
-            pass
-
-        def f5(*args, **kwargs):
-            pass
-
-        fs = [m.create_autospec(f, return_value=None) for f in [f1, f2, f3, f4, f5]]
-
-        feedbacks = [fs[0], fs[1], [fs[2], [fs[3], fs[4]]], fs[0]]
-        utils.call_feedback(feedbacks)
-        for f in fs:
-            f.assert_any_call()
-
-    def test_call_watchdog_raises(self):
-        with pytest.raises(ValueError) as info:
-            utils.call_watchdog('test')
-        self.assertIn('callable nor list', str(info.value))
-
-        def f():
-            return 'test'
-
-        with pytest.raises(ValueError) as info:
-            utils.call_watchdog([f, 'test'])
-        self.assertIn('callable nor list', str(info.value))
-
-        with pytest.raises(ValueError) as info:
-            utils.call_watchdog([f, [f, f, 'test']])
-        self.assertIn('callable nor list', str(info.value))
-
-    def test_call_watchdog_ignores_empty(self):
-        out = utils.call_watchdog(None)
-        self.assertEqual(out, False)
-
-    def test_call_watchdog_call(self):
-        def function(*args, **kwargs):
-            pass
-
-        f = m.create_autospec(function, return_value=None)
-        utils.call_watchdog(f)
-        f.assert_any_call()
-
-    def test_call_watchdog_list_call(self):
-        def f1(*args, **kwargs):
-            pass
-
-        def f2(*args, **kwargs):
-            pass
-
-        def f3(*args, **kwargs):
-            pass
-
-        def f4(*args, **kwargs):
-            pass
-
-        def f5(*args, **kwargs):
-            pass
-
-        returns = [False, None, True, False, False]
-        fs = [m.create_autospec(f, return_value=returns[i]) for i, f in enumerate([f1, f2, f3, f4, f5])]
-
-        watchdogs = [fs[0], fs[1], [fs[2], [fs[3], fs[4]]], fs[0]]
-        resp = utils.call_watchdog(watchdogs)
-        for f in fs:
-            f.assert_any_call()
-
-        self.assertEqual(resp, True)
+class TestUtils(TestCase):
 
     def test_assert_raise(self):
         for exp in (ValueError, IndexError, Exception):
@@ -155,3 +52,32 @@ class TestUtils(unittest.TestCase):
         t.train(True)
         t.run_false()
         self.assertEqual(t.training, True)
+
+    def test_to_tensor(self):
+        expected = torch.LongTensor([[1, 2, 3], [4, 5, 6]])
+        expected_float = torch.DoubleTensor([[1, 2, 3], [4, 5, 6]])
+
+        from_external = [
+            expected,
+            [[1, 2, 3], [4, 5, 6]],
+            np.asarray([[1, 2, 3], [4, 5, 6]]),
+            [np.asarray([1, 2, 3]), np.asarray([4, 5, 6])],
+        ]
+
+        for external in from_external:
+            self.assertEqual(utils.to_tensor(external), expected)
+
+        for external in from_external:
+            self.assertEqual(utils.to_tensor(external, torch.DoubleTensor), expected_float)
+
+        with pytest.raises(ValueError) as info:
+            utils.to_tensor({})
+        self.assertIn('Invalid data type: dict', str(info.value))
+
+        with pytest.raises(ValueError) as info:
+            utils.to_tensor([tuple()])
+        self.assertIn('Invalid data type: tuple', str(info.value))
+
+        with pytest.raises(ValueError) as info:
+            utils.to_tensor([])
+        self.assertIn('Empty list', str(info.value))
