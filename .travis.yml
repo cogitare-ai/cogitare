@@ -7,7 +7,7 @@ env:
 
 install:
     - pip install -U tox twine wheel codecov flake8
-    - pip install --user travis-sphinx
+    - pip install travis-sphinx
     - pip install -r requirements.txt
     - pip install http://download.pytorch.org/whl/cu75/torch-0.2.0.post3-cp36-cp36m-manylinux1_x86_64.whl
     - pip install -r docs/requirements.txt
