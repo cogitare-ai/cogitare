@@ -116,7 +116,7 @@ html_static_path = ['_static']
 
 
 # Custom sidebar templates, must be a dictionary that maps document names
-html_theme_path = [juliadoc.get_theme_dir()]
+html_theme_path = [os.path.join('.', 'theme')]
 html_sidebars = juliadoc.default_sidebars()
 # to template names.
 #
