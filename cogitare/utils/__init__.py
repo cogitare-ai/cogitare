@@ -11,7 +11,15 @@ class StopTraining(Exception):
 
 
 def not_training(func):
-    """decorator do disable the training during execution. Must be used inside a Module class
+    """Decorator do disable the training during execution. Must be used inside a Module class.
+
+    Example::
+
+        @not_training
+        def my_func(arg1, arg2):
+            # do something that cannot affect training, such as evaluating a
+            # test set
+            pass
     """
     def f(self, *args, **kwargs):
         assert isinstance(self, Module)
@@ -26,7 +34,15 @@ def not_training(func):
 
 
 def training(func):
-    """decorator do enable the training during execution. Must be used inside a Module class
+    """Decorator do enable the training during execution. Must be used inside a Module class.
+
+    Example::
+
+        @training
+        def my_func(arg1, arg2):
+            # do something that can affect training, such as forward your train
+            # data
+            pass
     """
     def f(self, *args, **kwargs):
         assert isinstance(self, Module)
@@ -87,20 +103,37 @@ def to_tensor(data, tensor_klass=None, use_cuda=None):
 
 
 def assert_raise(valid, exception, msg):
-    """if boolean is False, raises a excetion using the provided message
+    """Shortcute to assert if something is valid. If invalid,
+    raises the exception with the provided message.
+
+    Example::
+
+        >>> assert_raise(1 == 2, ValueError, 'The values must be equal')
+        ValueError: The values must be equal
     """
     if not valid:
         raise exception(msg)
 
 
 def get_cuda(cuda=None):
-    """get Cogitare default cuda enabled/disabled."""
+    """Get the default cuda enabled/disabled variable.
+
+    Args:
+        cuda (bool): if a boolean is provided, its value will be retured.
+
+    Returns:
+        enabled (bool): the ``cuda`` parameter, if provided, or the enaled/disabled status.
+    """
     if cuda is None:
         return _CUDA_ENABLED
     return cuda
 
 
 def set_cuda(cuda):
-    """set Cogitare default cuda enabled/disabled."""
+    """Set Cogitare default cuda enabled/disabled.
+
+    This value is used by Cogitare's models and some functions to determine if
+    it's necesary to automatically convert the Tensor/Module to cuda.
+    """
     global _CUDA_ENABLED
     _CUDA_ENABLED = cuda

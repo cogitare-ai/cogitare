@@ -2,7 +2,7 @@ from torch import nn
 from cogitare.utils import not_training, training, StopTraining
 from abc import ABCMeta, abstractmethod
 from six import add_metaclass
-from cogitare.feedbacks import LoggerFeedback, ProgressBarFeedback, PlottingFeedback
+from cogitare.plugins import Logger, ProgressBar, PlottingMatplotlib
 from cogitare import utils
 from cogitare.core.plugin_interface import PluginInterface
 from collections import OrderedDict
@@ -32,17 +32,20 @@ class Model(nn.Module):
 
     def _register_default_plugins(self):
         self._requires_register_default = False
+
+        if self.state['validation_dataset'] is None:
+            plot_data = 'train'
+        else:
+            plot_data = 'both'
+
         self.register_plugin([
-            LoggerFeedback(title='[%s]' % self.__class__.__name__),
-            ProgressBarFeedback(total=self.state['max_epochs'], indice_name='current_epoch',
-                                desc='epoch', leave=True),
-            PlottingFeedback(data_source=['loss', 'validation_loss'],
-                             max_epochs=self.state['max_epochs'])
+            Logger(title='[%s]' % self.__class__.__name__),
+            ProgressBar(),
+            PlottingMatplotlib(source=plot_data)
         ], 'on_end_epoch')
 
         self.register_plugin([
-            ProgressBarFeedback(total=self.state['num_batches'], indice_name='current_batch',
-                                desc='batch', leave=True)
+            ProgressBar(monitor='batch')
         ], 'on_end_batch')
 
     def register_default_plugins(self):
@@ -84,7 +87,8 @@ class Model(nn.Module):
                 'sample': None,
                 'output': None,
                 'loss': None,
-                'validation_loss': None
+                'validation_loss': None,
+                'validation_dataset': validation_dataset
             }
 
             if self._requires_register_default:
