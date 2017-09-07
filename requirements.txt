@@ -1,7 +1,6 @@
 six>=1.10.0
 numpy>=1.12.1
 tqdm>=4.11.2
-torchvision>=0.1.8
 matplotlib>=2.0.2
 dask>=0.15.2
 toolz>=0.8.2

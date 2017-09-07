@@ -1,0 +1,14 @@
+formats:
+    - epub
+    - pdf
+
+requirements_file: requirements.txt
+
+python:
+    version: 3.5
+    setup_py_install: true
+    pip_install: true
+    extra_requirements:
+        - http://download.pytorch.org/whl/cu75/torch-0.2.0.post3-cp35-cp35m-manylinux1_x86_64.whl
+        - sphinx_rtd_theme
+        - git+https://github.com/JuliaLang/JuliaDoc.git#egg=JuliaDoc
