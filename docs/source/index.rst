@@ -30,6 +30,8 @@ Contributions are welcome!
     :maxdepth: 2
     :caption: Cogitare
     
+    model
+    data
     plugins
     utils
 

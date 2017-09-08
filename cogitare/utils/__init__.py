@@ -1,4 +1,5 @@
 import torch
+import functools
 import numpy as np
 from torch.nn import Module
 
@@ -21,6 +22,7 @@ def not_training(func):
             # test set
             pass
     """
+    @functools.wraps(func)
     def f(self, *args, **kwargs):
         assert isinstance(self, Module)
         default = self.training
@@ -44,6 +46,7 @@ def training(func):
             # data
             pass
     """
+    @functools.wraps(func)
     def f(self, *args, **kwargs):
         assert isinstance(self, Module)
         default = self.training

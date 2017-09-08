@@ -18,7 +18,17 @@ If you have a plugin implementation/idea/request, contributions are welcome!
 Custom Plugin
 -------------
 
-TODO
+To use your own plugin with Cogitare, you just need to provide a callable
+object when registering the plugin.
+
+For example, if you want to apply a grad clipping, you can use:
+
+Example::
+
+    def norm(model, **kwargs):
+        torch.nn.utils.clip_grad_norm(model.parameters(), 1.0)
+
+    model.register_plugin(norm, 'before_step')
 
 
 Official Plugins
