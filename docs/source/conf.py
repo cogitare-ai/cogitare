@@ -5,6 +5,9 @@ import juliadoc
 import os
 import sys
 sys.path.insert(0, os.path.abspath(os.path.join('..', '..')))
+sys.path += ['.']
+
+import sphinxcontrib_rawfiles
 
 #
 # Cogitare documentation build configuration file, created by
@@ -46,6 +49,7 @@ extensions = [
     'juliadoc.julia',
     'juliadoc.jlhelp',
     'sphinx.ext.napoleon',
+    'sphinxcontrib_rawfiles'
 ]
 napoleon_include_init_with_doc = True
 napoleon_include_special_with_doc = True
@@ -53,6 +57,7 @@ napoleon_use_rtype = False
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
+rawfiles = ['CNAME']
 
 # The suffix(es) of source filenames.
 # You can specify multiple suffix as a list of string:
