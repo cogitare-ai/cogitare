@@ -1,6 +1,4 @@
-
-Cogitare
-========
+![](https://raw.githubusercontent.com/cogitare-ai/cogitare/master/docs/source/art/icon-line.png)
 
 **Cogitare** is a Modern, Fast, and Modular Deep Learning and Machine Learning framework in Python http://cogitare.aronbordin.com/. 
 
