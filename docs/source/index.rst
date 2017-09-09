@@ -6,6 +6,9 @@
 Welcome to Cogitare's documentation!
 ====================================
 
+
+.. image:: _static/logo-line.png
+
 **Cogitare** is a Modern, Fast, and Modular Deep Learning and Machine Learning framework in Python. 
 
 It uses the best of `PyTorch <http://pytorch.org/>`_ through a simple interface to train, evaluate, test
