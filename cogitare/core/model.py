@@ -1,4 +1,5 @@
 from torch import nn
+import torch
 from cogitare.utils import not_training, training, StopTraining
 from abc import ABCMeta, abstractmethod
 from six import add_metaclass
@@ -366,3 +367,19 @@ class Model(nn.Module):
             return total_loss / len(dataset)
         else:
             return total_loss
+
+    def load(self, path):
+        """Load the model parameters using :func:`torch.load` from a given path.
+
+        Args:
+            path: path of the serialized state_dict.
+        """
+        self.load_state_dict(torch.load(path))
+
+    def save(self, path):
+        """Save the model parameters using :func:`torch.save` to a given path.
+
+        Args:
+            path: path to save the model.
+        """
+        torch.save(self.state_dict(), path)

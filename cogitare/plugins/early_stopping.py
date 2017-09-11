@@ -1,6 +1,5 @@
 from cogitare.core import PluginInterface
 from cogitare.utils import StopTraining
-import torch
 
 
 class EarlyStopping(PluginInterface):
@@ -46,14 +45,14 @@ class EarlyStopping(PluginInterface):
         if validation_loss < self._best_score:
             self._best_score = validation_loss
 
-            torch.save(model.state_dict(), self.path)
+            model.save(self.path)
             self._best_epoch = current_epoch
         elif current_epoch - self._best_epoch > self.max_tries:
             print('\n\nStopping training after %d tries. Best score %.4f' % (
                 self.max_tries, self._best_score))
 
             if self.restore_checkpoint:
-                model.load_state_dict(torch.load(self.path))
+                model.load(self.path)
                 print('Model restored from: ' + self.path)
 
             raise StopTraining
