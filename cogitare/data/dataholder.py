@@ -165,7 +165,7 @@ class AbsDataHolder(object):
             ratio (float): ratio of split. Must be between 0 and 1.
 
         Returns:
-            (data1, data2): two dataholde, in the same type that the original.
+            (data1, data2): two dataholder, in the same type that the original.
 
         Example::
 
@@ -195,10 +195,10 @@ class AbsDataHolder(object):
         return data1, data2
 
     def split_chunks(self, n):
-        """Split the dataholder into N with the sample number of samples each.
+        """Split the dataholder into N dataholders with the sample number of samples each.
 
         Args:
-            n (int): number of new dataholders.
+            n (int): number of new splits.
 
         Returns:
             output (list): list of N dataholders.
