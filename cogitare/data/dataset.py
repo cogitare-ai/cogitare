@@ -1,5 +1,5 @@
 from cogitare.data import AutoHolder
-from cogitare.data.dataholder import _DataHolder
+from cogitare.data.dataholder import AbsDataHolder
 from cogitare import utils
 
 
@@ -16,14 +16,14 @@ class DataSet(object):
             data_types = [AutoHolder] * len(data)
 
         if not isinstance(data_types, list):
-            utils.assert_raise(isinstance(data_types, _DataHolder), ValueError,
+            utils.assert_raise(isinstance(data_types, AbsDataHolder), ValueError,
                                '"data_types" must be a DataHolder class of a list of them')
             data_types = [data_types] * len(data)
 
         self.container = []
         indices = None
         for i, d in enumerate(data):
-            if isinstance(d, _DataHolder):
+            if isinstance(d, AbsDataHolder):
                 d._batch_size = batch_size
                 d._shuffle = shuffle
                 d._drop_last = drop_last
