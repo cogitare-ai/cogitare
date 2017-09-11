@@ -12,9 +12,9 @@ from collections import OrderedDict
 class Model(nn.Module):
     """
     Model is an extension of :class:`torch.nn.Module` that includes support for
-    training the model using the method :meth:`learn`.
+    training the model using the method :meth:`~cogitare.Model.learn`.
 
-    While training, you may register plugins to watch and interact with the model.
+    While training, you can use plugins to watch and interact with the model.
     The plugin works like an event mechanism, you register a callback function to
     a specific event, and then you gain aceess to some variables of the model at
     specific steps of the training process.
@@ -23,7 +23,7 @@ class Model(nn.Module):
 
     valid_hooks = ('on_start', 'on_start_epoch', 'on_start_batch',
                    'on_end_batch', 'on_end_epoch', 'on_end',
-                   'before_backward', 'before_step')
+                   'before_backward', 'before_step', 'on_stop_training')
 
     def __init__(self):
         super(Model, self).__init__()
@@ -107,8 +107,6 @@ class Model(nn.Module):
 
     def register_plugin(self, plugin, hook):
         """You can use this to register a plugin to an specific event of the model.
-
-        .. todo:: show as a table
 
         You can register (hook) a plugin to some specific events that may occour
         during training:
@@ -207,7 +205,7 @@ class Model(nn.Module):
               - validation_dataset (if provided in the :meth:`~cogitare.Model.learn`).
               - validation_loss (if validation data is present)
 
-            - **on_stop**: executed when a plugin raises a :class:`cogitare.utils.StopTraining`.
+            - **on_stop_training**: executed when a plugin raises a :exc:`cogitare.utils.StopTraining`.
               At this time, the variables acessible will depends on the training step that the
               exception occored.
         """
@@ -322,6 +320,8 @@ class Model(nn.Module):
             self.hook('on_end')
             return True
         except StopTraining:
+            self.hook('on_stop_training')
+            self.hook('on_end')
             return False
 
     @not_training

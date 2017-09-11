@@ -8,6 +8,11 @@ _CUDA_ENABLED = False
 
 
 class StopTraining(Exception):
+    """This is an Exception to stop the training process of a :class:`cogitare.Model`.
+
+    While running the :meth:`cogitare.Model.learn`, if a plugin raise this exception,
+    the model will run the plugins in the ``on_stop_training`` hook, and stop the training.
+    """
     pass
 
 
