@@ -6,7 +6,7 @@ class EarlyStopping(PluginInterface):
     """
     This plugin provides the early stopping algorithm.
 
-    During training it will check the validation loss and if after ``max_tries``
+    During training, it will check the validation loss and if after ``max_tries``
     epochs the validation loss does not decrease, the training stops.
 
     The parameters with the best score found is saved in disk using :func:`torch.save` in the
@@ -15,7 +15,7 @@ class EarlyStopping(PluginInterface):
     When stopping, the plugin will automatically restore the model to the best checkpoint. If
     you don't want to have this feature, set ``restore_checkpoint=False``.
 
-    It's recommended to use this plugin at **on_end_epoch** hook, since the validation loss
+    It's recommended to use this plugin at the **on_end_epoch** hook since the validation loss
     is calculated at this point.
 
 

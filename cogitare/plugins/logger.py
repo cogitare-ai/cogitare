@@ -19,11 +19,11 @@ class Logger(PluginInterface):
     .. image:: _static/plugins.png
 
     Args:
-        title (str): title that appears in the beginning of the message.
-        msg (str): string with the message formating. You can use this parameter
+        title (str): title that appears at the beginning of the message.
+        msg (str): string with the message formatting. You can use this parameter
             to customize the logging variable and format. The message must be compatible with
-            :meth:`str.format`, and it have access to the model state variable.
-        show_time (bool): if True, appends the running time in the end of the message.
+            :meth:`str.format`, and it has access to the model state variable.
+        show_time (bool): if True, appends the running time at the end of the message.
         output (file): if provided, write the log message in the file.
         freq (int): the frequency to execute this model.
 

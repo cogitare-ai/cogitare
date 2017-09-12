@@ -4,28 +4,28 @@ from cogitare import utils
 
 
 class DataSet(object):
-    """This object is a container to multiple dataholders.
+    """This object is a container to multiple data holders.
 
     When creating it, the data parameter must be a list of data sources, and then
     the result of the iterator will be a batch got from each data source.
 
     It can be used to group input and target variables, for example, if they are not
-    in the same object.
+    on the same object.
 
     Args:
-        data (list): list of dataholders or list of data (that will be converted to a
-            dataholder using the :class:`~cogitare.data.AutoHolder`.
-        data_types (dataholder, list): A list of dataholder classes to be used to
+        data (list): list of data holders or list of data (that will be converted to a
+            data holder using the :class:`~cogitare.data.AutoHolder`.
+        data_types (dataholder, list): A list of data holder classes to be used to
             create the holder for each input.
-            If is a list, must have the same size of the data.
+            If it is a list, must have the same size of the data.
             If data_types is None, the :class:`~cogitare.data.AutoHolder` will be used.
         batch_size (int): the size of each batch.
-        shuffle (bool): if True, shuffles the samples of each dataholder.
-        drop_last (bool): if True, skip the batch if its size is lower then **batch_size** (can
-            occours in the last batch).
+        shuffle (bool): if True, shuffles the samples of each data holder.
+        drop_last (bool): if True, then skip the batch if its size is lower that **batch_size** (can
+            occur in the last batch).
 
     .. note:: The **batch_size**, **shuffle**, and **drop_last** parameters will override the
-        dataholder default value.
+        data holder default values.
     """
 
     def __init__(self, data, data_types=None, batch_size=1, shuffle=True, drop_last=False):
@@ -79,13 +79,14 @@ class DataSet(object):
 
     def split(self, ratio):
         """Check :meth:`cogitare.data.AbsDataHolder.split`
-        Split the dataset into two datasets.
+
+        Split the :class:`~cogitare.data.DataSet` into two :class:`~cogitare.data.DataSet`.
 
         Args:
-            ratio (float): ratio of split. Must be between 0 and 1.
+            ratio (float): ratio of the split. Must be between 0 and 1.
 
         Returns:
-            (data1, data2): two datasets.
+            (data1, data2): two :class:`~cogitare.data.DataSet`.
 
         Example::
 
@@ -132,13 +133,15 @@ class DataSet(object):
 
     def split_chunks(self, n):
         """Check :meth:`cogitare.data.AbsDataHolder.split_chunks`
-        Split the dataset into N datasets with the sample number of samples each.
+
+        Split the :class:`~cogitare.data.DataSet` into N :class:`~cogitare.data.DataSet`
+        with the sample number of samples each.
 
         Args:
             n (int): number of new splits.
 
         Returns:
-            output (list): list of N datasets.
+            output (list): list of N :class:`~cogitare.data.DataSet`.
 
         Example::
 
@@ -188,9 +191,11 @@ class DataSet(object):
                         drop_last=self._drop_last) for i in range(n)]
 
     def shuffle(self):
-        """Shuffles all dataholders in this container.
+        """Shuffles all data holders in this container.
 
-        .. note:: the shuffle keeps all dataholder indices aligned.
+        .. note:: The shuffle keeps all data holder indices aligned. So if you have
+            two data holders, one for x data and the other one for y data, for example,
+            the pair of samples (x, y) will be shuffled together.
         """
         self.container[0].shuffle()
 
@@ -206,7 +211,7 @@ class DataSet(object):
         return len(self.container[0])
 
     def __getitem__(self, key):
-        """Returns a list of samples, getting the key-th sample for each dataholder
+        """Returns a list of samples, getting the key-th sample for each data holder
         in the dataset.
         """
         if isinstance(key, slice):
@@ -222,8 +227,8 @@ class DataSet(object):
         After each iteration over the batches, the dataset will be shuffled if
         the **shuffle** parameter is True.
 
-        Each element of the iterator is a list with the length of dataholders. Each
-        element of the list is the n-th batch of each dataholder.
+        Each element of the iterator is a list with the length of data holders. Each
+        item of the list is the n-th batch of each data holder.
 
         Example::
 

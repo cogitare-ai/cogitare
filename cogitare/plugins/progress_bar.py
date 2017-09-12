@@ -8,9 +8,9 @@ class ProgressBar(PluginInterface):
     of the batch/epoch iterations.
 
     By default, the progress bar is set up to monitor epoch progress,
-    but you can swtich to batch iteration using the ``monitor`` variable.
+    but you can switch to batch iteration using the ``monitor`` variable.
 
-    It's recommended to use this plugin at **on_end_epoch** and **on_end_bactch** hooks,
+    It's recommended to use this plugin at the **on_end_epoch** and the **on_end_bactch** hooks
     since the batch/epoch count is updated at this point.
 
     .. image:: _static/plugins.png

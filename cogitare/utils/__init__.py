@@ -10,14 +10,14 @@ _CUDA_ENABLED = False
 class StopTraining(Exception):
     """This is an Exception to stop the training process of a :class:`cogitare.Model`.
 
-    While running the :meth:`cogitare.Model.learn`, if a plugin raise this exception,
+    While running the :meth:`cogitare.Model.learn`, if a plugin raises this exception,
     the model will run the plugins in the ``on_stop_training`` hook, and stop the training.
     """
     pass
 
 
 def not_training(func):
-    """Decorator do disable the training during execution. Must be used inside a Module class.
+    """Decorator to disable the training during execution. Must be used inside a Module class.
 
     Example::
 
@@ -41,7 +41,7 @@ def not_training(func):
 
 
 def training(func):
-    """Decorator do enable the training during execution. Must be used inside a Module class.
+    """Decorator to enable the training during execution. Must be used inside a Module class.
 
     Example::
 
@@ -111,7 +111,7 @@ def to_tensor(data, tensor_klass=None, use_cuda=None):
 
 
 def assert_raise(valid, exception, msg):
-    """Shortcute to assert if something is valid. If invalid,
+    """Shortcut to assert if something is valid. If invalid,
     raises the exception with the provided message.
 
     Example::
@@ -127,7 +127,7 @@ def get_cuda(cuda=None):
     """Get the default cuda enabled/disabled variable.
 
     Args:
-        cuda (bool): if a boolean is provided, its value will be retured.
+        cuda (bool): if a boolean is provided, its value will be returned.
 
     Returns:
         enabled (bool): the ``cuda`` parameter, if provided, or the enaled/disabled status.
@@ -141,7 +141,7 @@ def set_cuda(cuda):
     """Set Cogitare default cuda enabled/disabled.
 
     This value is used by Cogitare's models and some functions to determine if
-    it's necesary to automatically convert the Tensor/Module to cuda.
+    it's necessary to convert the Tensor/Module to cuda automatically.
     """
     global _CUDA_ENABLED
     _CUDA_ENABLED = cuda

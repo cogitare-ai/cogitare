@@ -11,7 +11,7 @@ class PlottingMatplotlib(PluginInterface):
 
     It's useful to monitor the model performance, overfitting, generalization, and so on.
 
-    It's recommended to use this plugin at **on_end_epoch** hook, since the validation loss
+    It's recommended to use this plugin at the **on_end_epoch** hook since the validation loss
     is calculated at this point.
 
     .. image:: _static/plugin_matplotlib.png

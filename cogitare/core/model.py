@@ -13,7 +13,8 @@ from collections import OrderedDict
 class Model(nn.Module):
     """
     Model is an extension of :class:`torch.nn.Module` that includes support for
-    training the model using the method :meth:`~cogitare.Model.learn`.
+    training the model using the method :meth:`~cogitare.Model.learn`, and provide integration
+    with plugins.
 
     While training, you can use plugins to watch and interact with the model.
     The plugin works like an event mechanism, you register a callback function to
@@ -254,10 +255,16 @@ class Model(nn.Module):
                     backward(error)
                     optimizer.step()
 
+                if validation_dataset:
+                    evaluate_model(validation_dataset)
+
         If the validation_dataset is present, it can be used by plugins to evaluate the
         validation/test loss/error during training.
 
-        .. todo:: cite DataSet class
+        To achieve a better performance, and have access to everyday dataset manipulation
+        features, it's recommended to use the :class:`~cogitare.data.DataSet` class. It
+        provides a interface that loads batches using multiple threads and provides useful
+        tasks such as data splitting, shuffling, and more.
         """
         try:
             self.state = {
@@ -341,10 +348,10 @@ class Model(nn.Module):
 
         Args:
             data: batch data that will be used as the argument to call
-              meth:`~cogitare.Model.forward`.
+              :meth:`~cogitare.Model.forward`.
 
         Returns:
-            output: the meth:`~cogitare.Model.forward` output.
+            output: the :meth:`~cogitare.Model.forward` output.
         """
         return self.forward(data)
 

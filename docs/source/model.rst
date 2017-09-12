@@ -89,7 +89,7 @@ and make new predictions using::
     output = l.predict(...)
 
 
-As you can see, the model development is pretty similary to develop a pure
+As you can see, the model development is pretty similar to develop a pure
 PyTorch model. To use a PyTorch model with Cogitare, you just need to extend
 the :class:`cogitare.Model` instead of :class:`torch.nn.Module`, and put the
 loss function inside the :meth:`cogitare.Model.loss` method.

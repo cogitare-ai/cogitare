@@ -11,12 +11,12 @@ from dask import threaded, delayed, compute
 @add_metaclass(ABCMeta)
 class AbsDataHolder(object):
     """
-    Abstract object that acts as a data holder. A data holder is a utility to hold
-    datasets, that provide some simple functions to work with the dataset, such as
-    sorting, spliting, dividing it into chunks, loading batches using multi-thread, and so on.
+    An abstract object that acts as a data holder. A data holder is a utility to hold
+    datasets, which provide some simple functions to work with the dataset, such as
+    sorting, splitting, dividing it into chunks, loading batches using multi-thread, and so on.
 
-    It's the recommended way to pass data to Cogitare's models, because it already
-    provides an compatible interface to iterate over batches.
+    It's the recommended way to pass data to Cogitare's models because it already
+    provides a compatible interface to iterate over batches.
 
     To improve the performance, the data holder loads batches using a multi-threaded
     loader with `Dask <http://dask.pydata.org/>`_.
@@ -35,8 +35,8 @@ class AbsDataHolder(object):
         data (torch.Tensor, numpy.ndarray, callable): the data to be managed by the data holder.
         batch_size (int): the size of the batch.
         shuffle (bool): if True, shuffles the dataset after each iteration.
-        drop_last (bool): if True, skip the batch if its size is lower then **batch_size** (can
-            occours in the last batch).
+        drop_last (bool): if True, then skip the batch if its size is lower that **batch_size** (can
+            occur in the last batch).
     """
 
     @property
@@ -75,7 +75,7 @@ class AbsDataHolder(object):
         return '{} with {}x{} samples'.format(type(self).__name__, len(self), self._batch_size)
 
     def __getitem__(self, key):
-        """Get a sample in the dataset using its indice.
+        """Get a sample in the dataset using its indices.
 
         Example::
 
@@ -139,7 +139,7 @@ class AbsDataHolder(object):
     def reset(self):
         """Reset the batch iterator.
 
-        This methods returns the iterator to the first sample, and shuffle the
+        This method returns the iterator to the first sample, and shuffle the
         dataset if shuffle is enabled.
         """
         self._requires_reset = False
@@ -156,16 +156,16 @@ class AbsDataHolder(object):
         random.shuffle(self.indices)
 
     def split(self, ratio):
-        """Split the dataholder into two dataholders.
+        """Split the data holder into two data holders.
 
-        The first one, will receive *total_samples * ratio* samples, and the second
-        dataholder will receive the remaining samples.
+        The first one will receive *total_samples * ratio* samples, and the second
+        data holder will receive the remaining samples.
 
         Args:
-            ratio (float): ratio of split. Must be between 0 and 1.
+            ratio (float): ratio of the split. Must be between 0 and 1.
 
         Returns:
-            (data1, data2): two dataholder, in the same type that the original.
+            (data1, data2): two data holder, in the same type that the original.
 
         Example::
 
@@ -195,13 +195,13 @@ class AbsDataHolder(object):
         return data1, data2
 
     def split_chunks(self, n):
-        """Split the dataholder into N dataholders with the sample number of samples each.
+        """Split the data holder into N data holders with the sample number of samples each.
 
         Args:
             n (int): number of new splits.
 
         Returns:
-            output (list): list of N dataholders.
+            output (list): list of N data holders.
 
         Example::
 
@@ -256,7 +256,7 @@ class CallableHolder(AbsDataHolder):
 
 class TensorHolder(AbsDataHolder):
     """
-    A dataholder to work with :class:`torch.Tensor` objects.
+    A data holder to work with :class:`torch.Tensor` objects.
 
     Example::
 
@@ -313,8 +313,6 @@ class TensorHolder(AbsDataHolder):
 
 def NumpyHolder(data, *args, **kwargs):
     """
-    Works exactly like :class:`~cogitare.data.TensorHolder`.
-
     When creating the object, it converts the numpy data to Tensor using
     :func:`torch.from_numpy` and then creates an :class:`~cogitare.data.TensorHolder`
     instance.
@@ -325,7 +323,7 @@ def NumpyHolder(data, *args, **kwargs):
 
 
 def AutoHolder(data, *args, **kwargs):
-    """Check the data type to infer which dataholder to use.
+    """Check the data type to infer which data holder to use.
     """
     if torch.is_tensor(data):
         return TensorHolder(data, *args, **kwargs)
