@@ -1,8 +1,3 @@
-.. Cogitare documentation master file, created by
-   sphinx-quickstart on Wed Sep  6 19:16:13 2017.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
 Welcome to Cogitare's documentation!
 ====================================
 
@@ -13,6 +8,24 @@ Welcome to Cogitare's documentation!
 
 It uses the best of `PyTorch <http://pytorch.org/>`_ through a simple interface to train, to evaluate, to test
 models and more.
+
+With Cogitare, you can use classical machine learning algorithms with high
+performance and develop state-of-the-art models quickly.
+
+The primary objectives of Cogitare are:
+
+- provide an easy-to-use interface to train and evaluate models;
+- provide tools to debug and analyze the model;
+- provide implementations of state-of-the-art models (models for common tasks, ready
+  to train and ready to use);
+- provide ready-to-use implementations of straightforward and classical models (such as
+  LogisticRegression);
+- be compatible with models for a broad range of problems;
+- be compatible with other tools (scikit-learn, etcs);
+- keep growing with the community: accept as many new features as possible;
+- provide a friendly interface to beginners, and powerful features for experts;
+- take the best of the hardware through multi-processing and multi-threading;
+- and others.
 
 Currently, it's a work in progress project that aims to provide a complete
 toolchain for machine learning and deep learning development, taking the best

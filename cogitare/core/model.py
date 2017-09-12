@@ -17,7 +17,7 @@ class Model(nn.Module):
 
     While training, you can use plugins to watch and interact with the model.
     The plugin works like an event mechanism, you register a callback function to
-    a specific event, and then you gain aceess to some variables of the model at
+    a specific event, and then you gain access to some variables of the model at
     specific steps of the training process.
     Check the :meth:`~cogitare.Model.register_plugin` for more information.
     """
@@ -43,13 +43,13 @@ class Model(nn.Module):
 
         Args:
             data: this is the data got from iterating over the dataset provided in the
-                :meth:`~cogitare.Model.learn` method. Its type and shape depends exclusively on
+                :meth:`~cogitare.Model.learn` method. Its type and shape depend exclusively on
                 the input dataset, no transformations or type checking are made during training.
                 For most models, this will be a tuple containing ``(x_data, y_data)``, but can be
                 anything.
 
         Returns:
-            output: the data after processing the input data. Usually this is a :class:`torch.autograd.Variable`.
+            output: the data after processing the input data. Usually, this is a :class:`torch.autograd.Variable`.
         """
         pass
 
@@ -66,7 +66,7 @@ class Model(nn.Module):
             output: the :meth:`~cogitare.Model.forward` output
             data: (note, this is the same data received in :meth:`~cogitare.Model.forward`)
                 this is the data got from iterating over the dataset provided in the
-                :meth:`~cogitare.Model.learn` method. Its type and shape depends exclusively on
+                :meth:`~cogitare.Model.learn` method. Its type and shape depend exclusively on
                 the input dataset, no transformations or type checking are made during training.
                 For most models, this will be a tuple containing ``(x_data, y_data)``, but can be
                 anything.
@@ -93,7 +93,7 @@ class Model(nn.Module):
 
     def register_default_plugins(self):
         """
-        This method register a set o common plugins to let you debug the model training.
+        This method registers a set o common plugins to let you debug the model training.
 
         Plugins included:
 
@@ -107,9 +107,9 @@ class Model(nn.Module):
         self._requires_register_default = True
 
     def register_plugin(self, plugin, hook):
-        """You can use this to register a plugin to an specific event of the model.
+        """You can use this to register a plugin to a specific event of the model.
 
-        You can register (hook) a plugin to some specific events that may occour
+        You can register (hook) a plugin to some specific events that may occor
         during training:
 
             - **on_start**: executed when the model starts the training
@@ -122,7 +122,7 @@ class Model(nn.Module):
               - current_epoch (always 0)
               - validation_dataset (if provided in the :meth:`~cogitare.Model.learn`).
 
-            - **on_start_epoch**: executed when the model start the execution
+            - **on_start_epoch**: executed when the model starts the execution
               of a new epoch. At this time, you have access to the following variables:
 
               - max_epochs
@@ -132,7 +132,7 @@ class Model(nn.Module):
               - current_epoch
               - validation_dataset (if provided in the :meth:`~cogitare.Model.learn`).
 
-            - **on_start_batch**: executed when the model start the execution
+            - **on_start_batch**: executed when the model starts the execution
               of a new batch. At this time, you have access to the following variables:
 
               - max_epochs
@@ -198,7 +198,7 @@ class Model(nn.Module):
               - validation_dataset (if provided in the :meth:`~cogitare.Model.learn`).
 
             - **on_end**: executed when the model finishes the execution
-              of all epoches. At this time, you have access to the following variables:
+              of all epochs. At this time, you have access to the following variables:
 
               - max_epochs
               - num_batches
@@ -213,8 +213,8 @@ class Model(nn.Module):
               - validation_dataset (if provided in the :meth:`~cogitare.Model.learn`).
 
             - **on_stop_training**: executed when a plugin raises a :exc:`cogitare.utils.StopTraining`.
-              At this time, the variables acessible will depends on the training step that the
-              exception occored.
+              At this time, the variables accessible will depends on the training step that the
+              exception occurred.
         """
         utils.assert_raise(hook in self.valid_hooks, ValueError,
                            'Expected on of the following hooks: ' + ', '.join(self.valid_hooks))
@@ -351,9 +351,9 @@ class Model(nn.Module):
     @not_training
     def evaluate(self, dataset):
         """
-        Iterate over batches in dataset and returns a list of the of losses of each batch.
+        Iterate over batches in the dataset and returns a list of the of losses of each batch.
 
-        This method does not affect training variables, and can be used to evaluate the
+        This method does not affect training variables and can be used to evaluate the
         model performance in a different data (such as validation and test sets).
 
         Args:
