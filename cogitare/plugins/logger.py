@@ -30,14 +30,14 @@ class Logger(PluginInterface):
     Examples::
 
         logger1 = Logger()
-        logger2 = Logger(msg='Batch loss: {loss:.6f}')
-        logger3 = Logger(msg='Validation loss: {validation_loss:.6f}')
+        logger2 = Logger(msg='Batch loss: {loss_mean:.6f}')
+        logger3 = Logger(msg='Validation loss: {loss_mean_validation:.6f}')
 
         model.register_plugin([logger1, logger3], 'on_end_epoch')
         model.register_plugin(logger2, 'on_end_batch')
     """
 
-    def __init__(self, title='[Logger]', msg='Loss: {loss:.6f}', show_time=True, output_file=None, freq=1):
+    def __init__(self, title='[Logger]', msg='Loss: {loss_mean:.6f}', show_time=True, output_file=None, freq=1):
         super(Logger, self).__init__(freq=freq)
 
         self.title = title

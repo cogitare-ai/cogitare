@@ -31,6 +31,14 @@ Example::
     model.register_plugin(norm, 'before_step')
 
 
+Register a plugin
+-----------------
+
+To register a plugin, use the :meth:`cogitare.Model.register_plugin` method.
+
+Check the :meth:`~cogitare.Model.register_plugin` docs for more details about
+the available events to watch, and which variables are available per event.
+
 Official Plugins
 ----------------
 

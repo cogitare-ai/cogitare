@@ -41,9 +41,9 @@ class EarlyStopping(PluginInterface):
         self._best_epoch = 0
         self._best_score = float('inf')
 
-    def function(self, model, validation_loss, current_epoch, *args, **kwargs):
-        if validation_loss < self._best_score:
-            self._best_score = validation_loss
+    def function(self, model, loss_mean_validation, current_epoch, *args, **kwargs):
+        if loss_mean_validation < self._best_score:
+            self._best_score = loss_mean_validation
 
             model.save(self.path)
             self._best_epoch = current_epoch

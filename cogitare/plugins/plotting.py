@@ -1,6 +1,7 @@
 from cogitare import utils
 from cogitare.core import PluginInterface
 import matplotlib.pyplot as plt
+import numpy as np
 
 
 class PlottingMatplotlib(PluginInterface):
@@ -28,6 +29,7 @@ class PlottingMatplotlib(PluginInterface):
         xlabel (str): label in the x-axis
         ylabel (str): label in the y-axis
         title (str): plot title
+        show_std (bool): if True, display the standard deviation of the loss in the plot.
 
     Example::
 
@@ -36,7 +38,8 @@ class PlottingMatplotlib(PluginInterface):
     """
 
     def __init__(self, source='train', training_label='Training loss', validation_label='Validation loss',
-                 style='ggplot', xlabel='Epochs', ylabel='Loss', title='Training loss per epoch'):
+                 style='ggplot', xlabel='Epochs', ylabel='Loss', title='Training loss per epoch',
+                 show_std=True):
         super(PlottingMatplotlib, self).__init__()
         utils.assert_raise(source in ('train', 'validation', 'both'), ValueError,
                            '"source" must be: "train", "validation" or "both"')
@@ -50,13 +53,28 @@ class PlottingMatplotlib(PluginInterface):
         self.title = title
 
         self.line = {
-            'loss': None,
-            'validation_loss': None
+            'loss_mean': None,
+            'loss_mean_validation': None
+        }
+
+        self.line_std = {
+            'loss_mean': None,
+            'loss_mean_validation': None
         }
 
         self.labels = {
-            'loss': self.training_label,
-            'validation_loss': self.validation_label
+            'loss_mean': self.training_label,
+            'loss_mean_validation': self.validation_label
+        }
+
+        self.list_values = {
+            'loss_mean': 'losses',
+            'loss_mean_validation': 'losses_validation'
+        }
+
+        self.colors = {
+            'loss_mean': 'blue',
+            'loss_mean_validation': 'green'
         }
 
     def _create(self):
@@ -69,30 +87,56 @@ class PlottingMatplotlib(PluginInterface):
         plt.xlabel(self.xlabel)
 
         self.y = {
-            'loss': [0] * self.max_epochs,
-            'validation_loss': [0] * self.max_epochs
+            'loss_mean': [0] * self.max_epochs,
+            'loss_mean_validation': [0] * self.max_epochs
+        }
+
+        self.y_inf = {
+            'loss_mean': [0] * self.max_epochs,
+            'loss_mean_validation': [0] * self.max_epochs
+        }
+
+        self.y_sup = {
+            'loss_mean': [0] * self.max_epochs,
+            'loss_mean_validation': [0] * self.max_epochs
         }
 
         if self.source == 'train':
-            del self.y['validation_loss']
+            del self.y['loss_mean_validation']
         elif self.source == 'validation':
-            del self.y['train']
+            del self.y['loss_mean']
 
     def function(self, current_epoch, max_epochs, *args, **kwargs):
         if self.max_epochs is None:
             self.max_epochs = max_epochs
+            self.x = list(range(1, max_epochs + 1))
             self._create()
         max_y = 0
 
         for d in self.y.keys():
             data = self.y[d]
+            data_inf = self.y_inf[d]
+            data_sup = self.y_sup[d]
+            if d == 'loss_mean':
+                std = np.std(kwargs['losses'])
+            else:
+                std = np.std(kwargs['losses_validation'])
 
             for pos in range(current_epoch - 1, self.max_epochs):
                 data[pos] = kwargs[d]
+                data_inf[pos] = kwargs[d] - std
+                data_sup[pos] = kwargs[d] + std
 
             if self.line[d] is None:
-                self.line[d], = self.ax.plot(self.y[d], '.-', label=self.labels[d])
+                self.line[d], = self.ax.plot(self.x, self.y[d], '.-', label=self.labels[d],
+                                             color=self.colors[d])
                 self.ax.legend(loc='upper right')
+
+            if self.line_std[d] is not None:
+                self.line_std[d].remove()
+
+            self.line_std[d] = self.ax.fill_between(self.x, self.y_inf[d], self.y_sup[d],
+                                                    color=self.colors[d], alpha=0.1)
 
             max_y = max(max_y, max(self.y[d]))
             self.line[d].set_ydata(self.y[d])

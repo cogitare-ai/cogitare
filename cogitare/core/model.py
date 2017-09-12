@@ -152,7 +152,7 @@ class Model(nn.Module):
               - current_batch
               - current_epoch
               - sample
-              - loss
+              - losses (a list of all losses in the current epoch until now)
               - output
               - validation_dataset (if provided in the :meth:`~cogitare.Model.learn`).
 
@@ -165,7 +165,7 @@ class Model(nn.Module):
               - current_batch
               - current_epoch
               - sample
-              - loss
+              - losses (a list of all losses in the current epoch until now)
               - output
               - validation_dataset (if provided in the :meth:`~cogitare.Model.learn`).
 
@@ -178,7 +178,7 @@ class Model(nn.Module):
               - current_batch
               - current_epoch
               - sample
-              - loss
+              - losses (a list of all losses in the current epoch until now)
               - output
               - validation_dataset (if provided in the :meth:`~cogitare.Model.learn`).
 
@@ -190,9 +190,12 @@ class Model(nn.Module):
               - model
               - current_batch (always 0)
               - current_epoch
-              - loss
+              - losses (a list of all losses in the current epoch until now)
+              - loss_mean
+              - losses_validation (if validation data is present. List of
+                losses in all validation batches)
+              - loss_mean_validation
               - validation_dataset (if provided in the :meth:`~cogitare.Model.learn`).
-              - validation_loss (if validation data is present)
 
             - **on_end**: executed when the model finishes the execution
               of all epoches. At this time, you have access to the following variables:
@@ -202,9 +205,12 @@ class Model(nn.Module):
               - model
               - current_batch (always 0)
               - current_epoch
-              - loss
+              - losses (a list of all losses in the current epoch until now)
+              - loss_mean
+              - losses_validation (if validation data is present. List of
+                losses in all validation batches)
+              - loss_mean_validation
               - validation_dataset (if provided in the :meth:`~cogitare.Model.learn`).
-              - validation_loss (if validation data is present)
 
             - **on_stop_training**: executed when a plugin raises a :exc:`cogitare.utils.StopTraining`.
               At this time, the variables acessible will depends on the training step that the
@@ -262,8 +268,10 @@ class Model(nn.Module):
                 'current_epoch': 0,
                 'sample': None,
                 'output': None,
-                'loss': None,
-                'validation_loss': None,
+                'losses': None,
+                'loss_mean': None,
+                'losses_validation': None,
+                'loss_mean_validation': None,
                 'validation_dataset': validation_dataset
             }
 
@@ -279,7 +287,8 @@ class Model(nn.Module):
                 self.state['output'] = None
 
                 self.hook('on_start_epoch')
-                total_loss = 0
+                losses = []
+                self.state['losses'] = losses
 
                 for idx, sample in enumerate(dataset):
                     idx += 1
@@ -294,9 +303,8 @@ class Model(nn.Module):
                     loss = self.loss(output, sample)
 
                     loss_value = loss.data[0]
-                    total_loss += loss_value
+                    losses.append(loss_value)
 
-                    self.state['loss'] = loss_value
                     self.state['output'] = output
 
                     self.hook('before_backward')
@@ -306,15 +314,15 @@ class Model(nn.Module):
 
                     self.hook('on_end_batch')
 
-                total_loss /= len(dataset)
-
                 self.state['current_batch'] = 0
                 self.state['sample'] = None
                 self.state['output'] = None
-                self.state['loss'] = total_loss
+                self.state['loss_mean'] = sum(losses) / len(dataset)
 
                 if validation_dataset:
-                    self.state['validation_loss'] = self.evaluate(validation_dataset)
+                    val = self.evaluate(validation_dataset)
+                    self.state['losses_validation'] = val
+                    self.state['loss_mean_validation'] = sum(val) / len(validation_dataset)
 
                 self.hook('on_end_epoch')
 
@@ -341,32 +349,28 @@ class Model(nn.Module):
         return self.forward(data)
 
     @not_training
-    def evaluate(self, dataset, averaged=True):
+    def evaluate(self, dataset):
         """
-        Iterate over batches in dataset and returns the averaged loss in all batches.
+        Iterate over batches in dataset and returns a list of the of losses of each batch.
 
         This method does not affect training variables, and can be used to evaluate the
         model performance in a different data (such as validation and test sets).
 
         Args:
             dataset: batch iterator
-            averaged (bool): if True, returns the averaged loss over the batches.
 
         Returns:
-            output (float): the loss in the provided dataset.
+            output (list): the losses in the provided batches.
         """
-        total_loss = 0
 
+        losses = []
         for sample in dataset:
             output = self.forward(sample)
             loss = self.loss(output, sample)
 
-            total_loss += loss.data[0]
+            losses.append(loss.data[0])
 
-        if averaged:
-            return total_loss / len(dataset)
-        else:
-            return total_loss
+        return losses
 
     def load(self, path):
         """Load the model parameters using :func:`torch.load` from a given path.
