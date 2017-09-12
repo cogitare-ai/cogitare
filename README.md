@@ -1,7 +1,5 @@
 <p align="center"><img width="80%" src="https://raw.githubusercontent.com/cogitare-ai/cogitare/master/docs/source/art/logo-line.png" /></p>
 
-<p align="center"><img width="80%" src="https://raw.githubusercontent.com/cogitare-ai/cogitare/master/docs/source/art/logo-line.png" /></p>
-
 **Cogitare** is a Modern, Fast, and Modular Deep Learning and Machine Learning framework in Python. 
 
 http://cogitare.aronbordin.com/
