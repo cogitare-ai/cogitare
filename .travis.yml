@@ -6,6 +6,7 @@ env:
  - TOXENV=py36
 
 install:
+    - sudo apt-get install python-tk
     - pip install -U tox twine wheel codecov flake8
     - pip install travis-sphinx
     - pip install -r requirements.txt
