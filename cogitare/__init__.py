@@ -3,9 +3,10 @@ import random
 import numpy as np
 from cogitare.core import PluginInterface
 from cogitare.core import Model
+from cogitare.core import SequentialModel
 
 
-__all__ = ['Model', 'PluginInterface']
+__all__ = ['Model', 'SequentialModel', 'PluginInterface']
 
 
 def seed(value):

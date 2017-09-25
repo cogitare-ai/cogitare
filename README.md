@@ -7,7 +7,7 @@ http://cogitare.aronbordin.com/
 [![Build Status](https://travis-ci.org/cogitare-ai/cogitare.svg?branch=master)](https://travis-ci.org/cogitare-ai/cogitare)
 [![codecov](https://codecov.io/gh/cogitare-ai/cogitare/branch/master/graph/badge.svg)](https://codecov.io/gh/cogitare-ai/cogitare)
 
-It uses the best of [PyTorch](http://pytorch.org/) through a simple interface to train, to evaluate, to test
+It uses the best of [PyTorch](http://pytorch.org/), [Dask](https://dask.pydata.org/), [NumPy](http://www.numpy.org/), and others through a simple interface to train, to evaluate, to test
 models and more.
 
 With Cogitare, you can use classical machine learning algorithms with high
@@ -54,7 +54,7 @@ fixing bugs, pushing code, etcs.
 
 
 Once you finish implementing a feature or bugfix, please send a Pull Request to
-https://github.com/pytorch/pytorch
+https://github.com/cogitare-ai/cogitare
 
 If you are not familiar with creating a Pull Request, here are some guides:
 - http://stackoverflow.com/questions/14680711/how-to-do-a-github-pull-request

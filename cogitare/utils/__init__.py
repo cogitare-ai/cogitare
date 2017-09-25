@@ -41,7 +41,7 @@ def not_training(func):
 
 
 def training(func):
-    """Decorator to enable the training during execution. Must be used inside a Module class.
+    """Decorator do enable the training during execution. Must be used inside a Module class.
 
     Example::
 
@@ -141,7 +141,7 @@ def set_cuda(cuda):
     """Set Cogitare default cuda enabled/disabled.
 
     This value is used by Cogitare's models and some functions to determine if
-    it's necessary to convert the Tensor/Module to cuda automatically.
+    it's necesary to automatically convert the Tensor/Module to cuda.
     """
     global _CUDA_ENABLED
     _CUDA_ENABLED = cuda

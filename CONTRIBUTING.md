@@ -18,7 +18,7 @@ Contributing to Cogitare
 
 
 Once you finish implementing a feature or bugfix, please send a Pull Request to
-https://github.com/pytorch/pytorch
+https://github.com/cogitare-ai/cogitare
 
 If you are not familiar with creating a Pull Request, here are some guides:
 - http://stackoverflow.com/questions/14680711/how-to-do-a-github-pull-request

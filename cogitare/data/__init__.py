@@ -1,6 +1,15 @@
 from cogitare.data.dataholder import CallableHolder, TensorHolder, NumpyHolder, AutoHolder,\
         AbsDataHolder
+from cogitare.data.sequential_dataholder import (
+    SequentialCallableHolder,
+    SequentialTensorHolder,
+    SequentialNumpyHolder,
+    SequentialAbsDataHolder
+)
 from cogitare.data.dataset import DataSet
+from cogitare.data.sequential_dataset import SequentialDataSet
 
 __all__ = ['AbsDataHolder', 'TensorHolder', 'NumpyHolder', 'CallableHolder', 'AutoHolder',
-           'DataSet']
+           'SequentialAbsDataHolder', 'SequentialNumpyHolder', 'SequentialAutoHolder',
+           'SequentialTensorHolder', 'SequentialCallableHolder', 'DataSet',
+           'SequentialDataSet']

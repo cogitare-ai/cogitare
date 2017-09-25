@@ -13,14 +13,31 @@ from collections import OrderedDict
 class Model(nn.Module):
     """
     Model is an extension of :class:`torch.nn.Module` that includes support for
-    training the model using the method :meth:`~cogitare.Model.learn`, and provide integration
-    with plugins.
+    training the model using the method :meth:`~cogitare.Model.learn`, and that provides integration
+    with plugins, model evalution metrics, and more.
+
+    For models with sequential data (LSTM, GRU, RNNs, etcs), check the
+    :class:`~cogitare.SequentialModel` model, that iterate over the timesteps per batch.
 
     While training, you can use plugins to watch and interact with the model.
     The plugin works like an event mechanism, you register a callback function to
     a specific event, and then you gain access to some variables of the model at
     specific steps of the training process.
-    Check the :meth:`~cogitare.Model.register_plugin` for more information.
+    Check the :meth:`~cogitare.Model.register_plugin` for more information about the
+    available events and variables that the model can interact with.
+
+    Methods that your model must implement:
+
+        - **forward** (data): where data is got from iterating over the dataset.
+        - **loss** (output, data): where output is value returned from forward, and
+          data is got from iterating over the dataset.
+
+    Expected input on :meth:`~cogitare.Model.learn`:
+
+        - **dataset** : an iterator, that returns one batch of samples per
+          iteration. The batch can be of any type (list, numpy array, tensor, string, etcs).
+          It is recommended to wrap your dataset using the :class:`~cogitare.data.DataSet` object,
+          that provides a high-performance data loading interface.
     """
 
     valid_hooks = ('on_start', 'on_start_epoch', 'on_start_batch',
@@ -29,9 +46,9 @@ class Model(nn.Module):
 
     def __init__(self):
         super(Model, self).__init__()
-        self.state = {}
-        self.status = {}
-        self.plugins = dict((name, OrderedDict()) for name in self.valid_hooks)
+        self._state = {}
+        self._status = {}
+        self._plugins = dict((name, OrderedDict()) for name in self.valid_hooks)
         self._requires_register_default = False
 
     @abstractmethod
@@ -39,8 +56,8 @@ class Model(nn.Module):
         """
         .. note:: When developing a Model, the class must implement this method.
 
-        In the parameters, it'll receive the data obtained by the dataset iterator,
-        and must return the model output after forwarding the data.
+        The method receive one parameter, the data obtained by the dataset iterator,
+        and it must return the model output after forwarding the data.
 
         Args:
             data: this is the data got from iterating over the dataset provided in the
@@ -59,7 +76,7 @@ class Model(nn.Module):
         """
         .. note:: When developing a Model, the class must implement this method.
 
-        It will receive the output of the :meth:`~cogitare.Model.forward` function and
+        It will receive the output of the :meth:`~cogitare.Model.forward` method and
         the data obtained by the dataset iterator (the same used in forward),
         and must return the model loss considering the model output and expected output.
 
@@ -71,13 +88,16 @@ class Model(nn.Module):
                 the input dataset, no transformations or type checking are made during training.
                 For most models, this will be a tuple containing ``(x_data, y_data)``, but can be
                 anything.
+
+        Returns:
+            loss (torch.autograd.Variable): the model loss. The loss will be used to backpropagate the errors.
         """
         pass
 
     def _register_default_plugins(self):
         self._requires_register_default = False
 
-        if self.state['validation_dataset'] is None:
+        if self._state['validation_dataset'] is None:
             plot_data = 'train'
         else:
             plot_data = 'both'
@@ -223,7 +243,7 @@ class Model(nn.Module):
         if not isinstance(plugin, list):
             plugin = [plugin]
 
-        container = self.plugins[hook]
+        container = self._plugins[hook]
 
         for p in plugin:
             if not isinstance(p, PluginInterface):
@@ -235,10 +255,25 @@ class Model(nn.Module):
             container[p.name] = p
 
     def hook(self, name):
-        for key, plugin in self.plugins[name].items():
-            status = plugin(**self.state)
+        for key, plugin in self._plugins[name].items():
+            status = plugin(**self._state)
 
-            self.status[name + '_' + key] = status
+            self._status[name + '_' + key] = status
+
+    def _forward_batch(self, batch_num, batch, optimizer):
+        optimizer.zero_grad()
+
+        output = self.forward(batch)
+        loss = self.loss(output, batch)
+
+        self._state['output'] = output
+
+        self.hook('before_backward')
+        loss.backward()
+        self.hook('before_step')
+        optimizer.step()
+
+        return loss.data[0]
 
     @training
     def learn(self, dataset, optimizer, validation_dataset=None, max_epochs=50):
@@ -246,28 +281,44 @@ class Model(nn.Module):
         Optimize the model parameters using the dataset. This function use the algorithm::
 
             for epoch in max_epochs:
-                for sample in data:
-                    # forward the data
-                    output = forward(sample)
-                    error = loss(output, sample)
+                try:
+                    for sample in data:
+                        # forward the data
+                        output = forward(sample)
+                        error = loss(output, sample)
 
-                    # optimize the parameters
-                    backward(error)
-                    optimizer.step()
+                        # optimize the parameters
+                        backward(error)
+                        optimizer.step()
 
-                if validation_dataset:
-                    evaluate_model(validation_dataset)
+                    if validation_dataset:
+                        evaluate_model(validation_dataset)
+                except StopTraining:
+                    # stop the training process if request by a plugin
 
-        If the validation_dataset is present, it can be used by plugins to evaluate the
+        If the ``validation_dataset`` is present, it can be used by plugins to evaluate the
         validation/test loss/error during training.
 
         To achieve a better performance, and have access to everyday dataset manipulation
         features, it's recommended to use the :class:`~cogitare.data.DataSet` class. It
-        provides a interface that loads batches using multiple threads and provides useful
-        tasks such as data splitting, shuffling, and more.
+        provides a interface that loads batches using multiple threads/processes
+        and provides useful tasks such as data splitting, async data loading, shuffling, and more.
+
+        Args:
+            dataset (iterator): an iterator that returns one batch per iteration. To have a better
+                performance and a easy to use interface, it is recommended to
+                use the :class:`~cogitare.data.DataSet`.
+            optimizer (torch.optim): the instance of a :class:`torch.optim.Optimizer` object.
+            validation_dataset (iterator, optional): if provided, must have the same
+                caracteristics that the ``dataset``. This may be used by the model and
+                by plugins to evaluate the model performance during training.
+            max_epochs (int): the number of epochs before ending the training procedure.
+
+        Returns:
+            status (bool): False if stopped by :class:`~cogitare.utils.StopTraining`. True otherwise.
         """
         try:
-            self.state = {
+            self._state = {
                 'max_epochs': max_epochs,
                 'num_batches': len(dataset),
                 'model': self,
@@ -288,75 +339,63 @@ class Model(nn.Module):
             self.hook('on_start')
 
             for epoch in range(1, max_epochs + 1):
-                self.state['current_epoch'] = epoch
-                self.state['current_batch'] = 0
-                self.state['sample'] = None
-                self.state['output'] = None
+                self._state['current_epoch'] = epoch
+                self._state['current_batch'] = 0
+                self._state['sample'] = None
+                self._state['output'] = None
 
                 self.hook('on_start_epoch')
                 losses = []
-                self.state['losses'] = losses
+                self._state['losses'] = losses
 
-                for idx, sample in enumerate(dataset):
-                    idx += 1
-
-                    self.state['current_batch'] = idx
-                    self.state['sample'] = sample
+                for idx, sample in enumerate(dataset, 1):
+                    self._state['current_batch'] = idx
+                    self._state['sample'] = sample
                     self.hook('on_start_batch')
 
-                    optimizer.zero_grad()
-
-                    output = self.forward(sample)
-                    loss = self.loss(output, sample)
-
-                    loss_value = loss.data[0]
-                    losses.append(loss_value)
-
-                    self.state['output'] = output
-
-                    self.hook('before_backward')
-                    loss.backward()
-                    self.hook('before_step')
-                    optimizer.step()
+                    loss = self._forward_batch(idx, sample, optimizer)
+                    losses.append(loss)
 
                     self.hook('on_end_batch')
 
-                self.state['current_batch'] = 0
-                self.state['sample'] = None
-                self.state['output'] = None
-                self.state['loss_mean'] = sum(losses) / len(dataset)
+                self._state['current_batch'] = 0
+                self._state['sample'] = None
+                self._state['output'] = None
+                self._state['loss_mean'] = sum(losses) / len(dataset)
 
                 if validation_dataset:
                     val = self.evaluate(validation_dataset)
-                    self.state['losses_validation'] = val
-                    self.state['loss_mean_validation'] = sum(val) / len(validation_dataset)
+                    self._state['losses_validation'] = val
+                    self._state['loss_mean_validation'] = sum(val) / len(validation_dataset)
 
                 self.hook('on_end_epoch')
 
             self.hook('on_end')
+            self._state.clear()
             return True
         except StopTraining:
             self.hook('on_stop_training')
             self.hook('on_end')
+            self._state.clear()
             return False
 
     @not_training
-    def predict(self, data):
+    def predict(self, *args, **kwargs):
         """
         Calls the forward on the provided data, but without affecting/using training
         variables.
 
         Args:
-            data: batch data that will be used as the argument to call
-              :meth:`~cogitare.Model.forward`.
+            args/kwargs: :meth:`~cogitare.Model.forward` arguments. If provided, the
+                forward will receive these parameters.
 
         Returns:
             output: the :meth:`~cogitare.Model.forward` output.
         """
-        return self.forward(data)
+        return self.forward(*args, **kwargs)
 
     @not_training
-    def evaluate(self, dataset):
+    def evaluate(self, dataset, *args, **kwargs):
         """
         Iterate over batches in the dataset and returns a list of the of losses of each batch.
 
@@ -365,6 +404,8 @@ class Model(nn.Module):
 
         Args:
             dataset: batch iterator
+            args/kwargs: :meth:`~cogitare.Model.forward` arguments. If provided, the
+                forward will receive these parameters.
 
         Returns:
             output (list): the losses in the provided batches.
@@ -393,4 +434,4 @@ class Model(nn.Module):
         Args:
             path: path to save the model.
         """
-        torch.save(self.state_dict(), path)
+        torch.save(self._state_dict(), path)

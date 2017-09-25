@@ -28,7 +28,14 @@ class DataSet(object):
         data holder default values.
     """
 
-    def __init__(self, data, data_types=None, batch_size=1, shuffle=True, drop_last=False):
+    @property
+    def container(self):
+        return self._container
+
+    _AutoHolderClass = AutoHolder
+    _AbsDataHolderClass = AbsDataHolder
+
+    def __init__(self, data, data_types=None, batch_size=1, shuffle=True, drop_last=False, total_samples=None):
         utils.assert_raise(isinstance(data, list), ValueError,
                            '"data" must be a list of model data')
 
@@ -36,33 +43,34 @@ class DataSet(object):
         self._shuffle = shuffle
         self._drop_last = drop_last
         if data_types is None:
-            data_types = [AutoHolder] * len(data)
+            data_types = [self.__class__._AutoHolderClass] * len(data)
 
         if not isinstance(data_types, list):
-            utils.assert_raise(isinstance(data_types, AbsDataHolder), ValueError,
-                               '"data_types" must be a DataHolder class of a list of them')
+            utils.assert_raise(isinstance(data_types, self.__class__._AbsDataHolderClass), ValueError,
+                               '"data_types" must be a DataHolder class or a list of them')
             data_types = [data_types] * len(data)
 
-        self.container = []
-        indices = None
+        self._container = []
         for i, d in enumerate(data):
-            if isinstance(d, AbsDataHolder):
+            if isinstance(d, self.__class__._AbsDataHolderClass):
                 d._batch_size = batch_size
                 d._shuffle = shuffle
                 d._drop_last = drop_last
+                if total_samples is not None:
+                    d.total_samples = total_samples
             else:
                 d = data_types[i](d, batch_size=batch_size, shuffle=shuffle,
-                                  drop_last=drop_last)
+                                  drop_last=drop_last, total_samples=total_samples)
 
-            self.container.append(d)
+            self._container.append(d)
 
-        l0 = len(self.container[0])
-        for c in self.container[1:]:
+        l0 = len(self._container[0])
+        for c in self._container[1:]:
             utils.assert_raise(len(c) == l0, ValueError, 'All data must have the same length!')
 
-        indices = list(range(self.container[0].total_samples))
+        indices = self._container[0].indices
 
-        for c in self.container:
+        for c in self._container:
             c._indices = indices
 
         self.reset()
@@ -83,7 +91,7 @@ class DataSet(object):
         Split the :class:`~cogitare.data.DataSet` into two :class:`~cogitare.data.DataSet`.
 
         Args:
-            ratio (float): ratio of the split. Must be between 0 and 1.
+            ratio (:obj:`float`): ratio of the split. Must be between 0 and 1.
 
         Returns:
             (data1, data2): two :class:`~cogitare.data.DataSet`.
@@ -124,10 +132,10 @@ class DataSet(object):
             d1.append(a)
             d2.append(b)
 
-        data1 = DataSet(d1, batch_size=self._batch_size, shuffle=self._shuffle,
-                        drop_last=self._drop_last)
-        data2 = DataSet(d2, batch_size=self._batch_size, shuffle=self._shuffle,
-                        drop_last=self._drop_last)
+        data1 = self.__class__(d1, batch_size=self._batch_size, shuffle=self._shuffle,
+                               drop_last=self._drop_last)
+        data2 = self.__class__(d2, batch_size=self._batch_size, shuffle=self._shuffle,
+                               drop_last=self._drop_last)
 
         return data1, data2
 
@@ -187,8 +195,8 @@ class DataSet(object):
             for idx, f in enumerate(folds):
                 data[idx].append(f)
 
-        return [DataSet(data[i], batch_size=self._batch_size, shuffle=self._shuffle,
-                        drop_last=self._drop_last) for i in range(n)]
+        return [self.__class__(data[i], batch_size=self._batch_size, shuffle=self._shuffle,
+                               drop_last=self._drop_last) for i in range(n)]
 
     def shuffle(self):
         """Shuffles all data holders in this container.

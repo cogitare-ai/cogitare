@@ -35,6 +35,10 @@ body,
     padding: 0;
 }
 
+div.section {
+  text-align: justify;
+  }
+
 .wy-side-nav-search input[type="text"] {
     border-color: rgb(201, 201, 201);
 }

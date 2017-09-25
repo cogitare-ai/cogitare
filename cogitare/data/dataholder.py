@@ -1,11 +1,10 @@
 import torch
-import random
 import math
 from abc import ABCMeta, abstractmethod
 from cogitare import utils
 from six import add_metaclass
 import numpy
-from dask import threaded, delayed, compute
+from dask import threaded, delayed, compute, multiprocessing
 
 
 @add_metaclass(ABCMeta)
@@ -45,18 +44,35 @@ class AbsDataHolder(object):
         """
         return self._total_samples
 
+    @total_samples.setter
+    def total_samples(self, value):
+        if hasattr(self._data, '__len__'):
+            size = len(self._data)
+        else:
+            size = None
+
+        if size is not None:
+            utils.assert_raise(value <= size, ValueError,
+                               'The value must be lesser or equal to the'
+                               'length of the input data')
+        self._total_samples = size
+
     @property
     def indices(self):
-        if not self._indices:
-            self._indices = list(range(self.total_samples))
+        if self._indices is None:
+            self._indices = numpy.arange(self.total_samples)
 
         return self._indices
 
-    def __init__(self, data=None, batch_size=1, shuffle=True, drop_last=False):
+    def __init__(self, data=None, batch_size=1, shuffle=True, drop_last=False,
+                 total_samples=None, mode='sequential'):
+        valid_modes = ['threaded', 'multiprocessing', 'sequential']
         utils.assert_raise(data is not None, ValueError, 'data cannot be None')
+        utils.assert_raise(mode in valid_modes, ValueError,
+                           '"mode" must be one of: ' + ', '.join(valid_modes))
 
         self._indices = None
-        self._total_samples = None
+        self._total_samples = total_samples
         self._remaining_samples = None
 
         self._data = data
@@ -67,6 +83,13 @@ class AbsDataHolder(object):
         self._shuffle = shuffle
 
         self._requires_reset = True
+
+        if mode == 'sequential':
+            self._get = None
+        elif mode == 'threaded':
+            self._get = threaded.get
+        else:
+            self._get = multiprocessing.get
 
     def __repr__(self):
         """Using repr(data) or str(data), display the shape of the data.
@@ -98,8 +121,14 @@ class AbsDataHolder(object):
             self._requires_reset = True
             raise StopIteration
 
-        jobs = (delayed(self.__getitem__)(self._current_batch * self._batch_size + i) for i in range(batch_size))
-        results = compute(jobs, get=threaded.get)[0]
+        if self._get:
+            # use dask
+            jobs = (delayed(self.__getitem__, traverse=False)
+                    (self._current_batch * self._batch_size + i) for i in range(batch_size))
+            results = compute(jobs, get=self._get)[0]
+        else:
+            results = [self.__getitem__(self._current_batch * self._batch_size + i)
+                       for i in range(batch_size)]
 
         self._current_batch += 1
         self._remaining_samples -= batch_size
@@ -153,7 +182,7 @@ class AbsDataHolder(object):
 
         This operation will not affect the original data.
         """
-        random.shuffle(self.indices)
+        numpy.random.shuffle(self.indices)
 
     def split(self, ratio):
         """Split the data holder into two data holders.
@@ -162,7 +191,7 @@ class AbsDataHolder(object):
         data holder will receive the remaining samples.
 
         Args:
-            ratio (float): ratio of the split. Must be between 0 and 1.
+            ratio (:obj:`float`): ratio of the split. Must be between 0 and 1.
 
         Returns:
             (data1, data2): two data holder, in the same type that the original.
@@ -233,9 +262,46 @@ class AbsDataHolder(object):
 
 
 class CallableHolder(AbsDataHolder):
+    """CallableHolder is a data holder for abritary data type.
+
+    As data input, it uses a callable that receive the sample index as parameter,
+    and must return the sample.
+
+    It can be used to load non-Tensor or non-numpy datasets, such as texts, dicts, and anything else.
+    You are free to use CallableHolder with any data type.
+
+        .. note:: When using CallableHolder, you must specify the number of samples
+            in the dataset. The callable will be called asking for samples from 0 to (total_samples - 1).
+
+    Example::
+
+        >>> def load_sample(idx):
+        ...     return list(range(idx, idx + 10))
+
+        >>> # when using the CallableHolder. you must pass the number of samples to
+        >>> # be loaded.
+
+        >>> # you can set the total_samples using the parameter in the constructor
+        >>> data = CallableHolder(load_sample, batch_size=8, total_samples=20)
+        >>> # or by setting the property
+        >>> data.total_samples = 20
+
+        >>> next(data)
+        [[8, 9, 10, 11, 12, 13, 14, 15, 16, 17],
+         [9, 10, 11, 12, 13, 14, 15, 16, 17, 18],
+         [6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+         [11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+         [13, 14, 15, 16, 17, 18, 19, 20, 21, 22],
+         [7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
+         [18, 19, 20, 21, 22, 23, 24, 25, 26, 27],
+         [17, 18, 19, 20, 21, 22, 23, 24, 25, 26]]
+
+    """
 
     @property
     def total_samples(self):
+        """The number of samples in the dataset. You must set this value before accessing the data.
+        """
         return self._total_samples
 
     @total_samples.setter
@@ -247,8 +313,8 @@ class CallableHolder(AbsDataHolder):
 
     def __init__(self, *args, **kwargs):
         total_samples = kwargs.pop('total_samples', None)
-        super(CallableHolder, self).__init__(*args, **kwargs)
         self._total_samples = total_samples
+        super(CallableHolder, self).__init__(*args, **kwargs)
 
     def get_sample(self, key):
         return self._data(key)
@@ -305,7 +371,14 @@ class TensorHolder(AbsDataHolder):
 
     def __init__(self, *args, **kwargs):
         super(TensorHolder, self).__init__(*args, **kwargs)
-        self._total_samples = len(self._data)
+        size = len(self._data)
+
+        if self._total_samples is None:
+            self._total_samples = size
+        else:
+            utils.assert_raise(self.total_samples <= size, ValueError,
+                               'The total_samples must be lesser or equal to the'
+                               'length of the input data')
 
     def get_sample(self, key):
         return self._data[key]
@@ -329,5 +402,7 @@ def AutoHolder(data, *args, **kwargs):
         return TensorHolder(data, *args, **kwargs)
     elif isinstance(data, numpy.ndarray):
         return NumpyHolder(data, *args, **kwargs)
+    elif callable(data):
+        return CallableHolder(data, *args, **kwargs)
     else:
         raise ValueError('Unable to infer data type!')
