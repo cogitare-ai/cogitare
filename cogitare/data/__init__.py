@@ -9,8 +9,9 @@ from cogitare.data.sequential_dataholder import (
 )
 from cogitare.data.dataset import DataSet
 from cogitare.data.sequential_dataset import SequentialDataSet
+from cogitare.data.async_loader import AsyncDataLoader
 
 __all__ = ['AbsDataHolder', 'TensorHolder', 'NumpyHolder', 'CallableHolder', 'AutoHolder',
            'SequentialAbsDataHolder', 'SequentialNumpyHolder', 'SequentialAutoHolder',
            'SequentialTensorHolder', 'SequentialCallableHolder', 'DataSet',
-           'SequentialDataSet']
+           'SequentialDataSet', 'AsyncDataLoader']
