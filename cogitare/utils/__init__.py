@@ -83,9 +83,7 @@ def to_tensor(data, tensor_klass=None, use_cuda=None):
         if torch.is_tensor(item):
             if depth != 2:
                 raise ValueError('Cannot convert nested list of tensors')
-            for l in data:
-                l.unsqueeze_(0)
-            tensor = torch.cat(data)
+            tensor = torch.stack(data)
         elif isinstance(item, int):
             tensor = torch.LongTensor(data)
         elif isinstance(item, float):
