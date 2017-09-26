@@ -1,3 +1,6 @@
+.. role:: hidden
+    :class: hidden-section
+
 Plugins
 =======
 
@@ -42,5 +45,22 @@ the available events to watch, and which variables are available per event.
 Official Plugins
 ----------------
 
-.. automodule:: cogitare.plugins
+:hidden:`Logger`
+~~~~~~~~~~~~~~~~
+.. autoclass:: cogitare.plugins.Logger
+    :members:
+
+:hidden:`ProgressBar`
+~~~~~~~~~~~~~~~~~~~~~
+.. autoclass:: cogitare.plugins.ProgressBar
+    :members:
+
+:hidden:`PlottingMatplotlib`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. autoclass:: cogitare.plugins.PlottingMatplotlib
+    :members:
+
+:hidden:`EarlyStopping`
+~~~~~~~~~~~~~~~~~~~~~~~
+.. autoclass:: cogitare.plugins.EarlyStopping
     :members:

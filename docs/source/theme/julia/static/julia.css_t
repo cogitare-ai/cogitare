@@ -74,3 +74,17 @@ code.descname, code.descclassname {
     display: block;
     margin: 1px 0;
 }
+
+/* For hidden headers that appear in TOC tree */
+/* see http://stackoverflow.com/a/32363545/3343043 */
+.rst-content .hidden-section {
+    display: none;
+}
+
+nav .hidden-section {
+    display: inherit;
+}
+
+.toctree-wrapper .hidden-section {
+    display: unset;
+}

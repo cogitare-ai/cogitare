@@ -34,6 +34,7 @@ of cuda and multi-core processing.
 Contributions are welcome!
 
 .. toctree::
+    :includehidden:
     :maxdepth: 2
     :caption: Introduction
 
@@ -43,7 +44,8 @@ Contributions are welcome!
     tutorials
 
 .. toctree::
-    :maxdepth: 2
+    :includehidden:
+    :maxdepth: 3
     :caption: Cogitare
     
     model
@@ -55,7 +57,8 @@ Contributions are welcome!
     utils
 
 .. toctree::
-    :maxdepth: 2
+    :includehidden:
+    :maxdepth: 3
     :caption: Extra
 
     contribute
