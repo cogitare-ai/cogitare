@@ -5,6 +5,60 @@ from threading import Thread
 
 
 class AsyncDataLoader(object):
+    """The AsyncDataLoader is a wrapper to asynchronous loading multiples batches of data.
+
+    It keeps a buffer of batches, so when the model asks for a new batch, it's
+    already in memory. After sending the batch to the model, it is removed from
+    the buffer, and a new batch can be loaded.
+
+    The buffer is filled using a separated thread. Then, each batch can be loaded
+    using multiple processes, or multiples threads.
+
+    This async batch loader is designed for heavy IO or heavy CPU batch generation.
+
+    .. warning:: When using the multiprocessing batch loader, watch the ram usage,
+        and avoid a high number of processes. Multiprocessing can easily lead
+        to memory overflow.
+
+    - Should I use the Async Data Loader ?
+
+        If you check the Cogitare's DataHolder, it already provides the execution
+        of the data loading through multiple threads or multiple processes. So you should
+        use this if the time to generate a whole batch is expensive.
+
+    - Should I use threads or processes ?
+
+        It's recommended to use threads, they are lightweight and fast.
+
+        Multiple processing usually will lead to a worse performance and memory
+        usage, due to the communication pipe between processes and due to
+        the extension sharing of the memory. However, it can be
+        useful for CPU expensive operations, because will not suffer from GIL.
+
+        Threads, in the other way, are lightweight and usually fast, but can suffer from GIL.
+        For tasks with heavy IO, it is a good choice.
+
+    Args:
+        data (DataSet, AbsDataHolder, SequentialDataSet, SequentialAbsDataHolder): data holder,
+            or dataset instance.
+        buffer_size (int): size of the batch buffer. The async data loader will keep around
+            ``buffer_size`` batches in memory.
+        mode (str): should be ``threaded`` or ``multiprocessing``, indicating how to fetch batches.
+        workers (int): the number of threads/processes used to load the batches. If None,
+            will use the number of cores in the CPU.
+
+    Example::
+
+        >>> mnist = fetch_mldata('MNIST original')
+        >>> mnist.data = mnist.data / 255
+        >>> data = DataSet([mnist.data, mnist.target.astype(int)], batch_size=64)
+        >>> data_train, data_validation = data.split(0.8)
+
+        >>> # wraps the data_train dataset with the async loader.
+        >>> data_train = AsyncDataLoader(data_train)
+
+        >>> model.learn(data_train, optimizer)
+    """
 
     def __init__(self, data, buffer_size=8, mode='threaded', workers=None):
         valid = ('threaded', 'multiprocessing', )

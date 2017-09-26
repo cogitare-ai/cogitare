@@ -19,3 +19,7 @@ Data
     :members:
 
 .. autofunction:: cogitare.data.AutoHolder
+
+.. autoclass:: cogitare.data.DataSet
+    :members:
+    :special-members:

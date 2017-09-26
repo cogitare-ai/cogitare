@@ -20,3 +20,7 @@ Sequential Data
     :members:
 
 .. autofunction:: cogitare.data.SequentialAutoHolder
+
+.. autoclass:: cogitare.data.SequentialDataSet
+    :members:
+    :special-members:

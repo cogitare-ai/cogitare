@@ -50,6 +50,7 @@ Contributions are welcome!
     sequential_model
     data
     sequential_data
+    async_data
     plugins
     utils
 
