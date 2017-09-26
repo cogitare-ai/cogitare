@@ -1,5 +1,5 @@
-cogitare.plugins
-================
+Plugins
+=======
 
 Plugins are high-level objects (any callable object, such as classes with
 ``__call__``, user defined functions, and lambdas) that are used to inspect the

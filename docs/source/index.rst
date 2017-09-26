@@ -49,6 +49,7 @@ Contributions are welcome!
     model
     sequential_model
     data
+    sequential_data
     plugins
     utils
 

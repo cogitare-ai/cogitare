@@ -24,9 +24,11 @@ class SequentialModel(Model):
 
     Methods that your model must implement:
 
-        - **forward** (data, hidden, timestep, seqlen):
-        - **loss** (output, data):
-          data is got from iterating over the dataset.
+        - **forward** (batch, hidden, timestep, seqlen): receives the data at
+            the current timestep, the hidden state, current timestep, and the sequence size;
+        - **loss** (output, batch, hidden, timestep, seqlen): returns the loss
+            at the current timestep;
+        - **get_initial_state** (self, batch): start the RNN hidden state.
 
     Expected input on :meth:`~cogitare.Model.learn`:
 

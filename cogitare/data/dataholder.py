@@ -17,8 +17,8 @@ class AbsDataHolder(object):
     It's the recommended way to pass data to Cogitare's models because it already
     provides a compatible interface to iterate over batches.
 
-    To improve the performance, the data holder loads batches using a multi-threaded
-    loader with `Dask <http://dask.pydata.org/>`_.
+    To improve the performance, the data holder loads batches using multiprocessing and multithreading
+    data loader with `Dask <http://dask.pydata.org/>`_.
 
     Usually, this object should not be used directly, only if you are developing a custom
     data loader. Cogitare already provides the following implementations for the most
@@ -36,6 +36,11 @@ class AbsDataHolder(object):
         shuffle (bool): if True, shuffles the dataset after each iteration.
         drop_last (bool): if True, then skip the batch if its size is lower that **batch_size** (can
             occur in the last batch).
+        total_samples (int): the number of total samples. If provided, this will limit the
+            number of samples to be accessed in the data.
+        mode (str): must be one of: 'sequential', 'threaded', 'multiprocessing'. Use one of them
+            to choose the batch loading methods. Take a loook
+            here: https://dask.pydata.org/en/latest/scheduler-choice.html for an overview of the advantage of each mode.
     """
 
     @property

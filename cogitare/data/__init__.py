@@ -4,7 +4,8 @@ from cogitare.data.sequential_dataholder import (
     SequentialCallableHolder,
     SequentialTensorHolder,
     SequentialNumpyHolder,
-    SequentialAbsDataHolder
+    SequentialAbsDataHolder,
+    SequentialAutoHolder
 )
 from cogitare.data.dataset import DataSet
 from cogitare.data.sequential_dataset import SequentialDataSet

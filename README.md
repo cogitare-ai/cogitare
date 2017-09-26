@@ -1,6 +1,6 @@
 <p align="center"><img width="80%" src="https://raw.githubusercontent.com/cogitare-ai/cogitare/master/docs/source/art/logo-line.png" /></p>
 
-**Cogitare** is a Modern, Fast, and Modular Deep Learning and Machine Learning framework in Python. 
+**Cogitare** is a Modern, Fast, and Modular Deep Learning and Machine Learning framework in Python. A friendly interface for beginners and a powerful toolset for experts. 
 
 http://cogitare.aronbordin.com/
 

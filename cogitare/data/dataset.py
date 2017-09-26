@@ -25,7 +25,8 @@ class DataSet(object):
             occur in the last batch).
 
     .. note:: The **batch_size**, **shuffle**, and **drop_last** parameters will override the
-        data holder default values.
+        data holder default values. If you want to keep a different value for each data holder,
+        get its instance in the ``container`` attribute and edit manually.
     """
 
     @property
