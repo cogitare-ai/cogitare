@@ -25,16 +25,18 @@ class SequentialModel(Model):
     Methods that your model must implement:
 
         - **forward** (batch, hidden, timestep, seqlen): receives the data at
-            the current timestep, the hidden state, current timestep, and the sequence size;
+          the current timestep, the hidden state, the current timestep, and the sequence size;
         - **loss** (output, batch, hidden, timestep, seqlen): returns the loss
-            at the current timestep;
+          at the current timestep;
         - **get_initial_state** (self, batch): start the RNN hidden state.
 
     Expected input on :meth:`~cogitare.Model.learn`:
 
         - **dataset** : an iterator, that returns one batch of samples per
-          iteration. The batch can be of any type (list, numpy array, tensor, string, etcs).
-          It is recommended to wrap your dataset using the :class:`~cogitare.data.DataSet` object,
+          iteration. Each bach is an iterator, containing data for each timestep.
+          The batch can be of any type (list, numpy array, tensor, string, etcs).
+          It is recommended to wrap your dataset using
+          the :class:`~cogitare.data.SequentialDataSet` object,
           that provides a high-performance data loading interface.
     """
 

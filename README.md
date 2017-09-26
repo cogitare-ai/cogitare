@@ -7,7 +7,7 @@ http://cogitare.aronbordin.com/
 [![Build Status](https://travis-ci.org/cogitare-ai/cogitare.svg?branch=master)](https://travis-ci.org/cogitare-ai/cogitare)
 [![codecov](https://codecov.io/gh/cogitare-ai/cogitare/branch/master/graph/badge.svg)](https://codecov.io/gh/cogitare-ai/cogitare)
 
-It uses the best of [PyTorch](http://pytorch.org/), [Dask](https://dask.pydata.org/), [NumPy](http://www.numpy.org/), and others through a simple interface to train, to evaluate, to test
+It uses the best of [PyTorch](http://pytorch.org/), [Dask](https://dask.pydata.org/), [NumPy](http://www.numpy.org/), and others tools through a simple interface to train, to evaluate, to test
 models and more.
 
 With Cogitare, you can use classical machine learning algorithms with high
