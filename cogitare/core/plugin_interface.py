@@ -1,3 +1,6 @@
+import inspect
+
+
 class PluginInterface(object):
 
     @property
@@ -40,5 +43,9 @@ class PluginInterface(object):
     def from_function(cls, f, freq=1):
         c = cls(freq)
         c.function = f
-        c.name = f.__name__
+
+        if inspect.ismethod(f) or inspect.isfunction(f):
+            c.name = f.__name__
+        else:
+            c.name = type(f).__name__
         return c
