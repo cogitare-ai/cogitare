@@ -41,6 +41,9 @@ class AbsDataHolder(object):
         mode (str): must be one of: 'sequential', 'threaded', 'multiprocessing'. Use one of them
             to choose the batch loading methods. Take a loook
             here: https://dask.pydata.org/en/latest/scheduler-choice.html for an overview of the advantage of each mode.
+        single (bool): if True, returns only the first element of each batch. Is designed to be used with models where
+            you only use one sample per batch (batch_size == 1). So instead of returning a list with a single sample, with
+            ``single == True``, the sample itself will be returned and not the list.
     """
 
     @property
@@ -70,13 +73,14 @@ class AbsDataHolder(object):
         return self._indices
 
     def __init__(self, data=None, batch_size=1, shuffle=True, drop_last=False,
-                 total_samples=None, mode='sequential'):
+                 total_samples=None, mode='sequential', single=False):
         valid_modes = ['threaded', 'multiprocessing', 'sequential']
         utils.assert_raise(data is not None, ValueError, 'data cannot be None')
         utils.assert_raise(mode in valid_modes, ValueError,
                            '"mode" must be one of: ' + ', '.join(valid_modes))
 
         self._indices = None
+        self._single = single
         self._total_samples = total_samples
         self._remaining_samples = None
 
@@ -138,6 +142,8 @@ class AbsDataHolder(object):
         self._current_batch += 1
         self._remaining_samples -= batch_size
 
+        if self._single:
+            return results[0]
         return results
 
     @abstractmethod
@@ -317,8 +323,6 @@ class CallableHolder(AbsDataHolder):
         self._remaining_samples = total_samples
 
     def __init__(self, *args, **kwargs):
-        total_samples = kwargs.pop('total_samples', None)
-        self._total_samples = total_samples
         super(CallableHolder, self).__init__(*args, **kwargs)
 
     def get_sample(self, key):

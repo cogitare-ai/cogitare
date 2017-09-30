@@ -1,4 +1,5 @@
 from cogitare import utils
+import time
 import concurrent.futures as C
 from six.moves.queue import PriorityQueue
 from threading import Thread
@@ -76,8 +77,27 @@ class AsyncDataLoader(object):
         self._thread = None
 
     def _start(self):
-        self._thread = Thread(target=self._produce, daemon=True)
-        self._thread.start()
+        if self._thread is None:
+            self._thread = Thread(target=self._produce, daemon=True)
+            self._thread.start()
+
+    def cache(self):
+        """Start to load batches to buffer, and wait the buffer be full.
+        This can be used before start the model training to cache the samples
+        and speed up the model execution.
+
+        Example::
+
+            >>> dh = CallableHolder(s.__next__, mode='sequential', total_samples=20000000, single=True)
+            >>> dh = AsyncDataLoader(dh, buffer_size=64000, mode='threaded', workers=1)
+            >>> print('caching ...')
+            >>> dh.cache()
+            >>> print('done')
+        """
+
+        self._start()
+        while not self._queue.full():
+            time.sleep(0.1)
 
     def _produce(self):
         idx = 0
@@ -87,11 +107,10 @@ class AsyncDataLoader(object):
             idx += 1
 
     def __iter__(self):
-        if self._thread is None:
-            self._start()
         return self
 
     def __next__(self):
+        self._start()
         return self._queue.get()[1].result()
 
     next = __next__
