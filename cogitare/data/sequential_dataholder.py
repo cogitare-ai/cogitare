@@ -61,8 +61,8 @@ class SequentialAbsDataHolder(AbsDataHolder):
     def padding_value(self, value):
         self._padding_value = value
 
-    def __init__(self, *args, padding_value=None, **kwargs):
-        self._padding_value = padding_value
+    def __init__(self, *args, **kwargs):
+        self._padding_value = kwargs.pop('padding_value', None)
 
         super(SequentialAbsDataHolder, self).__init__(*args, **kwargs)
 

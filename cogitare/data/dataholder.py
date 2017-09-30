@@ -17,8 +17,8 @@ class AbsDataHolder(object):
     It's the recommended way to pass data to Cogitare's models because it already
     provides a compatible interface to iterate over batches.
 
-    To improve the performance, the data holder loads batches using multiprocessing and multithreading
-    data loader with `Dask <http://dask.pydata.org/>`_.
+    To improve the performance, the data holder loads batches using multiprocessing
+    and multithreading data loader with `Dask <http://dask.pydata.org/>`_.
 
     Usually, this object should not be used directly, only if you are developing a custom
     data loader. Cogitare already provides the following implementations for the most
@@ -41,8 +41,9 @@ class AbsDataHolder(object):
         mode (str): must be one of: 'sequential', 'threaded', 'multiprocessing'. Use one of them
             to choose the batch loading methods. Take a loook
             here: https://dask.pydata.org/en/latest/scheduler-choice.html for an overview of the advantage of each mode.
-        single (bool): if True, returns only the first element of each batch. Is designed to be used with models where
-            you only use one sample per batch (batch_size == 1). So instead of returning a list with a single sample, with
+        single (bool): if True, returns only the first element of each batch.
+            Is designed to be used with models where you only use one sample per
+            batch (batch_size == 1). So instead of returning a list with a single sample, with
             ``single == True``, the sample itself will be returned and not the list.
     """
 
@@ -63,7 +64,11 @@ class AbsDataHolder(object):
             utils.assert_raise(value <= size, ValueError,
                                'The value must be lesser or equal to the'
                                'length of the input data')
-        self._total_samples = size
+        utils.assert_raise(value >= 1, ValueError,
+                           'number of samples must be greater or equal to 1')
+        self._total_samples = value
+        self._remaining_samples = value
+        self._requires_reset = True
 
     @property
     def indices(self):
@@ -72,10 +77,9 @@ class AbsDataHolder(object):
 
         return self._indices
 
-    def __init__(self, data=None, batch_size=1, shuffle=True, drop_last=False,
+    def __init__(self, data, batch_size=1, shuffle=True, drop_last=False,
                  total_samples=None, mode='sequential', single=False):
         valid_modes = ['threaded', 'multiprocessing', 'sequential']
-        utils.assert_raise(data is not None, ValueError, 'data cannot be None')
         utils.assert_raise(mode in valid_modes, ValueError,
                            '"mode" must be one of: ' + ', '.join(valid_modes))
 
@@ -219,7 +223,7 @@ class AbsDataHolder(object):
         """
         utils.assert_raise(0 < ratio < 1, ValueError, '"ratio" must be between 0 and 1')
 
-        pos = math.floor(self.total_samples * ratio)
+        pos = int(math.floor(self.total_samples * ratio))
 
         data1 = type(self)(data=self._data, batch_size=self._batch_size,
                            shuffle=self._shuffle, drop_last=self._drop_last)
@@ -313,14 +317,14 @@ class CallableHolder(AbsDataHolder):
     def total_samples(self):
         """The number of samples in the dataset. You must set this value before accessing the data.
         """
-        return self._total_samples
+        if self._total_samples is None:
+            raise ValueError('"total_samples" not defined. Callable objects requires the'
+                             ' number of total_samples before being used')
+        return super(CallableHolder, self).total_samples
 
     @total_samples.setter
-    def total_samples(self, total_samples):
-        utils.assert_raise(total_samples >= 1, ValueError,
-                           'number of samples must be greater or equal to 1')
-        self._total_samples = total_samples
-        self._remaining_samples = total_samples
+    def total_samples(self, value):
+        return super(CallableHolder, self.__class__).total_samples.fset(self, value)
 
     def __init__(self, *args, **kwargs):
         super(CallableHolder, self).__init__(*args, **kwargs)
@@ -383,11 +387,7 @@ class TensorHolder(AbsDataHolder):
         size = len(self._data)
 
         if self._total_samples is None:
-            self._total_samples = size
-        else:
-            utils.assert_raise(self.total_samples <= size, ValueError,
-                               'The total_samples must be lesser or equal to the'
-                               'length of the input data')
+            self.total_samples = size
 
     def get_sample(self, key):
         return self._data[key]
@@ -401,7 +401,7 @@ def NumpyHolder(data, *args, **kwargs):
     """
     data = torch.from_numpy(data)
 
-    return TensorHolder(data=data, *args, **kwargs)
+    return TensorHolder(data, *args, **kwargs)
 
 
 def AutoHolder(data, *args, **kwargs):
