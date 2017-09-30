@@ -9,6 +9,8 @@ import torch.nn as nn
 import torch.nn.functional as F
 from tests.common import TestCase
 import torch.optim as optim
+import cogitare
+cogitare.seed(123)
 
 
 class Model1(Model):

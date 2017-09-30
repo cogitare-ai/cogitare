@@ -24,9 +24,9 @@ class SequentialModel(Model):
 
     Methods that your model must implement:
 
-        - **forward** (batch, hidden, timestep, seqlen): receives the data at
+        - **forward** (data, hidden, timestep, seqlen): receives the data at
           the current timestep, the hidden state, the current timestep, and the sequence size;
-        - **loss** (output, batch, hidden, timestep, seqlen): returns the loss
+        - **loss** (output, data, hidden, timestep, seqlen): returns the loss
           at the current timestep;
         - **get_initial_state** (self, batch): start the RNN hidden state.
 
@@ -56,8 +56,32 @@ class SequentialModel(Model):
         """
         pass
 
+    def forward_seq(self, sequence):
+        """Forward a whole sequence in the model, and return a list of the output
+        at each timestep.
+
+        Args:
+            sequence (iterable): an iterable with each item being the data for
+              the current timestep.
+
+        Retuns:
+
+            output (iterable): a list with the :meth:`~cogitare.SequentialModel.forward` output for each timestep.
+        """
+        outputs = []
+
+        hidden = self.get_initial_state([sequence])
+        seqlen = len(sequence)
+
+        for timestep, data in enumerate(sequence, 1):
+            output, hidden = self.forward(data, hidden, timestep, seqlen)
+
+            outputs.append(output)
+
+        return outputs
+
     @abstractmethod
-    def forward(self, batch, hidden, timestep, seqlen):
+    def forward(self, data, hidden, timestep, seqlen):
         """
         .. note:: When developing a Model, the class must implement this method.
 
@@ -67,7 +91,7 @@ class SequentialModel(Model):
         It must return a tuple with the model output after forwarding the data and the new hidden state.
 
         Args:
-            batch: this is the data got from iterating over the timesteps, got from
+            data: this is the data got from iterating over the timesteps, got from
                 iterating over the batches in the dataset provided in the
                 :meth:`~cogitare.Model.learn` method. Its type and shape depend exclusively on
                 the input dataset, no transformations or type checking are made during training.
@@ -87,7 +111,7 @@ class SequentialModel(Model):
         pass
 
     @abstractmethod
-    def loss(self, output, batch, hidden, timestep, seqlen):
+    def loss(self, output, data, hidden, timestep, seqlen):
         """
         .. note:: When developing a Model, the class must implement this method.
 
@@ -102,7 +126,7 @@ class SequentialModel(Model):
 
         Args:
             output: the :meth:`~cogitare.SequentialModel.forward` output
-            batch: this is the data got from iterating over the timesteps, got from
+            data: this is the data got from iterating over the timesteps, got from
                 iterating over the batches in the dataset provided in the
                 :meth:`~cogitare.Model.learn` method. Its type and shape depend exclusively on
                 the input dataset, no transformations or type checking are made during training.
@@ -130,14 +154,14 @@ class SequentialModel(Model):
         optimizer.zero_grad()
         hidden = self.get_initial_state(batch)
 
-        for timestep, sample in enumerate(batch, 1):
+        for timestep, data in enumerate(batch, 1):
             self._state['current_timestep'] = timestep
-            self._state['sample_at_timestep'] = sample
+            self._state['sample_at_timestep'] = data
             self.hook('on_start_timestep')
 
-            output, hidden = self.forward(sample, hidden, timestep, seqlen)
+            output, hidden = self.forward(data, hidden, timestep, seqlen)
 
-            loss = self.loss(output, sample, batch, hidden, timestep, seqlen)
+            loss = self.loss(output, data, hidden, timestep, seqlen)
 
             if loss is not None:
                 total_loss += loss
@@ -178,9 +202,9 @@ class SequentialModel(Model):
             seqlen = len(batch)
             losses_batch = []
 
-            for timestep, sample in enumerate(batch, 1):
-                output, hidden = self.forward(sample, hidden, timestep, seqlen)
-                loss = self.loss(output, sample, batch, hidden, timestep, seqlen)
+            for timestep, data in enumerate(batch, 1):
+                output, hidden = self.forward(data, hidden, timestep, seqlen)
+                loss = self.loss(output, data, hidden, timestep, seqlen)
 
                 if loss is not None:
                     losses_batch.append(loss.data[0])
