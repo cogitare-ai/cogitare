@@ -78,7 +78,8 @@ class AsyncDataLoader(object):
 
     def _start(self):
         if self._thread is None:
-            self._thread = Thread(target=self._produce, daemon=True)
+            self._thread = Thread(target=self._produce)
+            self._thread.daemon = True
             self._thread.start()
 
     def cache(self):
