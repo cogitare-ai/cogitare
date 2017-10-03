@@ -1,4 +1,5 @@
 from cogitare import Model
+import torch.optim as optim
 from cogitare.core import PluginInterface
 from cogitare.utils import StopTraining
 import mock
@@ -8,8 +9,8 @@ from torch.autograd import Variable
 import torch.nn as nn
 import torch.nn.functional as F
 from tests.common import TestCase
-import torch.optim as optim
 import cogitare
+import os
 cogitare.seed(123)
 
 
@@ -95,12 +96,16 @@ class TestModel(TestCase):
 
     def test_register_default(self):
         model = Model1()
+        sgd = optim.SGD(model.parameters(), lr=0.1)
 
         model.register_default_plugins()
-        model.learn([1, 2, 3], None, None, max_epochs=0)
+        model.learn(self.data, None, None, max_epochs=0)
         for i in range(10):
             model.register_default_plugins()
-            model.learn([1, 2, 3], None, [4, 5, 6], max_epochs=0)
+            if 'DISPLAY' in os.environ:
+                model.learn(self.data, sgd, self.data, max_epochs=2)
+            else:
+                model.learn(self.data, sgd, self.data, max_epochs=0)
 
             self.assertIn('Logger', model._plugins['on_end_epoch'])
             self.assertIn('ProgressBar', model._plugins['on_end_epoch'])
