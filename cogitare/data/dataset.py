@@ -15,10 +15,6 @@ class DataSet(object):
     Args:
         data (list): list of data holders or list of data (that will be converted to a
             data holder using the :class:`~cogitare.data.AutoHolder`.
-        data_types (dataholder, list): A list of data holder classes to be used to
-            create the holder for each input.
-            If it is a list, must have the same size of the data.
-            If data_types is None, the :class:`~cogitare.data.AutoHolder` will be used.
         batch_size (int): the size of each batch.
         shuffle (bool): if True, shuffles the samples of each data holder.
         drop_last (bool): if True, then skip the batch if its size is lower that **batch_size** (can
@@ -33,35 +29,33 @@ class DataSet(object):
     def container(self):
         return self._container
 
-    _AutoHolderClass = AutoHolder
-    _AbsDataHolderClass = AbsDataHolder
+    @property
+    def _AutoHolderClass(self):
+        return AutoHolder
 
-    def __init__(self, data, data_types=None, batch_size=1, shuffle=True, drop_last=False, total_samples=None):
-        utils.assert_raise(isinstance(data, list), ValueError,
-                           '"data" must be a list of model data')
+    @property
+    def _AbsDataHolderClass(self):
+        return AbsDataHolder
+
+    def __init__(self, data, batch_size=1, shuffle=True, drop_last=False, total_samples=None):
+        utils.assert_raise(isinstance(data, (list, tuple)), ValueError,
+                           '"data" must be a list or a tuple')
 
         self._batch_size = batch_size
         self._shuffle = shuffle
         self._drop_last = drop_last
-        if data_types is None:
-            data_types = [self.__class__._AutoHolderClass] * len(data)
-
-        if not isinstance(data_types, list):
-            utils.assert_raise(isinstance(data_types, self.__class__._AbsDataHolderClass), ValueError,
-                               '"data_types" must be a DataHolder class or a list of them')
-            data_types = [data_types] * len(data)
 
         self._container = []
-        for i, d in enumerate(data):
-            if isinstance(d, self.__class__._AbsDataHolderClass):
+        for d in data:
+            if isinstance(d, self._AbsDataHolderClass):
                 d._batch_size = batch_size
                 d._shuffle = shuffle
                 d._drop_last = drop_last
                 if total_samples is not None:
                     d.total_samples = total_samples
             else:
-                d = data_types[i](d, batch_size=batch_size, shuffle=shuffle,
-                                  drop_last=drop_last, total_samples=total_samples)
+                d = self._AutoHolderClass(d, batch_size=batch_size, shuffle=shuffle,
+                                          drop_last=drop_last, total_samples=total_samples)
 
             self._container.append(d)
 
@@ -223,12 +217,7 @@ class DataSet(object):
         """Returns a list of samples, getting the key-th sample for each data holder
         in the dataset.
         """
-        if isinstance(key, slice):
-            raise NotImplementedError
         return [c[key] for c in self.container]
-
-    def _get_batch(self):
-        return [c._get_batch() for c in self.container]
 
     def __iter__(self):
         """Creates an iterator to iterate over batches in the dataset.

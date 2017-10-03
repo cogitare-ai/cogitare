@@ -1,0 +1,10 @@
+tox
+twine
+wheel
+codecov
+flake8
+mock
+pytest
+pytest-cov
+hypothesis
+hypothesis-pytest

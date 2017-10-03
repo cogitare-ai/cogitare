@@ -1,4 +1,7 @@
 import torch
+import logging
+import coloredlogs
+from itertools import repeat
 import functools
 import numpy as np
 from torch.nn import Module
@@ -14,6 +17,26 @@ class StopTraining(Exception):
     the model will run the plugins in the ``on_stop_training`` hook, and stop the training.
     """
     pass
+
+
+def get_logger(name):
+    _LOGGER = logging.getLogger(name)
+    _LOGGER.addHandler(logging.NullHandler())
+    coloredlogs.install(level='DEBUG', logger=_LOGGER)
+
+    return _LOGGER
+
+
+def number_parameters(model):
+    """Counts the number of parameters in the model.
+
+    Args:
+        model (Model): model with training parameters
+
+    Returns:
+        count (int): number of parameters
+    """
+    return sum(np.prod(params.size()) for params in model.parameters())
 
 
 def not_training(func):
@@ -83,9 +106,7 @@ def to_tensor(data, tensor_klass=None, use_cuda=None):
         if torch.is_tensor(item):
             if depth != 2:
                 raise ValueError('Cannot convert nested list of tensors')
-            for l in data:
-                l.unsqueeze_(0)
-            tensor = torch.cat(data)
+            tensor = torch.stack(data)
         elif isinstance(item, int):
             tensor = torch.LongTensor(data)
         elif isinstance(item, float):
@@ -145,3 +166,9 @@ def set_cuda(cuda):
     """
     global _CUDA_ENABLED
     _CUDA_ENABLED = cuda
+
+
+def _ntuple(item, n):
+    if isinstance(item, (list, tuple)):
+        return item
+    return tuple(repeat(item, n))

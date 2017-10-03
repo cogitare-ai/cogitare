@@ -8,7 +8,7 @@ from torch.autograd import Variable
 
 class LogisticRegression(Model):
 
-    def __init__(self, input_size, num_classes=2, dropout=0, bias=True, use_cuda=False, *args, **kwargs):
+    def __init__(self, input_size, num_classes=2, dropout=0.0, bias=True, use_cuda=False, *args, **kwargs):
         super(LogisticRegression, self).__init__(*args, **kwargs)
         self.use_cuda = use_cuda
         utils.assert_raise(num_classes >= 2, ValueError,
@@ -30,7 +30,7 @@ class LogisticRegression(Model):
             self.cuda()
 
     def forward(self, sample):
-        x = Variable(utils.to_tensor(sample[0], torch.FloatTensor, self.use_cuda))
+        x = Variable(utils.to_tensor(sample[0], torch.DoubleTensor, self.use_cuda))
         x = x.view(x.size(0), -1)
         data = F.dropout(x, self.arguments['dropout'])
         out = self.linear(data)

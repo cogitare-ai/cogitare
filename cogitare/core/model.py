@@ -1,6 +1,8 @@
 from torch import nn
+import humanize
 import torch
 from cogitare.utils import not_training, training, StopTraining
+from cogitare.data import AbsDataHolder, SequentialAbsDataHolder, DataSet, AsyncDataLoader
 from abc import ABCMeta, abstractmethod
 from six import add_metaclass
 from cogitare.plugins import Logger, ProgressBar, PlottingMatplotlib
@@ -47,9 +49,9 @@ class Model(nn.Module):
     def __init__(self):
         super(Model, self).__init__()
         self._state = {}
-        self._status = {}
         self._plugins = dict((name, OrderedDict()) for name in self.valid_hooks)
         self._requires_register_default = False
+        self._logger = utils.get_logger(__name__)
 
     @abstractmethod
     def forward(self, data):
@@ -106,11 +108,11 @@ class Model(nn.Module):
             Logger(title='[%s]' % self.__class__.__name__),
             ProgressBar(),
             PlottingMatplotlib(source=plot_data)
-        ], 'on_end_epoch')
+        ], 'on_end_epoch', True)
 
         self.register_plugin([
             ProgressBar(monitor='batch')
-        ], 'on_end_batch')
+        ], 'on_end_batch', True)
 
     def register_default_plugins(self):
         """
@@ -127,7 +129,7 @@ class Model(nn.Module):
         """
         self._requires_register_default = True
 
-    def register_plugin(self, plugin, hook):
+    def register_plugin(self, plugin, hook, override=False):
         """You can use this to register a plugin to a specific event of the model.
 
         You can register (hook) a plugin to some specific events that may occor
@@ -236,12 +238,17 @@ class Model(nn.Module):
             - **on_stop_training**: executed when a plugin raises a :exc:`cogitare.utils.StopTraining`.
               At this time, the variables accessible will depends on the training step that the
               exception occurred.
+
+        Args:
+            plugin (callable): a function to be called. The parameters will be sent
+                was described above
+            hook (str): the event to watch, as described above.
+            override (bool): if True, override a plugin at a specific hook if it has the
+                same name. If False, raises an exception.
         """
         utils.assert_raise(hook in self.valid_hooks, ValueError,
                            'Expected on of the following hooks: ' + ', '.join(self.valid_hooks))
-
-        if not isinstance(plugin, list):
-            plugin = [plugin]
+        plugin = utils._ntuple(plugin, 1)
 
         container = self._plugins[hook]
 
@@ -249,7 +256,7 @@ class Model(nn.Module):
             if not isinstance(p, PluginInterface):
                 p = PluginInterface.from_function(p)
 
-            if p.name in container:
+            if p.name in container and not override:
                 raise ValueError('A plugin with name "{}" already exists'.format(p.name))
 
             container[p.name] = p
@@ -258,7 +265,7 @@ class Model(nn.Module):
         for key, plugin in self._plugins[name].items():
             status = plugin(**self._state)
 
-            self._status[name + '_' + key] = status
+            self._state[name + '_' + key] = status
 
     def _forward_batch(self, batch_num, batch, optimizer):
         optimizer.zero_grad()
@@ -317,6 +324,14 @@ class Model(nn.Module):
         Returns:
             status (bool): False if stopped by :class:`~cogitare.utils.StopTraining`. True otherwise.
         """
+        self._logger.info('Model: \n\n{}\n'.format(repr(self)))
+        if isinstance(dataset, (AbsDataHolder, SequentialAbsDataHolder,
+                                DataSet, AsyncDataLoader)):
+            self._logger.info('Training data: \n\n{}\n'.format(repr(dataset)))
+        self._logger.info('Number of parameters: ' + humanize.intcomma(
+            utils.number_parameters(self)))
+        self._logger.info('Starting the training ...')
+
         try:
             self._state = {
                 'max_epochs': max_epochs,
@@ -333,6 +348,7 @@ class Model(nn.Module):
                 'validation_dataset': validation_dataset
             }
 
+            original_register_default = self._requires_register_default
             if self._requires_register_default:
                 self._register_default_plugins()
 
@@ -370,14 +386,17 @@ class Model(nn.Module):
 
                 self.hook('on_end_epoch')
 
-            self.hook('on_end')
-            self._state.clear()
-            return True
+            status = True
         except StopTraining:
             self.hook('on_stop_training')
-            self.hook('on_end')
-            self._state.clear()
-            return False
+            status = False
+
+        self._requires_register_default = original_register_default
+        self._state.clear()
+        self.hook('on_end')
+
+        self._logger.info('Training finished')
+        return status
 
     @not_training
     def predict(self, *args, **kwargs):
@@ -426,7 +445,8 @@ class Model(nn.Module):
         Args:
             path: path of the serialized state_dict.
         """
-        self.load_state_dict(torch.load(path))
+        state = torch.load(path)
+        self.load_state_dict(state)
 
     def save(self, path):
         """Save the model parameters using :func:`torch.save` to a given path.
@@ -434,4 +454,5 @@ class Model(nn.Module):
         Args:
             path: path to save the model.
         """
-        torch.save(self._state_dict(), path)
+        state = self.state_dict()
+        torch.save(state, path)

@@ -72,10 +72,10 @@ char, it can be implemented as follows::
 
             return v1, v2
 
-        def forward(self, seq, prev_hidden, timestep, seqlen):
+        def forward(self, data, prev_hidden, timestep, seqlen):
             # seq is a tuple with (x_data_t, y_data_t)
             # we forward the x value
-            seq = seq[0]
+            seq = data[0]
             seq = Variable(torch.LongTensor(seq).view(len(seq), -1))
             if args.cuda:
                 seq = seq.cuda()
@@ -90,7 +90,7 @@ char, it can be implemented as follows::
             # returns the prediction and the new hidden state
             return F.log_softmax(output), (ot, ht)
 
-        def loss(self, output, sample, batch, hidden, timestep, seqlen):
+        def loss(self, output, sample, hidden, timestep, seqlen):
             # here, we are using a Many-to-One RNN. If you want to use
             # Many-to-Many, just remove the following if
             if timestep != seqlen:

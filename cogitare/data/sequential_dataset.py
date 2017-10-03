@@ -77,8 +77,13 @@ class SequentialDataSet(DataSet):
         ((6.0, 9.0), (15.0, 18.0))
     """
 
-    _AutoHolderClass = SequentialAutoHolder
-    _AbsDataHolderClass = SequentialAbsDataHolder
+    @property
+    def _AutoHolderClass(self):
+        return SequentialAutoHolder
+
+    @property
+    def _AbsDataHolderClass(self):
+        return SequentialAbsDataHolder
 
     def __init__(self, *args, **kwargs):
         self._padding_value = kwargs.pop('padding_value', None)

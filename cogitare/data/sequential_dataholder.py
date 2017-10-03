@@ -61,8 +61,8 @@ class SequentialAbsDataHolder(AbsDataHolder):
     def padding_value(self, value):
         self._padding_value = value
 
-    def __init__(self, *args, padding_value=None, **kwargs):
-        self._padding_value = padding_value
+    def __init__(self, *args, **kwargs):
+        self._padding_value = kwargs.pop('padding_value', None)
 
         super(SequentialAbsDataHolder, self).__init__(*args, **kwargs)
 
@@ -71,7 +71,8 @@ class SequentialAbsDataHolder(AbsDataHolder):
 
     def __next__(self):
         batch = super(SequentialAbsDataHolder, self).__next__()
-        return list(zip_longest(*batch, fillvalue=self.padding_value))
+        data = zip_longest(*batch, fillvalue=self.padding_value)
+        return list(data)
 
     next = __next__
 
@@ -201,7 +202,7 @@ def SequentialNumpyHolder(data, *args, **kwargs):
 
 
 def SequentialAutoHolder(data, *args, **kwargs):
-    """Check the data type to infer which data holder to use.
+    """Check the data type to infer which sequential data holder to use.
     """
     if torch.is_tensor(data):
         return SequentialTensorHolder(data, *args, **kwargs)

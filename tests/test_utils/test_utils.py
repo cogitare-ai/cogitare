@@ -1,4 +1,5 @@
 import torch
+from mock import patch
 import numpy as np
 import mock as m
 from cogitare import utils
@@ -62,6 +63,7 @@ class TestUtils(TestCase):
             [[1, 2, 3], [4, 5, 6]],
             np.asarray([[1, 2, 3], [4, 5, 6]]),
             [np.asarray([1, 2, 3]), np.asarray([4, 5, 6])],
+            [torch.Tensor([1, 2, 3]), torch.Tensor([4, 5, 6])]
         ]
 
         for external in from_external:
@@ -70,14 +72,29 @@ class TestUtils(TestCase):
         for external in from_external:
             self.assertEqual(utils.to_tensor(external, torch.DoubleTensor), expected_float)
 
+        data = [[1.0, 2, 3], [4, 5, 6]]
+        self.assertEqual(utils.to_tensor(data), expected_float)
+
         with pytest.raises(ValueError) as info:
             utils.to_tensor({})
         self.assertIn('Invalid data type: dict', str(info.value))
 
         with pytest.raises(ValueError) as info:
-            utils.to_tensor([tuple()])
-        self.assertIn('Invalid data type: tuple', str(info.value))
+            utils.to_tensor(['asd'])
+        self.assertIn('Invalid data type: str', str(info.value))
 
         with pytest.raises(ValueError) as info:
             utils.to_tensor([])
         self.assertIn('Empty list', str(info.value))
+
+        with pytest.raises(ValueError) as info:
+            utils.to_tensor([[torch.Tensor([1, 2, 3]), torch.Tensor([4, 5, 6])],
+                             [torch.Tensor([7, 8, 9]), torch.Tensor([10, 11, 12])]])
+        self.assertIn('Cannot convert nested list of tensors', str(info.value))
+
+    def test_to_cuda(self):
+        tensor = torch.Tensor([1, 2, 3])
+
+        with patch.object(tensor, 'cuda', return_value=None) as mock_method:
+            utils.to_tensor(tensor, use_cuda=True)
+        mock_method.assert_any_call()
