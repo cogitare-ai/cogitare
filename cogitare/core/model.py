@@ -395,7 +395,7 @@ class Model(nn.Module):
         self._state.clear()
         self.hook('on_end')
 
-        self._logger.info('Training finished after {} epochs'.format(epoch))
+        self._logger.info('Training finished')
         return status
 
     @not_training

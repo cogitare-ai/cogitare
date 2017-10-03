@@ -28,6 +28,14 @@ def get_logger(name):
 
 
 def number_parameters(model):
+    """Counts the number of parameters in the model.
+
+    Args:
+        model (Model): model with training parameters
+
+    Returns:
+        count (int): number of parameters
+    """
     return sum(np.prod(params.size()) for params in model.parameters())
 
 
