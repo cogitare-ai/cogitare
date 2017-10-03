@@ -1,4 +1,7 @@
 import torch
+import logging
+import coloredlogs
+from itertools import repeat
 import functools
 import numpy as np
 from torch.nn import Module
@@ -14,6 +17,18 @@ class StopTraining(Exception):
     the model will run the plugins in the ``on_stop_training`` hook, and stop the training.
     """
     pass
+
+
+def get_logger(name):
+    _LOGGER = logging.getLogger(name)
+    _LOGGER.addHandler(logging.NullHandler())
+    coloredlogs.install(level='DEBUG', logger=_LOGGER)
+
+    return _LOGGER
+
+
+def number_parameters(model):
+    return sum(np.prod(params.size()) for params in model.parameters())
 
 
 def not_training(func):
@@ -143,3 +158,9 @@ def set_cuda(cuda):
     """
     global _CUDA_ENABLED
     _CUDA_ENABLED = cuda
+
+
+def _ntuple(item, n):
+    if isinstance(item, (list, tuple)):
+        return item
+    return tuple(repeat(item, n))

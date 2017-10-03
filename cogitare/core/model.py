@@ -1,6 +1,8 @@
 from torch import nn
+import humanize
 import torch
 from cogitare.utils import not_training, training, StopTraining
+from cogitare.data import AbsDataHolder, SequentialAbsDataHolder, DataSet, AsyncDataLoader
 from abc import ABCMeta, abstractmethod
 from six import add_metaclass
 from cogitare.plugins import Logger, ProgressBar, PlottingMatplotlib
@@ -49,6 +51,7 @@ class Model(nn.Module):
         self._state = {}
         self._plugins = dict((name, OrderedDict()) for name in self.valid_hooks)
         self._requires_register_default = False
+        self._logger = utils.get_logger(__name__)
 
     @abstractmethod
     def forward(self, data):
@@ -245,9 +248,7 @@ class Model(nn.Module):
         """
         utils.assert_raise(hook in self.valid_hooks, ValueError,
                            'Expected on of the following hooks: ' + ', '.join(self.valid_hooks))
-
-        if not isinstance(plugin, list):
-            plugin = [plugin]
+        plugin = utils._ntuple(plugin, 1)
 
         container = self._plugins[hook]
 
@@ -323,6 +324,14 @@ class Model(nn.Module):
         Returns:
             status (bool): False if stopped by :class:`~cogitare.utils.StopTraining`. True otherwise.
         """
+        self._logger.info('Model: \n\n{}\n'.format(repr(self)))
+        if isinstance(dataset, (AbsDataHolder, SequentialAbsDataHolder,
+                                DataSet, AsyncDataLoader)):
+            self._logger.info('Training data: \n\n{}\n'.format(repr(dataset)))
+        self._logger.info('Number of parameters: ' + humanize.intcomma(
+            utils.number_parameters(self)))
+        self._logger.info('Starting the training ...')
+
         try:
             self._state = {
                 'max_epochs': max_epochs,
@@ -386,6 +395,7 @@ class Model(nn.Module):
         self._state.clear()
         self.hook('on_end')
 
+        self._logger.info('Training finished after {} epochs'.format(epoch))
         return status
 
     @not_training

@@ -1,5 +1,7 @@
 from cogitare.core import PluginInterface
-import math
+import humanize
+import logging
+import coloredlogs
 import time
 from tqdm import tqdm
 import sys
@@ -44,6 +46,8 @@ class Logger(PluginInterface):
         self.msg = msg
         self.show_time = show_time
         self.output_file = output_file
+        self.logger = logging.getLogger(title)
+        coloredlogs.install(level='DEBUG', logger=self.logger)
 
         if show_time:
             self._start_time = time.time()
@@ -53,9 +57,8 @@ class Logger(PluginInterface):
             return ''
 
         seconds = time.time() - self._start_time
-        minutes = math.floor(seconds / 60)
-        seconds = seconds % 60
-        return '%dm %ds' % (minutes, seconds)
+
+        return '| ' + humanize.naturaltime(seconds)
 
     def function(self, *args, **kwargs):
         log = '%s %s %s' % (self.title, self.msg.format(**kwargs), self._time_spent())
@@ -64,11 +67,11 @@ class Logger(PluginInterface):
             for i in tqdm._instances:
                 i.clear()
             sys.stderr.flush()
-            sys.stdout.write(log + '\n')
+            self.logger.info(log)
             for i in tqdm._instances:
                 i.refresh()
         else:
-            print(log)
+            self.logger.info(log)
 
         if self.output_file:
             self.output_file.write(log + '\n')
