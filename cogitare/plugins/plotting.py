@@ -22,7 +22,11 @@ class PlottingMatplotlib(PluginInterface):
 
     Example::
 
-        plot = PlottingMatplotlib(source='both')
+
+        plot = PlottingMatplotlib()
+        # plot the loss error with the std
+        plot.add_variable('loss_mean', 'Loss', color='blue', std_data='losses')
+
         model.register_plugin(plot, 'on_end_epoch')
     """
     def __init__(self, style='ggplot', xlabel='Epochs', ylabel='Loss', title='Training loss per epoch',
@@ -55,6 +59,24 @@ class PlottingMatplotlib(PluginInterface):
         self._created = True
 
     def add_variable(self, name, label, style='.-', color=None, std_data=None):
+        """Register a varible to be plotted.
+
+        Args:
+            name (str): the name of a state variable to plot. Read the :meth:`cogitare.Model.register_plugin`
+                for available names. This variable must return a numeric value.
+            label (str): the label displayed in the plot
+            style (str): line style (check matplotlib for more information).
+            color (str): line color. If not defined, matplotlib will use a collor from its pallete.
+            std_data (str): if defined, must be the name of a state variable that returns a
+                list of numberic values. The plot will have the line and the standard-deviation (computed
+                using this list).
+
+        Example::
+
+            # plot the loss error with the std
+            plot.add_variable('loss_mean', 'Loss', color='blue', std_data='losses')
+        """
+
         plot = {
             'name': name,
             'label': label,
