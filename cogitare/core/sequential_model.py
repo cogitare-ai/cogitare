@@ -179,6 +179,15 @@ class SequentialModel(Model):
 
         return sum(losses) / len(losses)
 
+    def _start_learn_state(self, dataset, optimizer, validation_dataset, max_epochs):
+        super(SequentialModel, self)._start_learn_state(dataset, optimizer,
+                                                        validation_dataset, max_epochs)
+        self._state.update({'num_timesteps': None,
+                            'losses_timestep': None,
+                            'current_timestep': None,
+                            'sample_at_timestep': None,
+                            'output_at_timestep': None})
+
     @not_training
     def evaluate(self, dataset, *args, **kwargs):
         """
