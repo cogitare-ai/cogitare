@@ -18,6 +18,7 @@ class PlottingMatplotlib(PluginInterface):
         xlabel (str): label in the x-axis
         ylabel (str): label in the y-axis
         title (str): plot title
+        legend_pos (str): position of the label legends
 
     Example::
 
@@ -104,7 +105,7 @@ class PlottingMatplotlib(PluginInterface):
 
         # xdata = None
         for plot in self._variables:
-            y = kwargs.get(plot['name'])
+            y = kwargs[plot['name']]
             plot['data'].append(y)
 
             max_y = max(max_y, max(plot['data']))
