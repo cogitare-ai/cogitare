@@ -63,7 +63,7 @@ class Logger(PluginInterface):
     def function(self, *args, **kwargs):
         log = '%s %s %s' % (self.title, self.msg.format(**kwargs), self._time_spent())
 
-        if hasattr(tqdm, '_instances') and tqdm._instances:
+        if getattr(tqdm, '_instances', None):
             for i in tqdm._instances:
                 i.clear()
             sys.stderr.flush()

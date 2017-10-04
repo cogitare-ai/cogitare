@@ -44,20 +44,9 @@ class DataSet(object):
         self._batch_size = batch_size
         self._shuffle = shuffle
         self._drop_last = drop_last
+        self._total_samples = total_samples
 
-        self._container = []
-        for d in data:
-            if isinstance(d, self._AbsDataHolderClass):
-                d._batch_size = batch_size
-                d._shuffle = shuffle
-                d._drop_last = drop_last
-                if total_samples is not None:
-                    d.total_samples = total_samples
-            else:
-                d = self._AutoHolderClass(d, batch_size=batch_size, shuffle=shuffle,
-                                          drop_last=drop_last, total_samples=total_samples)
-
-            self._container.append(d)
+        self._container = self._create_container(data)
 
         l0 = len(self._container[0])
         for c in self._container[1:]:
@@ -69,6 +58,23 @@ class DataSet(object):
             c._indices = indices
 
         self.reset()
+
+    def _create_container(self, data):
+        container = []
+        for d in data:
+            if isinstance(d, self._AbsDataHolderClass):
+                d._batch_size = self._batch_size
+                d._shuffle = self._shuffle
+                d._drop_last = self._drop_last
+                if self._total_samples is not None:
+                    d.total_samples = self._total_samples
+            else:
+                d = self._AutoHolderClass(d, batch_size=self._batch_size, shuffle=self._shuffle,
+                                          drop_last=self._drop_last, total_samples=self._total_samples)
+
+            container.append(d)
+
+        return container
 
     def __repr__(self):
         """Display a summary of the dataset when using str(dataset) or repr(dataset).
