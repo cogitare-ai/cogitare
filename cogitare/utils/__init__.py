@@ -39,28 +39,31 @@ def number_parameters(model):
     return sum(np.prod(params.size()) for params in model.parameters())
 
 
+def _training_mode(func, mode):
+    @functools.wraps(func)
+    def f(self, *args, **kwargs):
+        assert isinstance(self, Module)
+        default = self.training
+        self.train(mode)
+        value = func(self, *args, **kwargs)
+        self.train(default)
+
+        return value
+    return f
+
+
 def not_training(func):
     """Decorator to disable the training during execution. Must be used inside a Module class.
 
     Example::
 
         @not_training
-        def my_func(arg1, arg2):
+        def my_func(self, arg1, arg2):
             # do something that cannot affect training, such as evaluating a
             # test set
             pass
     """
-    @functools.wraps(func)
-    def f(self, *args, **kwargs):
-        assert isinstance(self, Module)
-        default = self.training
-        self.train(False)
-        value = func(self, *args, **kwargs)
-        self.train(default)
-
-        return value
-
-    return f
+    return _training_mode(func, False)
 
 
 def training(func):
@@ -69,54 +72,53 @@ def training(func):
     Example::
 
         @training
-        def my_func(arg1, arg2):
+        def my_func(self, arg1, arg2):
             # do something that can affect training, such as forward your train
             # data
             pass
     """
-    @functools.wraps(func)
-    def f(self, *args, **kwargs):
-        assert isinstance(self, Module)
-        default = self.training
-        self.train(True)
-        value = func(self, *args, **kwargs)
-        self.train(default)
+    return _training_mode(func, True)
 
-        return value
 
-    return f
+def _get_first_item(data_list, depth=0):
+    depth += 1
+    if isinstance(data_list, list):
+        if len(data_list) == 0:
+            raise ValueError('Empty list')
+
+        return _get_first_item(data_list[0], depth)
+    return data_list, depth
+
+
+def _list_to_tensor(data):
+    item, depth = _get_first_item(data)
+    converter = {
+        int: torch.LongTensor,
+        float: torch.DoubleTensor,
+        np.ndarray: lambda x: torch.from_numpy(np.stack(x))
+    }
+
+    if torch.is_tensor(item):
+        if depth != 2:
+            raise ValueError('Cannot convert nested list of tensors')
+        tensor = torch.stack(data)
+    elif type(item) in converter:
+        tensor = converter[type(item)](data)
+    else:
+        raise ValueError('Invalid data type: {}'.format(type(item).__name__))
+
+    return tensor
 
 
 def to_tensor(data, tensor_klass=None, use_cuda=None):
     # if list, cast it to the compatible tensor type
-    tensor = None
+    converter = {
+        list: _list_to_tensor,
+        np.ndarray: torch.from_numpy
+    }
 
-    def get_first_item(data_list, depth=0):
-        depth += 1
-        if isinstance(data_list, list):
-            if len(data_list) == 0:
-                raise ValueError('Empty list')
-
-            return get_first_item(data_list[0], depth)
-        return data_list, depth
-
-    if isinstance(data, list):
-        item, depth = get_first_item(data)
-
-        if torch.is_tensor(item):
-            if depth != 2:
-                raise ValueError('Cannot convert nested list of tensors')
-            tensor = torch.stack(data)
-        elif isinstance(item, int):
-            tensor = torch.LongTensor(data)
-        elif isinstance(item, float):
-            tensor = torch.DoubleTensor(data)
-        elif isinstance(item, np.ndarray):
-            tensor = torch.from_numpy(np.stack(data))
-        else:
-            raise ValueError('Invalid data type: {}'.format(type(item).__name__))
-    elif isinstance(data, np.ndarray):
-        tensor = torch.from_numpy(data)
+    if type(data) in converter:
+        tensor = converter[type(data)](data)
     elif torch.is_tensor(data):
         tensor = data
     else:

@@ -85,6 +85,7 @@ class AbsDataHolder(object):
 
         self._indices = None
         self._single = single
+        self._mode = mode
         self._total_samples = total_samples
         self._remaining_samples = None
 
@@ -104,6 +105,11 @@ class AbsDataHolder(object):
         else:
             self._get = multiprocessing.get
 
+    def _clone(self):
+        return type(self)(data=self._data, batch_size=self._batch_size, shuffle=self._shuffle,
+                          drop_last=self._drop_last, total_samples=self._total_samples,
+                          mode=self._mode, single=self._single)
+
     def __repr__(self):
         """Using repr(data) or str(data), display the shape of the data.
         """
@@ -120,10 +126,7 @@ class AbsDataHolder(object):
         """
         return self.get_sample(self.indices[key])
 
-    def _get_batch(self):
-        if self._requires_reset:
-            self.reset()
-
+    def _get_batch_size(self):
         batch_size = min(self._batch_size, self._remaining_samples)
 
         if batch_size < self._batch_size and self._drop_last:
@@ -134,14 +137,24 @@ class AbsDataHolder(object):
             self._requires_reset = True
             raise StopIteration
 
+        return batch_size
+
+    def _get_batch(self):
+        if self._requires_reset:
+            self.reset()
+
+        batch_size = self._get_batch_size()
+
+        def load(loader):
+            return [loader(self.__getitem__)(self._current_batch * self._batch_size + i)
+                    for i in range(batch_size)]
+
         if self._get:
             # use dask
-            jobs = (delayed(self.__getitem__, traverse=False)
-                    (self._current_batch * self._batch_size + i) for i in range(batch_size))
+            jobs = load(lambda x: delayed(x, traverse=False))
             results = compute(jobs, get=self._get)[0]
         else:
-            results = [self.__getitem__(self._current_batch * self._batch_size + i)
-                       for i in range(batch_size)]
+            results = load(lambda x: x)
 
         self._current_batch += 1
         self._remaining_samples -= batch_size
@@ -225,11 +238,8 @@ class AbsDataHolder(object):
 
         pos = int(math.floor(self.total_samples * ratio))
 
-        data1 = type(self)(data=self._data, batch_size=self._batch_size,
-                           shuffle=self._shuffle, drop_last=self._drop_last)
-
-        data2 = type(self)(data=self._data, batch_size=self._batch_size,
-                           shuffle=self._shuffle, drop_last=self._drop_last)
+        data1 = self._clone()
+        data2 = self._clone()
 
         data1._indices = self.indices[:pos]
         data2._indices = self.indices[pos:]
@@ -266,8 +276,7 @@ class AbsDataHolder(object):
         for i in range(n):
             begin, end = i * size, min((i + 1) * size, self.total_samples)
 
-            holder = type(self)(data=self._data, batch_size=self._batch_size,
-                                shuffle=self._shuffle, drop_last=self._drop_last)
+            holder = self._clone()
             holder._indices = self.indices[begin:end]
             holder._total_samples = end - begin
 

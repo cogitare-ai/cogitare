@@ -99,15 +99,16 @@ class Model(nn.Module):
     def _register_default_plugins(self):
         self._requires_register_default = False
 
-        if self._state['validation_dataset'] is None:
-            plot_data = 'train'
-        else:
-            plot_data = 'both'
+        plot = PlottingMatplotlib()
+        plot.add_variable('loss_mean', 'Loss', color='blue', std_data='losses')
+        if self._state['validation_dataset']:
+            plot.add_variable('loss_mean_validation', 'Loss', color='green',
+                              std_data='losses_validation')
 
         self.register_plugin([
             Logger(title='[%s]' % self.__class__.__name__),
             ProgressBar(),
-            PlottingMatplotlib(source=plot_data)
+            plot,
         ], 'on_end_epoch', True)
 
         self.register_plugin([
@@ -132,7 +133,7 @@ class Model(nn.Module):
     def register_plugin(self, plugin, hook, override=False):
         """You can use this to register a plugin to a specific event of the model.
 
-        You can register (hook) a plugin to some specific events that may occor
+        You can register (hook) a plugin to some specific events that may occur
         during training:
 
             - **on_start**: executed when the model starts the training
@@ -141,6 +142,7 @@ class Model(nn.Module):
               - max_epochs
               - num_batches
               - model
+              - optimizer
               - current_batch (always 0)
               - current_epoch (always 0)
               - validation_dataset (if provided in the :meth:`~cogitare.Model.learn`).
@@ -151,6 +153,7 @@ class Model(nn.Module):
               - max_epochs
               - num_batches
               - model
+              - optimizer
               - current_batch (always 0)
               - current_epoch
               - validation_dataset (if provided in the :meth:`~cogitare.Model.learn`).
@@ -161,6 +164,7 @@ class Model(nn.Module):
               - max_epochs
               - num_batches
               - model
+              - optimizer
               - current_batch
               - current_epoch
               - sample
@@ -172,6 +176,7 @@ class Model(nn.Module):
               - max_epochs
               - num_batches
               - model
+              - optimizer
               - current_batch
               - current_epoch
               - sample
@@ -185,6 +190,7 @@ class Model(nn.Module):
               - max_epochs
               - num_batches
               - model
+              - optimizer
               - current_batch
               - current_epoch
               - sample
@@ -198,6 +204,7 @@ class Model(nn.Module):
               - max_epochs
               - num_batches
               - model
+              - optimizer
               - current_batch
               - current_epoch
               - sample
@@ -211,6 +218,7 @@ class Model(nn.Module):
               - max_epochs
               - num_batches
               - model
+              - optimizer
               - current_batch (always 0)
               - current_epoch
               - losses (a list of all losses in the current epoch until now)
@@ -226,6 +234,7 @@ class Model(nn.Module):
               - max_epochs
               - num_batches
               - model
+              - optimizer
               - current_batch (always 0)
               - current_epoch
               - losses (a list of all losses in the current epoch until now)
@@ -282,6 +291,34 @@ class Model(nn.Module):
 
         return loss.data[0]
 
+    def _start_learn_state(self, dataset, optimizer, validation_dataset, max_epochs):
+        self._logger.info('Model: \n\n{}\n'.format(repr(self)))
+        if isinstance(dataset, (AbsDataHolder, SequentialAbsDataHolder,
+                                DataSet, AsyncDataLoader)):
+            self._logger.info('Training data: \n\n{}\n'.format(repr(dataset)))
+        self._logger.info('Number of parameters: ' + humanize.intcomma(
+            utils.number_parameters(self)))
+        self._logger.info('Starting the training ...')
+
+        self._state = {
+            'max_epochs': max_epochs,
+            'num_batches': len(dataset),
+            'model': self,
+            'optimizer': optimizer,
+            'current_batch': 0,
+            'current_epoch': 0,
+            'sample': None,
+            'output': None,
+            'losses': None,
+            'loss_mean': None,
+            'losses_validation': None,
+            'loss_mean_validation': None,
+            'validation_dataset': validation_dataset
+        }
+
+        if self._requires_register_default:
+            self._register_default_plugins()
+
     @training
     def learn(self, dataset, optimizer, validation_dataset=None, max_epochs=50):
         """
@@ -324,34 +361,9 @@ class Model(nn.Module):
         Returns:
             status (bool): False if stopped by :class:`~cogitare.utils.StopTraining`. True otherwise.
         """
-        self._logger.info('Model: \n\n{}\n'.format(repr(self)))
-        if isinstance(dataset, (AbsDataHolder, SequentialAbsDataHolder,
-                                DataSet, AsyncDataLoader)):
-            self._logger.info('Training data: \n\n{}\n'.format(repr(dataset)))
-        self._logger.info('Number of parameters: ' + humanize.intcomma(
-            utils.number_parameters(self)))
-        self._logger.info('Starting the training ...')
-
+        original_register_default = self._requires_register_default
+        self._start_learn_state(dataset, optimizer, validation_dataset, max_epochs)
         try:
-            self._state = {
-                'max_epochs': max_epochs,
-                'num_batches': len(dataset),
-                'model': self,
-                'current_batch': 0,
-                'current_epoch': 0,
-                'sample': None,
-                'output': None,
-                'losses': None,
-                'loss_mean': None,
-                'losses_validation': None,
-                'loss_mean_validation': None,
-                'validation_dataset': validation_dataset
-            }
-
-            original_register_default = self._requires_register_default
-            if self._requires_register_default:
-                self._register_default_plugins()
-
             self.hook('on_start')
 
             for epoch in range(1, max_epochs + 1):

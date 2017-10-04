@@ -204,11 +204,10 @@ def SequentialNumpyHolder(data, *args, **kwargs):
 def SequentialAutoHolder(data, *args, **kwargs):
     """Check the data type to infer which sequential data holder to use.
     """
+    if isinstance(data, numpy.ndarray):
+        return SequentialNumpyHolder(data, *args, **kwargs)
     if torch.is_tensor(data):
         return SequentialTensorHolder(data, *args, **kwargs)
-    elif isinstance(data, numpy.ndarray):
-        return SequentialNumpyHolder(data, *args, **kwargs)
-    elif callable(data):
+    if callable(data):
         return SequentialCallableHolder(data, *args, **kwargs)
-    else:
-        raise ValueError('Unable to infer data type!')
+    raise ValueError('Unable to infer data type!')

@@ -1,144 +1,117 @@
-from cogitare import utils
 from cogitare.core import PluginInterface
-import matplotlib.pyplot as plt
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 class PlottingMatplotlib(PluginInterface):
     """
-    This plugin is a matplotlib interface to plot training and validation error
-    during the training process.
+    This plugin is a matplotlib interface to plot the training state, such as the
+    training and validation error during the training process.
 
     It's useful to monitor the model performance, overfitting, generalization, and so on.
-
-    It's recommended to use this plugin at the **on_end_epoch** hook since the validation loss
-    is calculated at this point.
 
     .. image:: _static/plugin_matplotlib.png
         :target: _static/plugin_matplotlib.png
 
-    .. note:: If you want to plot the validation error, make sure to include the
-        validation dataset in the model training.
-
     Args:
-        source (str): determines the plot data. "train" to plot training error, "validation"
-            for validation error, or "both" to include both losses in the plot.
-        training_label (str): the label in the plot of the training error
-        validation_label (str): the label in the plot of the validation error
         style (str): matplotlib style
         xlabel (str): label in the x-axis
         ylabel (str): label in the y-axis
         title (str): plot title
-        show_std (bool): if True, display the standard deviation of the loss in the plot.
+        legend_pos (str): position of the label legends
 
     Example::
 
         plot = PlottingMatplotlib(source='both')
         model.register_plugin(plot, 'on_end_epoch')
     """
-
-    def __init__(self, source='train', training_label='Training loss', validation_label='Validation loss',
-                 style='ggplot', xlabel='Epochs', ylabel='Loss', title='Training loss per epoch',
-                 show_std=True):
+    def __init__(self, style='ggplot', xlabel='Epochs', ylabel='Loss', title='Training loss per epoch',
+                 legend_pos='upper right'):
         super(PlottingMatplotlib, self).__init__()
-        utils.assert_raise(source in ('train', 'validation', 'both'), ValueError,
-                           '"source" must be: "train", "validation" or "both"')
-        self.source = source
-        self.max_epochs = None
-        self.style = style
-        self.xlabel = xlabel
-        self.ylabel = ylabel
-        self.training_label = training_label
-        self.validation_label = validation_label
-        self.title = title
+        self._style = style
+        self._xlabel = xlabel
+        self._ylabel = ylabel
+        self._title = title
+        self._legend_pos = legend_pos
 
-        self.line = {
-            'loss_mean': None,
-            'loss_mean_validation': None
-        }
+        self._plt = None
+        self._fig, self._ax = None, None
+        self._variables = []
+        self._created = False
 
-        self.line_std = {
-            'loss_mean': None,
-            'loss_mean_validation': None
-        }
-
-        self.labels = {
-            'loss_mean': self.training_label,
-            'loss_mean_validation': self.validation_label
-        }
-
-        self.list_values = {
-            'loss_mean': 'losses',
-            'loss_mean_validation': 'losses_validation'
-        }
-
-        self.colors = {
-            'loss_mean': 'blue',
-            'loss_mean_validation': 'green'
-        }
-
-    def _create(self):
+    def _create_plot(self):
         plt.ion()
-        plt.style.use(self.style)
-        self.fig, self.ax = plt.subplots()
+        plt.style.use(self._style)
+        fig, ax = plt.subplots()
 
-        plt.title(self.title)
-        plt.ylabel(self.ylabel)
-        plt.xlabel(self.xlabel)
+        plt.title(self._title)
+        plt.xlabel(self._xlabel)
+        plt.ylabel(self._ylabel)
 
-        self.y = {
-            'loss_mean': [0] * self.max_epochs,
-            'loss_mean_validation': [0] * self.max_epochs
+        self._plt = plt
+        self._fig = fig
+        self._ax = ax
+
+        self._created = True
+
+    def add_variable(self, name, label, style='.-', color=None, std_data=None):
+        plot = {
+            'name': name,
+            'label': label,
+            'style': style,
+            'std_data': std_data,
+            'color': color,
+            'data': [],
+            'data_inf': [],
+            'data_sup': [],
+
+            'line': None,
+            'line_std': None
         }
 
-        self.y_inf = {
-            'loss_mean': [0] * self.max_epochs,
-            'loss_mean_validation': [0] * self.max_epochs
-        }
+        self._variables.append(plot)
 
-        self.y_sup = {
-            'loss_mean': [0] * self.max_epochs,
-            'loss_mean_validation': [0] * self.max_epochs
-        }
+    def _plot_data(self, plot, y, kwargs):
+        qtd = len(plot['data'])
+        xdata = list(range(1, qtd + 1))
 
-        if self.source == 'train':
-            del self.y['loss_mean_validation']
-        elif self.source == 'validation':
-            del self.y['loss_mean']
+        if qtd == 1:  # first one
+            plot['line'], = self._ax.plot(xdata, plot['data'], plot['style'],
+                                          label=plot['label'],
+                                          color=plot['color'])
+            self._ax.legend(loc=self._legend_pos)
+        else:
+            plot['line'].set_ydata(plot['data'])
+            plot['line'].set_xdata(xdata)
 
-    def function(self, current_epoch, max_epochs, *args, **kwargs):
-        if self.max_epochs is None:
-            self.max_epochs = max_epochs
-            self.x = list(range(1, max_epochs + 1))
-            self._create()
-        max_y = 0
+        if plot['std_data'] is not None:
+            std_data = kwargs.get(plot['std_data'])
+            std = np.std(std_data)
+            plot['data_inf'].append(y - std)
+            plot['data_sup'].append(y + std)
 
-        for d in self.y.keys():
-            data = self.y[d]
-            data_inf = self.y_inf[d]
-            data_sup = self.y_sup[d]
-            if d == 'loss_mean':
-                std = np.std(kwargs['losses'])
-            else:
-                std = np.std(kwargs['losses_validation'])
+            if plot['line_std']:
+                plot['line_std'].remove()
 
-            for pos in range(current_epoch - 1, self.max_epochs):
-                data[pos] = kwargs[d]
-                data_inf[pos] = kwargs[d] - std
-                data_sup[pos] = kwargs[d] + std
+            p = self._ax.fill_between(xdata, plot['data_inf'], plot['data_sup'],
+                                      color=plot['line'].get_color(), alpha=0.1)
+            plot['line_std'] = p
 
-            if self.line[d] is None:
-                self.line[d], = self.ax.plot(self.x, self.y[d], '.-', label=self.labels[d],
-                                             color=self.colors[d])
-                self.ax.legend(loc='upper right')
+    def function(self, **kwargs):
+        if not self._created:
+            self._create_plot()
+        max_y = -float('inf')
+        min_y = float('inf')
 
-            if self.line_std[d] is not None:
-                self.line_std[d].remove()
+        # xdata = None
+        for plot in self._variables:
+            y = kwargs[plot['name']]
+            plot['data'].append(y)
 
-            self.line_std[d] = self.ax.fill_between(self.x, self.y_inf[d], self.y_sup[d],
-                                                    color=self.colors[d], alpha=0.1)
+            max_y = max(max_y, max(plot['data']))
+            min_y = min(min_y, min(plot['data']))
+            self._plot_data(plot, y, kwargs)
 
-            max_y = max(max_y, max(self.y[d]))
-            self.line[d].set_ydata(self.y[d])
-        self.ax.set_ylim([0, max_y])
-        self.fig.canvas.draw()
+        self._ax.set_ylim([min(0, min_y), max_y])
+        self._plt.xticks(np.arange(1, len(plot['data']) + 1))
+        self._fig.canvas.draw()
