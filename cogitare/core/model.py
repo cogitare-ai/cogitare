@@ -99,15 +99,16 @@ class Model(nn.Module):
     def _register_default_plugins(self):
         self._requires_register_default = False
 
-        if self._state['validation_dataset'] is None:
-            plot_data = 'train'
-        else:
-            plot_data = 'both'
+        plot = PlottingMatplotlib()
+        plot.add_variable('loss_mean', 'Loss', color='blue', std_data='losses')
+        if self._state['validation_dataset']:
+            plot.add_variable('loss_mean_validation', 'Loss', color='green',
+                              std_data='losses_validation')
 
         self.register_plugin([
             Logger(title='[%s]' % self.__class__.__name__),
             ProgressBar(),
-            PlottingMatplotlib(source=plot_data)
+            plot,
         ], 'on_end_epoch', True)
 
         self.register_plugin([
@@ -132,7 +133,7 @@ class Model(nn.Module):
     def register_plugin(self, plugin, hook, override=False):
         """You can use this to register a plugin to a specific event of the model.
 
-        You can register (hook) a plugin to some specific events that may occor
+        You can register (hook) a plugin to some specific events that may occur
         during training:
 
             - **on_start**: executed when the model starts the training
