@@ -105,10 +105,10 @@ class Model(nn.Module):
         plot.add_variable('loss', 'Loss', color='blue', use_std=True)
         if self._state['validation_dataset']:
             evaluator = Evaluator(self._state['validation_dataset'], {'loss': self.metric_loss})
-            plot.add_variable('on_end_epoch_Evaluator_loss', 'Loss', color='green')
+            plot.add_variable('on_end_epoch_Evaluator_loss', 'Loss', color='green', use_std=True)
+            self.register_plugin(evaluator, 'on_end_epoch', True, False)
 
         self.register_plugin([
-            evaluator,
             Logger(title='[%s]' % self.__class__.__name__),
             ProgressBar(),
             plot,
@@ -191,7 +191,7 @@ class Model(nn.Module):
         """
         for params in self._to_register:
             self._apply_plugin(*params)
-        self._to_register.clear()
+        self._to_register = []
 
     def _apply_plugin(self, plugin, hook, override):
         utils.assert_raise(hook in self.valid_hooks, ValueError,

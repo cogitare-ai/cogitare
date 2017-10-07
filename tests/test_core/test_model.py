@@ -50,7 +50,7 @@ class TestModel(TestCase):
         model = Model1()
 
         with pytest.raises(ValueError) as info:
-            model.register_plugin(lambda x: x, 'any')
+            model.register_plugin(lambda x: x, 'any', postpone=False)
         self.assertIn('Expected on of the following hooks', str(info.value))
 
     def test_register_plugin_adds_to_hooks(self):
@@ -62,7 +62,7 @@ class TestModel(TestCase):
         container = model._plugins['on_start']
         self.assertDictEqual(container, {})
 
-        model.register_plugin(test, 'on_start')
+        model.register_plugin(test, 'on_start', postpone=False)
         self.assertIn('test', container)
 
         plugin = container['test']
@@ -71,13 +71,13 @@ class TestModel(TestCase):
         self.assertIsInstance(plugin, PluginInterface)
 
         with pytest.raises(ValueError) as info:
-            model.register_plugin(test, 'on_start')
+            model.register_plugin(test, 'on_start', postpone=False)
         self.assertIn('A plugin with name "test" already exists', str(info.value))
 
-        model.register_plugin(test, 'on_start', True)
+        model.register_plugin(test, 'on_start', True, postpone=False)
         self.assertIn('test', container)
 
-        model.register_plugin(test, 'on_end')
+        model.register_plugin(test, 'on_end', postpone=False)
         self.assertIn('test', model._plugins['on_end'])
 
     def test_hook(self):
@@ -87,7 +87,7 @@ class TestModel(TestCase):
             pass
 
         meth = mock.create_autospec(test, return_value=3)
-        model.register_plugin(meth, 'on_start')
+        model.register_plugin(meth, 'on_start', postpone=False)
 
         model.hook('on_start')
 
@@ -99,18 +99,33 @@ class TestModel(TestCase):
         sgd = optim.SGD(model.parameters(), lr=0.1)
 
         model.register_default_plugins()
-        model.learn(self.data, None, None, max_epochs=0)
-        for i in range(10):
-            model.register_default_plugins()
-            if 'DISPLAY' in os.environ:
-                model.learn(self.data, sgd, self.data, max_epochs=2)
-            else:
-                model.learn(self.data, sgd, self.data, max_epochs=0)
+        if 'DISPLAY' in os.environ:
+            model.learn(self.data, sgd, self.data, max_epochs=10)
+        else:
+            model.learn(self.data, sgd, self.data, max_epochs=0)
 
-            self.assertIn('Logger', model._plugins['on_end_epoch'])
-            self.assertIn('ProgressBar', model._plugins['on_end_epoch'])
-            self.assertIn('PlottingMatplotlib', model._plugins['on_end_epoch'])
-            self.assertIn('ProgressBar', model._plugins['on_end_batch'])
+        self.assertIn('Logger', model._plugins['on_end_epoch'])
+        self.assertIn('ProgressBar', model._plugins['on_end_epoch'])
+        self.assertIn('PlottingMatplotlib', model._plugins['on_end_epoch'])
+        self.assertIn('ProgressBar', model._plugins['on_end_batch'])
+
+    def test_evaluate_metrics(self):
+        model = Model1()
+        sgd = optim.SGD(model.parameters(), lr=0.01)
+        model.learn(self.data, sgd, max_epochs=100)
+
+        metrics = model.evaluate_with_metrics(self.data, {'loss': model.metric_loss,
+                                                          'nothing': lambda x, y: 1})
+
+        self.assertDictEqual(metrics, {'loss': [0, 0], 'nothing': [1, 1]})
+
+    def test_metric_loss(self):
+        model = Model1()
+
+        output = model.forward(self.data[0])
+        loss = model.loss(output, self.data[0])
+
+        self.assertEqual(loss.data[0], model.metric_loss(output, self.data[0]))
 
     @mock.patch('torch.load', return_value=None)
     def test_load(self, tload):

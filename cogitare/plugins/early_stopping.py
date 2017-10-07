@@ -64,7 +64,7 @@ class EarlyStopping(PluginInterface):
         self._best_score = float('inf')
 
     def function(self, model, current_epoch, **kwargs):
-        metric = self.func(self.func(kwargs.get(self.metric_name)))
+        metric = self.func(kwargs.get(self.metric_name))
 
         if metric < self._best_score:
             self._best_score = metric

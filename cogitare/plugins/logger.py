@@ -1,4 +1,3 @@
-# -*- coding: future_fstrings -*-
 from cogitare.core import PluginInterface
 import humanize
 import logging
@@ -33,8 +32,8 @@ class Logger(PluginInterface):
     Examples::
 
         logger1 = Logger()
-        logger2 = Logger(msg='Batch loss: {np.mean(loss):.6f}')
-        logger3 = Logger(msg='Validation loss: {np.mean(on_end_batch_Evalualor_loss):.6f}')
+        logger2 = Logger(msg='Batch loss: {loss_mean:.6f}')
+        logger3 = Logger(msg='Validation loss: {on_end_batch_Evalualor_loss:.6f}')
 
         model.register_plugin([logger1, logger3], 'on_end_epoch')
         model.register_plugin(logger2, 'on_end_batch')

@@ -1,9 +1,10 @@
 from cogitare.plugins import Logger
-import tqdm
+from tqdm import tqdm
 import mock
 
 
 def test_logger1(capsys):
+    tqdm._instances = set()
     l = Logger()
     l(loss_mean=1.0)
     out, err = capsys.readouterr()
@@ -29,7 +30,7 @@ def test_logger_file(capsys):
 
 
 def test_logger_with_tqdm(capsys):
-    bar = tqdm.tqdm(total=10)
+    bar = tqdm(total=10)
     bar.update(3)
 
     l = Logger()
