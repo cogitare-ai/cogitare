@@ -45,14 +45,20 @@ the available events to watch, and which variables are available per event.
 Official Plugins
 ----------------
 
+
+:hidden:`EarlyStopping`
+~~~~~~~~~~~~~~~~~~~~~~~
+.. autoclass:: cogitare.plugins.EarlyStopping
+    :members:
+
+:hidden:`Evaluator`
+~~~~~~~~~~~~~~~~~~~
+.. autoclass:: cogitare.plugins.Evaluator
+    :members:
+
 :hidden:`Logger`
 ~~~~~~~~~~~~~~~~
 .. autoclass:: cogitare.plugins.Logger
-    :members:
-
-:hidden:`ProgressBar`
-~~~~~~~~~~~~~~~~~~~~~
-.. autoclass:: cogitare.plugins.ProgressBar
     :members:
 
 :hidden:`PlottingMatplotlib`
@@ -60,7 +66,7 @@ Official Plugins
 .. autoclass:: cogitare.plugins.PlottingMatplotlib
     :members:
 
-:hidden:`EarlyStopping`
-~~~~~~~~~~~~~~~~~~~~~~~
-.. autoclass:: cogitare.plugins.EarlyStopping
+:hidden:`ProgressBar`
+~~~~~~~~~~~~~~~~~~~~~
+.. autoclass:: cogitare.plugins.ProgressBar
     :members:

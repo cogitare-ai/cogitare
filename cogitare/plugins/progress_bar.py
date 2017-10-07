@@ -19,8 +19,7 @@ class ProgressBar(PluginInterface):
         monitor (str): the state to be monitored. Must be ``epoch`` or ``batch``.
         desc (str): the name of the progress bar. If not provided, the monitor name
             will be used.
-        freq (int): the frequency to update the progress bar.
-
+        freq (int): the frequency to execute this model. The model will execute at each ``freq`` call.
     Examples::
 
         bar1 = ProgressBar()

@@ -19,19 +19,23 @@ class PlottingMatplotlib(PluginInterface):
         ylabel (str): label in the y-axis
         title (str): plot title
         legend_pos (str): position of the label legends
+        freq (int): the frequency to execute this model. The model will execute at each ``freq`` call.
 
     Example::
 
 
         plot = PlottingMatplotlib()
-        # plot the loss error with the std
-        plot.add_variable('loss_mean', 'Loss', color='blue', std_data='losses')
+        # plot the training error with the std
+        plot.add_variable('loss', 'Loss', color='blue', use_std=True)
+        # plot the validation error without std
+        plot.add_variable('on_end_batch_Evaluator_loss',
+                          'Validation', color='green', use_std=False)
 
         model.register_plugin(plot, 'on_end_epoch')
     """
     def __init__(self, style='ggplot', xlabel='Epochs', ylabel='Loss', title='Training loss per epoch',
-                 legend_pos='upper right'):
-        super(PlottingMatplotlib, self).__init__()
+                 legend_pos='upper right', freq=1):
+        super(PlottingMatplotlib, self).__init__(freq=freq)
         self._style = style
         self._xlabel = xlabel
         self._ylabel = ylabel
@@ -58,30 +62,29 @@ class PlottingMatplotlib(PluginInterface):
 
         self._created = True
 
-    def add_variable(self, name, label, style='.-', color=None, std_data=None):
+    def add_variable(self, name, label, style='.-', color=None, use_std=True):
         """Register a varible to be plotted.
 
         Args:
             name (str): the name of a state variable to plot. Read the :meth:`cogitare.Model.register_plugin`
-                for available names. This variable must return a numeric value.
+                for available names. This variable must return a numeric value or a list of them.
             label (str): the label displayed in the plot
             style (str): line style (check matplotlib for more information).
             color (str): line color. If not defined, matplotlib will use a collor from its pallete.
-            std_data (str): if defined, must be the name of a state variable that returns a
-                list of numberic values. The plot will have the line and the standard-deviation (computed
-                using this list).
+            use_std (bool): if True, plots the standard deviation of the variable defined
+                by ``name``. To compute the std, the ``name`` variable must be a list.
 
         Example::
 
             # plot the loss error with the std
-            plot.add_variable('loss_mean', 'Loss', color='blue', std_data='losses')
+            plot.add_variable('loss', 'Loss', color='blue')
         """
 
         plot = {
             'name': name,
             'label': label,
             'style': style,
-            'std_data': std_data,
+            'use_std': use_std,
             'color': color,
             'data': [],
             'data_inf': [],
@@ -93,7 +96,7 @@ class PlottingMatplotlib(PluginInterface):
 
         self._variables.append(plot)
 
-    def _plot_data(self, plot, y, kwargs):
+    def _plot_data(self, plot, y_mean, y, kwargs):
         qtd = len(plot['data'])
         xdata = list(range(1, qtd + 1))
 
@@ -106,11 +109,10 @@ class PlottingMatplotlib(PluginInterface):
             plot['line'].set_ydata(plot['data'])
             plot['line'].set_xdata(xdata)
 
-        if plot['std_data'] is not None:
-            std_data = kwargs.get(plot['std_data'])
-            std = np.std(std_data)
-            plot['data_inf'].append(y - std)
-            plot['data_sup'].append(y + std)
+        if plot['use_std']:
+            std = np.std(y)
+            plot['data_inf'].append(y_mean - std)
+            plot['data_sup'].append(y_mean + std)
 
             if plot['line_std']:
                 plot['line_std'].remove()
@@ -122,18 +124,19 @@ class PlottingMatplotlib(PluginInterface):
     def function(self, **kwargs):
         if not self._created:
             self._create_plot()
-        max_y = -float('inf')
-        min_y = float('inf')
+            self.max_y = -float('inf')
+            self.min_y = float('inf')
 
         # xdata = None
         for plot in self._variables:
             y = kwargs[plot['name']]
-            plot['data'].append(y)
+            y_mean = float(np.mean(y))
+            plot['data'].append(y_mean)
 
-            max_y = max(max_y, max(plot['data']))
-            min_y = min(min_y, min(plot['data']))
-            self._plot_data(plot, y, kwargs)
+            self.max_y = max(self.max_y, y_mean)
+            self.min_y = min(self.min_y, y_mean)
+            self._plot_data(plot, y_mean, y, kwargs)
 
-        self._ax.set_ylim([min(0, min_y), max_y])
+        self._ax.set_ylim([min(0, self.min_y), self.max_y])
         self._plt.xticks(np.arange(1, len(plot['data']) + 1))
         self._fig.canvas.draw()

@@ -111,6 +111,54 @@ def _list_to_tensor(data):
 
 
 def to_tensor(data, tensor_klass=None, use_cuda=None):
+    """Try to conver a variable to a torch tensor.
+
+    Data can be:
+
+        - list of Tensors
+        - list of list of list (...) of int/float
+        - list of numpy arrays
+        - numpy array
+        - tensor
+
+    And this will return a torch tensor.
+
+    Args:
+        data (list, numpy.ndarray, torch.Tensor): the data to be converted.
+        tensor_klass (torch,Tensor): if provided, the output will have the same type
+            as this class.
+        use_cuda (bool): if True, the tensor ``.cuda()`` will be returned. If None, the
+            default value setted by :func:`~cogitare.utils.set_cuda` will be used.
+
+    Returns:
+        tensor (torch.Tensor): the data converted to tensor type.
+
+    Examples::
+
+        >>> a = [1, 2, 3]
+        >>> b = [[1, 2, 3], [4, 5, 6]]
+        >>> to_tensor(a)
+         1
+         2
+         3
+        [torch.LongTensor of size 3]
+        >>> to_tensor(b, torch.FloatTensor)
+         1  2  3
+         4  5  6
+        [torch.FloatTensor of size 2x3]
+
+        >>> c = [torch.Tensor([1, 2, 3]), torch.Tensor([4, 5, 6])]
+        >>> to_tensor(c)
+         1  2  3
+         4  5  6
+        [torch.FloatTensor of size 2x3]
+
+        >>> d = [np.asarray([1, 2, 3]), np.asarray([4, 5, 6])]
+        >>> to_tensor(d)
+         1  2  3
+         4  5  6
+        [torch.LongTensor of size 2x3]
+    """
     # if list, cast it to the compatible tensor type
     converter = {
         list: _list_to_tensor,

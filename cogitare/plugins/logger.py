@@ -27,13 +27,13 @@ class Logger(PluginInterface):
             :meth:`str.format`, and it has access to the model state variable.
         show_time (bool): if True, appends the running time at the end of the message.
         output (file): if provided, write the log message in the file.
-        freq (int): the frequency to execute this model.
+        freq (int): the frequency to execute this model. The model will execute at each ``freq`` call.
 
     Examples::
 
         logger1 = Logger()
         logger2 = Logger(msg='Batch loss: {loss_mean:.6f}')
-        logger3 = Logger(msg='Validation loss: {loss_mean_validation:.6f}')
+        logger3 = Logger(msg='Validation loss: {on_end_batch_Evalualor_loss:.6f}')
 
         model.register_plugin([logger1, logger3], 'on_end_epoch')
         model.register_plugin(logger2, 'on_end_batch')
