@@ -1,11 +1,12 @@
 from torch import nn
+import numpy as np
 import humanize
 import torch
 from cogitare.utils import not_training, training, StopTraining
 from cogitare.data import AbsDataHolder, SequentialAbsDataHolder, DataSet, AsyncDataLoader
 from abc import ABCMeta, abstractmethod
 from six import add_metaclass
-from cogitare.plugins import Logger, ProgressBar, PlottingMatplotlib
+from cogitare.plugins import Logger, ProgressBar, PlottingMatplotlib, Evaluator
 from cogitare import utils
 from cogitare.core.plugin_interface import PluginInterface
 from collections import OrderedDict
@@ -52,6 +53,7 @@ class Model(nn.Module):
         self._plugins = dict((name, OrderedDict()) for name in self.valid_hooks)
         self._requires_register_default = False
         self._logger = utils.get_logger(__name__)
+        self._to_register = []
 
     @abstractmethod
     def forward(self, data):
@@ -100,20 +102,21 @@ class Model(nn.Module):
         self._requires_register_default = False
 
         plot = PlottingMatplotlib()
-        plot.add_variable('loss_mean', 'Loss', color='blue', std_data='losses')
+        plot.add_variable('loss', 'Loss', color='blue', use_std=True)
         if self._state['validation_dataset']:
-            plot.add_variable('loss_mean_validation', 'Loss', color='green',
-                              std_data='losses_validation')
+            evaluator = Evaluator(self._state['validation_dataset'], {'loss': self.metric_loss})
+            plot.add_variable('on_end_epoch_Evaluator_loss', 'Loss', color='green')
 
         self.register_plugin([
+            evaluator,
             Logger(title='[%s]' % self.__class__.__name__),
             ProgressBar(),
             plot,
-        ], 'on_end_epoch', True)
+        ], 'on_end_epoch', True, False)
 
         self.register_plugin([
             ProgressBar(monitor='batch')
-        ], 'on_end_batch', True)
+        ], 'on_end_batch', True, False)
 
     def register_default_plugins(self):
         """
@@ -122,7 +125,7 @@ class Model(nn.Module):
         Plugins included:
 
             - Progress bar per batch and epoch
-            - Plot training and validation losses
+            - Plot training and validation losses (if validation_dataset is present)
             - Log training loss
 
         If you want to have these plugins on training, just use this method before
@@ -130,123 +133,41 @@ class Model(nn.Module):
         """
         self._requires_register_default = True
 
-    def register_plugin(self, plugin, hook, override=False):
+    def register_plugin(self, plugin, hook, override=False, postpone=True):
         """You can use this to register a plugin to a specific event of the model.
+
+        For each hook, the plugins will be called in the same order that they
+        were registered.
 
         You can register (hook) a plugin to some specific events that may occur
         during training:
 
-            - **on_start**: executed when the model starts the training
-              process. At this time, you have access to the following variables:
+        +-------------------------+-------------+--------------+-------+-----------+----------------+----------------+---------+---------+---------+------------+---------------------+
+        | hook X parameter        | max_epochs  | num_batches  | model | optimizer | current_batch  | current_epoch  | sample  | output  | loss    | loss_mean  | validation_dataset  |
+        +=========================+=============+==============+=======+===========+================+================+=========+=========+=========+============+=====================+
+        | on_start                | OK          | OK           | OK    | OK        | 0              | 0              | None    | None    | None    | None       | OK                  |
+        +-------------------------+-------------+--------------+-------+-----------+----------------+----------------+---------+---------+---------+------------+---------------------+
+        | on_start_epoch          | OK          | OK           | OK    | OK        | 0              | OK             | None    | None    | None    | None       | OK                  |
+        +-------------------------+-------------+--------------+-------+-----------+----------------+----------------+---------+---------+---------+------------+---------------------+
+        | on_start_batch          | OK          | OK           | OK    | OK        | OK             | OK             | OK      | None    | OK      | OK         | OK                  |
+        +-------------------------+-------------+--------------+-------+-----------+----------------+----------------+---------+---------+---------+------------+---------------------+
+        | before_backward         | OK          | OK           | OK    | OK        | OK             | OK             | OK      | OK      | OK      | None       | OK                  |
+        +-------------------------+-------------+--------------+-------+-----------+----------------+----------------+---------+---------+---------+------------+---------------------+
+        | before_step             | OK          | OK           | OK    | OK        | OK             | OK             | OK      | OK      | OK      | None       | OK                  |
+        +-------------------------+-------------+--------------+-------+-----------+----------------+----------------+---------+---------+---------+------------+---------------------+
+        | on_end_batch            | OK          | OK           | OK    | OK        | OK             | OK             | OK      | OK      | OK      | None       | OK                  |
+        +-------------------------+-------------+--------------+-------+-----------+----------------+----------------+---------+---------+---------+------------+---------------------+
+        | on_end_epoch            | OK          | OK           | OK    | OK        | 0              | OK             | None    | None    | OK      | OK         | OK                  |
+        +-------------------------+-------------+--------------+-------+-----------+----------------+----------------+---------+---------+---------+------------+---------------------+
+        | on_stop_training        | OK          | OK           | OK    | OK        | depends        | depends        | depends | depends | depends | depends    | OK                  |
+        +-------------------------+-------------+--------------+-------+-----------+----------------+----------------+---------+---------+---------+------------+---------------------+
+        | on_end                  | OK          | OK           | OK    | OK        | depends        | depends        | depends | depends | depends | depends    | OK                  |
+        +-------------------------+-------------+--------------+-------+-----------+----------------+----------------+---------+---------+---------+------------+---------------------+
 
-              - max_epochs
-              - num_batches
-              - model
-              - optimizer
-              - current_batch (always 0)
-              - current_epoch (always 0)
-              - validation_dataset (if provided in the :meth:`~cogitare.Model.learn`).
+        The value of some of the model states depends on the execution of the model. The
+        **on_stop_training**, for example, can be execute at any position of the learnining
+        algorithm, so the valiables in the model state will depend on its current position.
 
-            - **on_start_epoch**: executed when the model starts the execution
-              of a new epoch. At this time, you have access to the following variables:
-
-              - max_epochs
-              - num_batches
-              - model
-              - optimizer
-              - current_batch (always 0)
-              - current_epoch
-              - validation_dataset (if provided in the :meth:`~cogitare.Model.learn`).
-
-            - **on_start_batch**: executed when the model starts the execution
-              of a new batch. At this time, you have access to the following variables:
-
-              - max_epochs
-              - num_batches
-              - model
-              - optimizer
-              - current_batch
-              - current_epoch
-              - sample
-              - validation_dataset (if provided in the :meth:`~cogitare.Model.learn`).
-
-            - **before_backward**: executed before the model backward the loss
-              function. At this time, you have access to the following variables:
-
-              - max_epochs
-              - num_batches
-              - model
-              - optimizer
-              - current_batch
-              - current_epoch
-              - sample
-              - losses (a list of all losses in the current epoch until now)
-              - output
-              - validation_dataset (if provided in the :meth:`~cogitare.Model.learn`).
-
-            - **before_step**: executed before the model optimize the model
-              parameters. At this time, you have access to the following variables:
-
-              - max_epochs
-              - num_batches
-              - model
-              - optimizer
-              - current_batch
-              - current_epoch
-              - sample
-              - losses (a list of all losses in the current epoch until now)
-              - output
-              - validation_dataset (if provided in the :meth:`~cogitare.Model.learn`).
-
-            - **on_end_batch**: executed when the model finishes the execution
-              of a batch of data. At this time, you have access to the following variables:
-
-              - max_epochs
-              - num_batches
-              - model
-              - optimizer
-              - current_batch
-              - current_epoch
-              - sample
-              - losses (a list of all losses in the current epoch until now)
-              - output
-              - validation_dataset (if provided in the :meth:`~cogitare.Model.learn`).
-
-            - **on_end_epoch**: executed when the model finishes the execution
-              of epoch (usually multiple batches). At this time, you have access to the following variables:
-
-              - max_epochs
-              - num_batches
-              - model
-              - optimizer
-              - current_batch (always 0)
-              - current_epoch
-              - losses (a list of all losses in the current epoch until now)
-              - loss_mean
-              - losses_validation (if validation data is present. List of
-                losses in all validation batches)
-              - loss_mean_validation
-              - validation_dataset (if provided in the :meth:`~cogitare.Model.learn`).
-
-            - **on_end**: executed when the model finishes the execution
-              of all epochs. At this time, you have access to the following variables:
-
-              - max_epochs
-              - num_batches
-              - model
-              - optimizer
-              - current_batch (always 0)
-              - current_epoch
-              - losses (a list of all losses in the current epoch until now)
-              - loss_mean
-              - losses_validation (if validation data is present. List of
-                losses in all validation batches)
-              - loss_mean_validation
-              - validation_dataset (if provided in the :meth:`~cogitare.Model.learn`).
-
-            - **on_stop_training**: executed when a plugin raises a :exc:`cogitare.utils.StopTraining`.
-              At this time, the variables accessible will depends on the training step that the
-              exception occurred.
 
         Args:
             plugin (callable): a function to be called. The parameters will be sent
@@ -254,7 +175,25 @@ class Model(nn.Module):
             hook (str): the event to watch, as described above.
             override (bool): if True, override a plugin at a specific hook if it has the
                 same name. If False, raises an exception.
+            postpone (bool): if True, creates the instance of the module only when
+                starting the learning step, or when manually calling :meth:`~cogitare.Model.apply_register_plugins`.
+        """  # noqa: E501
+        if postpone:
+            self._to_register.append((plugin, hook, override))
+        else:
+            self._apply_plugin(plugin, hook, override)
+
+    def apply_register_plugins(self):
+        """Creates and definetily register all plugins added by :meth:`~cogitare.Model.register_plugin` with
+        `postpone=True`.
+
+        This method is automatically executed when starting the :meth:`~cogitare.Model.learn`.
         """
+        for params in self._to_register:
+            self._apply_plugin(*params)
+        self._to_register.clear()
+
+    def _apply_plugin(self, plugin, hook, override):
         utils.assert_raise(hook in self.valid_hooks, ValueError,
                            'Expected on of the following hooks: ' + ', '.join(self.valid_hooks))
         plugin = utils._ntuple(plugin, 1)
@@ -274,7 +213,12 @@ class Model(nn.Module):
         for key, plugin in self._plugins[name].items():
             status = plugin(**self._state)
 
-            self._state[name + '_' + key] = status
+            state_name = name + '_' + key
+            if isinstance(status, dict):
+                for attr, value in status.items():
+                    self._state[state_name + '_' + attr] = value
+            else:
+                self._state[state_name] = status
 
     def _forward_batch(self, batch_num, batch, optimizer):
         optimizer.zero_grad()
@@ -309,10 +253,8 @@ class Model(nn.Module):
             'current_epoch': 0,
             'sample': None,
             'output': None,
-            'losses': None,
+            'loss': None,
             'loss_mean': None,
-            'losses_validation': None,
-            'loss_mean_validation': None,
             'validation_dataset': validation_dataset
         }
 
@@ -363,22 +305,26 @@ class Model(nn.Module):
         """
         original_register_default = self._requires_register_default
         self._start_learn_state(dataset, optimizer, validation_dataset, max_epochs)
+        self.apply_register_plugins()
         try:
             self.hook('on_start')
 
             for epoch in range(1, max_epochs + 1):
                 self._state['current_epoch'] = epoch
                 self._state['current_batch'] = 0
+                self._state['loss'] = None
+                self._state['loss_mean'] = None
                 self._state['sample'] = None
                 self._state['output'] = None
 
                 self.hook('on_start_epoch')
                 losses = []
-                self._state['losses'] = losses
+                self._state['loss'] = losses
 
                 for idx, sample in enumerate(dataset, 1):
                     self._state['current_batch'] = idx
                     self._state['sample'] = sample
+                    self._state['output'] = None
                     self.hook('on_start_batch')
 
                     loss = self._forward_batch(idx, sample, optimizer)
@@ -389,12 +335,7 @@ class Model(nn.Module):
                 self._state['current_batch'] = 0
                 self._state['sample'] = None
                 self._state['output'] = None
-                self._state['loss_mean'] = sum(losses) / len(dataset)
-
-                if validation_dataset:
-                    val = self.evaluate(validation_dataset)
-                    self._state['losses_validation'] = val
-                    self._state['loss_mean_validation'] = sum(val) / len(validation_dataset)
+                self._state['loss_mean'] = np.mean(self._state['loss'])
 
                 self.hook('on_end_epoch')
 
@@ -425,6 +366,22 @@ class Model(nn.Module):
         """
         return self.forward(*args, **kwargs)
 
+    def metric_loss(self, output, sample):
+        """metric_loss is a shortcut to use the model loss as a tranining metric.
+
+        Given the model output and the batch data, the metric_loss returns the
+        loss for this specific batch.
+
+        Args:
+            output: model output
+            sample: batch data
+
+        Returns:
+            output (float): the model loss.
+        """
+        loss = self.loss(output, sample)
+        return loss.data[0]
+
     @not_training
     def evaluate(self, dataset, *args, **kwargs):
         """
@@ -444,12 +401,64 @@ class Model(nn.Module):
 
         losses = []
         for sample in dataset:
-            output = self.forward(sample)
-            loss = self.loss(output, sample)
-
-            losses.append(loss.data[0])
+            output = self.predict(sample)
+            losses.append(self.metric_loss(output, sample))
 
         return losses
+
+    @not_training
+    def evaluate_with_metrics(self, dataset, metrics, *args, **kwargs):
+        """
+        Iterate over batches in the dataset using metrics defined in the ``metrics``
+        argument, and then return a dict mapping {matric_name -> list of results}.
+
+        This method does not affect training variables and can be used to evaluate the
+        model performance in a different data (such as validation and test sets).
+
+        The ``metrics`` must be defined as:
+
+            - key: a name for this metric. The metric name must follow variable naming convention.
+
+            - value: a callable object, that accepts two parameters as input. The first parameter
+              will be the model output, and the second parameter will be the batch data.
+
+        Args:
+            dataset: batch iterator
+            metrics (dict): a dict mapping metric name to a callable.
+            args/kwargs: :meth:`~cogitare.Model.forward` arguments. If provided, the
+                forward will receive these parameters.
+
+        Returns:
+
+            output (dict): a dict mapping the metric name with a list containing the metric
+            output for each batch in the dataset.
+
+
+        Example::
+
+            >>> metrics = {
+            ...     'loss': model.metric_loss,
+            ...     'precision': metrics.precision
+            ... }
+
+            >>> model.evaluate_with_metrics(validation_dataset, metrics)
+            {'loss': [1.0, 0.8, 0.9], 'precision': [0.6, 0.55, 0.58]}
+        """
+
+        utils.assert_raise(isinstance(metrics, dict), ValueError,
+                           '"metrics" must be a dict with metric_name -> metric_function')
+        result = dict()
+
+        for sample in dataset:
+            output = self.predict(sample)
+
+            for key, call in metrics.items():
+                holder = result.get(key, list())
+                holder.append(call(output, sample))
+
+                result[key] = holder
+
+        return result
 
     def load(self, path):
         """Load the model parameters using :func:`torch.load` from a given path.
