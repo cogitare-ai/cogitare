@@ -37,6 +37,15 @@ class _DataHolderAbs(object):
         for i in range(10):
             self.assertEqual(dh[i], self._data[i])
 
+    def test_on_sample_loaded(self):
+        def f(x):
+            return x * 2
+
+        dh = self.holder(self.data, on_sample_loaded=f, **self.kwargs)
+
+        for i in range(10):
+            self.assertEqual(dh[i], self._data[i] * 2)
+
     def test_len(self):
         dh = self.holder(self.data, batch_size=9, **self.kwargs)
         self.assertEqual(12, len(dh))
@@ -80,6 +89,22 @@ class _DataHolderAbs(object):
         next(dh)
         assert not dh.shuffle.called
 
+    def test_batch(self):
+        dh = self.holder(self.data, batch_size=10, **self.kwargs)
+        self.assertEqual(dh._current_batch, 0)
+        next(dh)
+        self.assertEqual(dh._current_batch, 1)
+        next(dh)
+        self.assertEqual(dh._current_batch, 2)
+        dh.reset()
+        self.assertEqual(dh._current_batch, 0)
+        next(dh)
+        self.assertEqual(dh._current_batch, 1)
+        dh.batch_size = 3
+        next(dh)
+        self.assertEqual(dh._current_batch, 1)
+        self.assertEqual(dh.batch_size, dh._batch_size)
+
     def test_set_total_samples(self):
         dh = self.holder(self.data, batch_size=10, **self.kwargs)
         dh.total_samples = 90
@@ -96,6 +121,15 @@ class _DataHolderAbs(object):
         with pytest.raises(ValueError) as info:
             dh.total_samples = 0
         self.assertIn('number of samples must be greater or equal to 1', str(info.value))
+
+    def test_on_batch_loaded(self):
+        def f(batch):
+            return batch[2]
+
+        dh = self.holder(self.data, shuffle=False, batch_size=10, on_batch_loaded=f, **self.kwargs)
+        batch = next(dh)
+
+        self.assertEqual(batch, self._data[2])
 
     def test_iter_batches(self):
         for mode in ['threaded', 'multiprocessing', 'sequential']:

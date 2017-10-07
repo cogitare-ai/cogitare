@@ -7,6 +7,10 @@ import numpy
 from dask import threaded, delayed, compute, multiprocessing
 
 
+def _identity(x):
+    return x
+
+
 @add_metaclass(ABCMeta)
 class AbsDataHolder(object):
     """
@@ -45,6 +49,13 @@ class AbsDataHolder(object):
             Is designed to be used with models where you only use one sample per
             batch (batch_size == 1). So instead of returning a list with a single sample, with
             ``single == True``, the sample itself will be returned and not the list.
+        on_sample_loaded (callable): if provided, this function will be called when a new sample is loaded. It must
+            receive one argument, the sample. And return one value that will replace the sample data.
+            This is used to apply pre-processing on single samples while loading.
+        on_batch_loaded (callable): if provided, this function will be called when a new batch is loaded. It must
+            receive one argument, the batch data. And return the batch after applying some operation on the data. This
+            can be used to apply pre-processing functions on a batch of data (such as image filtering, moving the
+            data to GPU, and etc).
     """
 
     @property
@@ -77,17 +88,38 @@ class AbsDataHolder(object):
 
         return self._indices
 
+    @property
+    def batch_size(self):
+        """The size of the mini-batch used by the iterator.
+
+        When a new batch_size is set, the iterator will reset.
+        """
+        return self._batch_size
+
+    @batch_size.setter
+    def batch_size(self, value):
+        self._batch_size = value
+        self._requires_reset = True
+
     def __init__(self, data, batch_size=1, shuffle=True, drop_last=False,
-                 total_samples=None, mode='sequential', single=False):
+                 total_samples=None, mode='sequential', single=False,
+                 on_sample_loaded=None, on_batch_loaded=None):
         valid_modes = ['threaded', 'multiprocessing', 'sequential']
         utils.assert_raise(mode in valid_modes, ValueError,
                            '"mode" must be one of: ' + ', '.join(valid_modes))
+
+        if on_sample_loaded is None:
+            on_sample_loaded = _identity
+        if on_batch_loaded is None:
+            on_batch_loaded = _identity
 
         self._indices = None
         self._single = single
         self._mode = mode
         self._total_samples = total_samples
         self._remaining_samples = None
+        self._on_sample_loaded = on_sample_loaded
+        self._on_batch_loaded = on_batch_loaded
 
         self._data = data
         self._batch_size = batch_size
@@ -124,7 +156,7 @@ class AbsDataHolder(object):
             sample = data[0]
             sample2 = data[1]
         """
-        return self.get_sample(self.indices[key])
+        return self._on_sample_loaded(self.get_sample(self.indices[key]))
 
     def _get_batch_size(self):
         batch_size = min(self._batch_size, self._remaining_samples)
@@ -154,11 +186,12 @@ class AbsDataHolder(object):
             jobs = load(lambda x: delayed(x, traverse=False))
             results = compute(jobs, get=self._get)[0]
         else:
-            results = load(lambda x: x)
+            results = load(_identity)
 
         self._current_batch += 1
         self._remaining_samples -= batch_size
 
+        results = self._on_batch_loaded(results)
         if self._single:
             return results[0]
         return results
