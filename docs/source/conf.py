@@ -4,12 +4,28 @@ import juliadoc
 
 import os
 import sys
+from sphinx.ext.napoleon.docstring import GoogleDocstring
+
+
+# https://michaelgoerz.net/notes/extending-sphinx-napoleon-docstring-sections.html
+
+
+def parse_shape_section(self, section):
+    return self._format_fields('Shape', self._consume_fields())
+GoogleDocstring._parse_shape_section = parse_shape_section
+
+
+def patched_parse(self):
+    self._sections['shape'] = self._parse_shape_section
+    self._unpatched_parse()
+GoogleDocstring._unpatched_parse = GoogleDocstring._parse
+GoogleDocstring._parse = patched_parse
+
 sys.path.insert(0, os.path.abspath(os.path.join('..', '..')))
 sys.path += ['.']
 
 import sphinxcontrib_rawfiles
 
-#
 # Cogitare documentation build configuration file, created by
 # sphinx-quickstart on Wed Sep  6 19:16:13 2017.
 #
