@@ -140,7 +140,8 @@ class AbsDataHolder(object):
     def _clone(self):
         return type(self)(data=self._data, batch_size=self._batch_size, shuffle=self._shuffle,
                           drop_last=self._drop_last, total_samples=self._total_samples,
-                          mode=self._mode, single=self._single)
+                          mode=self._mode, single=self._single, on_sample_loaded=self._on_sample_loaded,
+                          on_batch_loaded=self._on_batch_loaded)
 
     def __repr__(self):
         """Using repr(data) or str(data), display the shape of the data.
