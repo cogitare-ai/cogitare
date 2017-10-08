@@ -5,6 +5,15 @@ from six.moves.queue import PriorityQueue
 from threading import Thread
 
 
+def _identity(x):
+    return x
+
+
+def _fetch(f, data):
+    batch = next(data)
+    return f(batch)
+
+
 class AsyncDataLoader(object):
     """The AsyncDataLoader is a wrapper to asynchronous loading multiples batches of data.
 
@@ -47,6 +56,9 @@ class AsyncDataLoader(object):
         mode (str): should be ``threaded`` or ``multiprocessing``, indicating how to fetch batches.
         workers (int): the number of threads/processes used to load the batches. If None,
             will use the number of cores in the CPU.
+        on_batch_loaded (callable): if provided, this function will be called when a new batch is loaded. It must
+            receive one argument, the batch data. And return the batch after applying some operation on the data. This
+            can be used to apply pre-processing functions on a batch of data (such as image filtering, moving the
 
     Example::
 
@@ -61,7 +73,7 @@ class AsyncDataLoader(object):
         >>> model.learn(data_train, optimizer)
     """
 
-    def __init__(self, data, buffer_size=8, mode='threaded', workers=None):
+    def __init__(self, data, buffer_size=8, mode='threaded', workers=None, on_batch_loaded=None):
         valid = ('threaded', 'multiprocessing', )
         utils.assert_raise(mode in valid, ValueError,
                            'mode must be one of: ' + ', '.join(valid))
@@ -72,9 +84,13 @@ class AsyncDataLoader(object):
         else:
             self._executor = C.ProcessPoolExecutor(workers)
 
+        if on_batch_loaded is None:
+            on_batch_loaded = _identity
+
         self._queue = PriorityQueue(buffer_size)
         self._data = data
         self._thread = None
+        self._on_batch_loaded = on_batch_loaded
 
     def _start(self):
         if self._thread is None:
@@ -102,8 +118,9 @@ class AsyncDataLoader(object):
 
     def _produce(self):
         idx = 0
+
         while True:
-            future = self._executor.submit(next, self._data)
+            future = self._executor.submit(_fetch, self._on_batch_loaded, self._data)
             self._queue.put((idx, future))
             idx += 1
 
