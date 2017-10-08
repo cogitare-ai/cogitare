@@ -1,4 +1,6 @@
 import unittest
+import os
+import tempfile
 import pytest
 from cogitare.plugins import PlottingMatplotlib
 
@@ -30,3 +32,17 @@ class TestPlottingMatplotlib(unittest.TestCase):
         self.p(test=[1, 2, 3, 4])
         self.p(test=2)
         self.p(test=2)
+
+    def test_save_img(self):
+        f = tempfile.NamedTemporaryFile()
+        name = f.name + '.png'
+
+        p = PlottingMatplotlib(file_name=name)
+        p.add_variable('test', 'Test', use_std=True)
+
+        p(test=1)
+        p(test=[1, 2, 3, 4])
+        p(test=2)
+
+        f.flush()
+        self.assertGreater(os.path.getsize(name), 0)

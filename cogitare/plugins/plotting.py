@@ -19,6 +19,7 @@ class PlottingMatplotlib(PluginInterface):
         ylabel (str): label in the y-axis
         title (str): plot title
         legend_pos (str): position of the label legends
+        file_name (str): if set, save the plot image in the specified path.
         freq (int): the frequency to execute this model. The model will execute at each ``freq`` call.
 
     Example::
@@ -34,13 +35,14 @@ class PlottingMatplotlib(PluginInterface):
         model.register_plugin(plot, 'on_end_epoch')
     """
     def __init__(self, style='ggplot', xlabel='Epochs', ylabel='Loss', title='Training loss per epoch',
-                 legend_pos='upper right', freq=1):
+                 legend_pos='upper right', file_name=None, freq=1):
         super(PlottingMatplotlib, self).__init__(freq=freq)
         self._style = style
         self._xlabel = xlabel
         self._ylabel = ylabel
         self._title = title
         self._legend_pos = legend_pos
+        self._file_name = file_name
 
         self._plt = None
         self._fig, self._ax = None, None
@@ -140,3 +142,6 @@ class PlottingMatplotlib(PluginInterface):
         self._ax.set_ylim([min(0, self.min_y), self.max_y])
         self._plt.xticks(np.arange(1, len(plot['data']) + 1))
         self._fig.canvas.draw()
+
+        if self._file_name:
+            self._fig.savefig(self._file_name)
