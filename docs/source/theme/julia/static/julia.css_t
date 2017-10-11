@@ -68,8 +68,8 @@ code.descname, code.descclassname {
 }
 
 .rst-content dl:not(.docutils) dt {
-    background: #fdfdfd;
-    border-top: none;
+    background: #6673931a;
+    border-top: solid 3px #000e1766;
     color: rgb(64, 64, 64);
     display: block;
     margin: 1px 0;

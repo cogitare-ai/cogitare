@@ -27,6 +27,36 @@ def get_logger(name):
     return _LOGGER
 
 
+def tensorfy(*params, **kw):
+    def decorator(func):
+        @functools.wraps(func)
+        def f(*args, **kwargs):
+            args = list(args)
+            kwargs = dict(kwargs)
+
+            for p in params:
+                if isinstance(p, int):
+                    if p < len(args):
+                        args[p] = to_tensor(args[p], **kw)
+                else:
+                    if kwargs.get(p, None):
+                        kwargs[p] = to_tensor(kwargs[p], **kw)
+            return func(*args, **kwargs)
+
+        return f
+    return decorator
+
+
+def assert_dim(tensor, name, expected):
+    dim = tensor.dim()
+    msg = 'Expected {} tensor on {}. Got {}D tensor instead'.format(
+        '/'.join(str(d) + 'D' for d in expected),
+        '"{}"'.format(name),
+        dim)
+
+    assert_raise(dim in expected, ValueError, msg)
+
+
 def number_parameters(model):
     """Counts the number of parameters in the model.
 
