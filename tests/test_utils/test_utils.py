@@ -106,7 +106,7 @@ class TestUtils(TestCase):
             self.assertIsInstance(a, torch.LongTensor)
             self.assertIsInstance(b, torch.LongTensor)
 
-        @utils.tensorfy(0, 1, tensor_klass=torch.DoubleTensor)
+        @utils.tensorfy(0, 1, 'c', tensor_klass=torch.DoubleTensor)
         def f2(a, b, c=None):
             self.assertIsInstance(a, torch.DoubleTensor)
             self.assertIsInstance(b, torch.DoubleTensor)
