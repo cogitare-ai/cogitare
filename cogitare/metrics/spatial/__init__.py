@@ -283,7 +283,7 @@ def canberra_distance(u, v, dim=1, eps=1e-8):
 @utils.tensorfy(0, 1)
 def chebyshev_distance(u, v, dim=1):
     """The Chebyshev distance (or Tchebychev distance), maximum metric,
-    or :math:`\ell_\inf` (infinity) norm between two vectors is defined as:
+    or :math:`\ell\_\inf` (the infinity) norm between two vectors is defined as:
 
         :math:`chebyshev\_distance(u, v) = max_i|u_i - v_i|`
 
