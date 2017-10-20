@@ -39,11 +39,11 @@ class TestAccuracy(TestCase):
 
     def test_diff_size(self):
         a = torch.Tensor(10)
-        b = torch.Tensor(1, 10)
+        b = torch.Tensor(1, 15)
 
         with pytest.raises(ValueError) as info:
             C.accuracy(a, b)
-        self.assertIn('must have the same dimension.', str(info.value))
+        self.assertIn('should all have the same dimension', str(info.value))
 
     def test_accuracy_filter1(self):
         a = torch.Tensor([[3, 4, 2], [3, 1, 2]])

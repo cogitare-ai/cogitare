@@ -31,7 +31,7 @@ class TestLogistic(TestCase):
         assert meth.called
 
     def test_model(self):
-        data = torch.FloatTensor([[0, 0, 0], [0, 0, 1], [0, 1, 0], [1, 0, 0]])
+        data = torch.DoubleTensor([[0, 0, 0], [0, 0, 1], [0, 1, 0], [1, 0, 0]])
         out = torch.LongTensor([0, 0, 0, 0])
         ds = DataSet([data, out])
 

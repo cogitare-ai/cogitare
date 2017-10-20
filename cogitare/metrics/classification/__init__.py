@@ -2,7 +2,7 @@ from cogitare import utils
 import torch
 
 
-@utils.tensorfy(0, 1, tensor_klass=torch.LongTensor)
+@utils.tensorfy(0, 1, dtype=torch.LongTensor)
 def filter_labels(y, labels):
     """Utility used to create a mask to filter values in a tensor.
 
@@ -49,7 +49,7 @@ def filter_labels(y, labels):
     return mapping
 
 
-@utils.tensorfy(0, 1, tensor_klass=torch.LongTensor)
+@utils.tensorfy(0, 1, dtype=torch.LongTensor)
 def accuracy(prediction, expected, labels=None):
     """Computes the accuracy of the classification.
 
@@ -103,20 +103,19 @@ def accuracy(prediction, expected, labels=None):
          0.6000
         [torch.FloatTensor of size 3x1]
     """
-    utils.assert_dim(prediction, "prediction", (1, 2))
-    utils.assert_dim(expected, "expected", (1, 2))
-    utils.assert_raise(prediction.size() == expected.size(), ValueError, '"prediction" and "expected" must have'
-                       ' the same dimension.')
-    if prediction.dim() == 1:
-        prediction = prediction.view(1, -1)
-        expected = expected.view(1, -1)
+    params = ((prediction, 'prediction'), (expected, 'expected'))
+
+    prediction, expected = utils._as_2d(*params)
+    utils._assert_same_dim(*params)
 
     eq = torch.eq(prediction, expected).byte()
     if labels is None:
         correct = torch.sum(eq, 1).float()
-        return correct / prediction.size(1)
+        result = correct / prediction.size(1)
     else:
         mask = filter_labels(expected, labels)
         eq &= mask
         correct = torch.sum(eq, 1).float()
-        return correct / (mask.sum(1).float())
+        result = correct / (mask.sum(1).float())
+
+    return result.squeeze()

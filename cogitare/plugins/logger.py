@@ -1,5 +1,5 @@
 from cogitare.core import PluginInterface
-import humanize
+from dateutil.relativedelta import relativedelta
 import logging
 import coloredlogs
 import time
@@ -56,9 +56,12 @@ class Logger(PluginInterface):
         if not self.show_time:
             return ''
 
-        seconds = time.time() - self._start_time
+        intervals = ['days', 'hours', 'minutes', 'seconds']
+        seconds = relativedelta(seconds=int(time.time() - self._start_time))
+        time_str = ' '.join('{} {}'.format(getattr(seconds, k), k) for k in intervals
+                            if getattr(seconds, k))
 
-        return '| ' + humanize.naturaltime(seconds)
+        return '| ' + time_str
 
     def function(self, *args, **kwargs):
         log = '%s %s %s' % (self.title, self.msg.format(**kwargs), self._time_spent())

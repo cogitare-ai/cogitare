@@ -30,7 +30,7 @@ class LogisticRegression(Model):
             self.cuda()
 
     def forward(self, sample):
-        x = Variable(utils.to_tensor(sample[0], torch.DoubleTensor, self.use_cuda))
+        x = Variable(utils.to_tensor(sample[0], use_cuda=self.use_cuda))
         x = x.view(x.size(0), -1)
         data = F.dropout(x, self.arguments['dropout'])
         out = self.linear(data)

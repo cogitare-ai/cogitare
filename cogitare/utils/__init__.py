@@ -1,4 +1,5 @@
 import torch
+from torch.autograd import Variable
 import logging
 import coloredlogs
 from itertools import repeat
@@ -28,12 +29,29 @@ def get_logger(name):
 
 
 def tensorfy(*params, **kw):
+    """Utility decorator to automatically convert a function parameters to tensor.
+
+    You can pass the argument position, or the parameter name that you wish to be converted to tensor.
+
+    Example::
+
+        @tensorfy(0, 1, 2)
+        def my_func(a, b, c, d, e):
+            # will convert a, b, and c to tensor
+            pass
+
+        @tensorfy(0, 2, 'cmp')
+        def my_func2(a, b, cmp=None):
+            # will convert a and cmp (if defined) to tensor
+            pass
+    """
     def decorator(func):
         @functools.wraps(func)
         def f(*args, **kwargs):
             args = list(args)
             kwargs = dict(kwargs)
 
+            kw.setdefault('dtype', torch.Tensor)
             for p in params:
                 if isinstance(p, int):
                     if p < len(args):
@@ -48,8 +66,27 @@ def tensorfy(*params, **kw):
 
 
 def assert_dim(tensor, name, expected):
+    """Asserts if a tensor has a valid dimension.
+
+    Args:
+        tensor (torch.Tensor): tensor to verify
+        name (str): verbose tensor name to diplay in the exception message.
+        expected (list, tuple): list of ints with the accepted number of dimensions.
+
+    Example::
+
+        >>> a = torch.rand(2, 3)
+        >>> b = torch.rand(2, 3, 4)
+        >>> c = torch.rand(2, 3, 5, 5)
+
+        >>> valid = (1, 2, 3)  # accept 1D, 2D, and 3D tensor
+        >>> assert_dim(a, 'a', valid)
+        >>> assert_dim(b, 'b', valid)
+        >>> assert_dim(c, 'c', valid)
+        ValueError: Expected 1D/2D/3D tensor on "c". Got a 4D tensor instead.
+    """
     dim = tensor.dim()
-    msg = 'Expected {} tensor on {}. Got {}D tensor instead'.format(
+    msg = 'Expected {} tensor on {}. Got a {}D tensor instead.'.format(
         '/'.join(str(d) + 'D' for d in expected),
         '"{}"'.format(name),
         dim)
@@ -57,16 +94,42 @@ def assert_dim(tensor, name, expected):
     assert_raise(dim in expected, ValueError, msg)
 
 
+def _as_2d(*items):
+    result = []
+    for (item, name) in items:
+        assert_dim(item, name, (1, 2))
+
+        if item.dim() == 1:
+            item = item.view(1, -1)
+
+        result.append(item)
+
+    return result
+
+
+def _assert_same_dim(*items):
+    labels = ['"{}"'.format(v[1]) for v in items]
+    items = [v[0] for v in items]
+
+    size = items[0].size()
+    valid = all(v.size() == size for v in items[1:])
+    assert_raise(valid, ValueError, "The tensors {} should all have the same dimension.".format(
+        '/'.join(labels)))
+
+
 def number_parameters(model):
-    """Counts the number of parameters in the model.
+    """Counts the number of trainable and non-trainable parameters in the model.
 
     Args:
         model (Model): model with training parameters
 
     Returns:
-        count (int): number of parameters
+        count (tuple): (trainable_params, non_trainable_params)
     """
-    return sum(np.prod(params.size()) for params in model.parameters())
+    trainable = sum(np.prod(params.size()) for params in model.parameters() if params.requires_grad)
+    non_trainable = sum(np.prod(params.size()) for params in model.parameters() if params.requires_grad is False)
+
+    return trainable, non_trainable
 
 
 def _training_mode(func, mode):
@@ -140,7 +203,17 @@ def _list_to_tensor(data):
     return tensor
 
 
-def to_tensor(data, tensor_klass=None, use_cuda=None):
+def _convert_tensor(tensor, dtype, use_cuda):
+    if dtype:
+        tensor = tensor.type(dtype)
+
+    if get_cuda(use_cuda):
+        tensor = tensor.cuda()
+
+    return tensor
+
+
+def to_tensor(data, dtype=None, use_cuda=None):
     """Try to conver a variable to a torch tensor.
 
     Data can be:
@@ -155,7 +228,7 @@ def to_tensor(data, tensor_klass=None, use_cuda=None):
 
     Args:
         data (list, numpy.ndarray, torch.Tensor): the data to be converted.
-        tensor_klass (torch,Tensor): if provided, the output will have the same type
+        dtype (torch.Tensor): if provided, the output will have the same type
             as this class.
         use_cuda (bool): if True, the tensor ``.cuda()`` will be returned. If None, the
             default value setted by :func:`~cogitare.utils.set_cuda` will be used.
@@ -192,7 +265,8 @@ def to_tensor(data, tensor_klass=None, use_cuda=None):
     # if list, cast it to the compatible tensor type
     converter = {
         list: _list_to_tensor,
-        np.ndarray: torch.from_numpy
+        np.ndarray: torch.from_numpy,
+        Variable: lambda x: x
     }
 
     if type(data) in converter:
@@ -202,11 +276,7 @@ def to_tensor(data, tensor_klass=None, use_cuda=None):
     else:
         raise ValueError('Invalid data type: {}'.format(type(data).__name__))
 
-    if tensor_klass:
-        tensor = tensor.type_as(tensor_klass())
-
-    if get_cuda(use_cuda):
-        tensor = tensor.cuda()
+    tensor = _convert_tensor(tensor, dtype, use_cuda)
 
     return tensor
 

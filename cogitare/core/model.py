@@ -240,8 +240,11 @@ class Model(nn.Module):
         if isinstance(dataset, (AbsDataHolder, SequentialAbsDataHolder,
                                 DataSet, AsyncDataLoader)):
             self._logger.info('Training data: \n\n{}\n'.format(repr(dataset)))
-        self._logger.info('Number of parameters: ' + humanize.intcomma(
-            utils.number_parameters(self)))
+
+        num_params = utils.number_parameters(self)
+        self._logger.info('Number of trainable parameters: ' + humanize.intcomma(num_params[0]))
+        self._logger.info('Number of non-trainable parameters: ' + humanize.intcomma(num_params[1]))
+        self._logger.info('Total number of parameters: ' + humanize.intcomma(num_params[0] + num_params[1]))
         self._logger.info('Starting the training ...')
 
         self._state = {

@@ -101,12 +101,12 @@ class TestUtils(TestCase):
 
     def test_tensorfy(self):
 
-        @utils.tensorfy(0, 1, tensor_klass=torch.LongTensor)
+        @utils.tensorfy(0, 1, dtype=torch.LongTensor)
         def f1(a, b):
             self.assertIsInstance(a, torch.LongTensor)
             self.assertIsInstance(b, torch.LongTensor)
 
-        @utils.tensorfy(0, 1, 'c', tensor_klass=torch.DoubleTensor)
+        @utils.tensorfy(0, 1, 'c', dtype=torch.DoubleTensor)
         def f2(a, b, c=None):
             self.assertIsInstance(a, torch.DoubleTensor)
             self.assertIsInstance(b, torch.DoubleTensor)
@@ -124,8 +124,8 @@ class TestUtils(TestCase):
     def test_assert_dim(self):
         with pytest.raises(ValueError) as info:
             utils.assert_dim(torch.rand(3, 3), 'test_tensor', [3])
-        self.assertIn('Expected 3D tensor on "test_tensor". Got 2D tensor instead', str(info.value))
+        self.assertIn('Expected 3D tensor on "test_tensor". Got a 2D tensor instead', str(info.value))
 
         with pytest.raises(ValueError) as info:
             utils.assert_dim(torch.rand(3, 4, 5), 'test', [4, 5, 6])
-        self.assertIn('Expected 4D/5D/6D tensor on "test". Got 3D tensor instead', str(info.value))
+        self.assertIn('Expected 4D/5D/6D tensor on "test". Got a 3D tensor instead', str(info.value))
