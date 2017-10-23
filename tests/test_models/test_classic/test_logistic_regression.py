@@ -4,7 +4,7 @@ import torch.optim as optim
 import torch
 import mock
 import pytest
-from cogitare.models.linear import LogisticRegression
+from cogitare.models.classic import LogisticRegression
 
 
 class TestLogistic(TestCase):
@@ -25,7 +25,7 @@ class TestLogistic(TestCase):
             LogisticRegression(10, dropout=1.5)
         self.assertIn('"dropout" value must be', str(info.value))
 
-        with mock.patch('cogitare.models.linear.LogisticRegression.cuda', autospec=True) as meth:
+        with mock.patch('cogitare.models.classic.LogisticRegression.cuda', autospec=True) as meth:
             LogisticRegression(10, use_cuda=True)
 
         assert meth.called

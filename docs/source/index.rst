@@ -60,6 +60,13 @@ Contributions are welcome!
 .. toctree::
     :includehidden:
     :maxdepth: 3
+    :caption: Models
+
+    models/classic
+
+.. toctree::
+    :includehidden:
+    :maxdepth: 3
     :caption: Extra
 
     contribute
