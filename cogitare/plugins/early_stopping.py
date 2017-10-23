@@ -1,4 +1,5 @@
 from cogitare.core import PluginInterface
+import operator
 import numpy as np
 from cogitare.utils import StopTraining
 
@@ -30,6 +31,9 @@ class EarlyStopping(PluginInterface):
             on :func:`numpy.mean`.
         restore_checkpoint (bool): if True,  restore the model parameters after stopping by
             early-stopping.
+        min_delta: the minimum difference between losses to consider as an improviment.
+        mode ('min' or 'max'): if ``min``, consider that this is a minimization problem, so the
+            loss should decrease to the model improve. If 'max', consider the opposite behavior.
         freq (int): the frequency to execute this model. The model will execute at each ``freq`` call.
 
     Example::
@@ -50,9 +54,11 @@ class EarlyStopping(PluginInterface):
     """
 
     def __init__(self, max_tries, path, name='on_end_epoch_Evaluator_loss',
-                 func=np.mean, restore_checkpoint=True, freq=1):
+                 func=np.mean, min_delta=1e-8, mode='min', restore_checkpoint=True, freq=1):
         super(EarlyStopping, self).__init__(freq=freq)
         self.max_tries = max_tries
+        self.min_delta = min_delta
+        self.op = operator.lt if mode == 'min' else operator.gt
         self.path = path
         self.restore_checkpoint = restore_checkpoint
         self.metric_name = name
@@ -61,12 +67,12 @@ class EarlyStopping(PluginInterface):
         self.func = func
 
         self._best_epoch = 0
-        self._best_score = float('inf')
+        self._best_score = float('inf') if mode == 'min' else -float('inf')
 
     def function(self, model, current_epoch, **kwargs):
         metric = self.func(kwargs.get(self.metric_name))
 
-        if metric < self._best_score:
+        if self.op(metric, self._best_score) and abs(metric - self._best_score) > self.min_delta:
             self._best_score = metric
 
             model.save(self.path)
