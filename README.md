@@ -2,7 +2,7 @@
 
 **Cogitare** is a Modern, Fast, and Modular Deep Learning and Machine Learning framework in Python. A friendly interface for beginners and a powerful toolset for experts. 
 
-http://cogitare.aronbordin.com/
+http://docs.cogitare-ai.org/
 	
 [![Build Status](https://travis-ci.org/cogitare-ai/cogitare.svg?branch=master)](https://travis-ci.org/cogitare-ai/cogitare)
 [![codecov](https://codecov.io/gh/cogitare-ai/cogitare/branch/master/graph/badge.svg)](https://codecov.io/gh/cogitare-ai/cogitare)
