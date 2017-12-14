@@ -19,6 +19,8 @@ class DataSet(object):
         shuffle (bool): if True, shuffles the samples of each data holder.
         drop_last (bool): if True, then skip the batch if its size is lower that **batch_size** (can
             occur in the last batch).
+        total_samples (int, optional): number of samples. If provided and smalled than the maximum number of samples,
+            just the subset of size ``total_samples`` will be used.
 
     .. note:: The **batch_size**, **shuffle**, and **drop_last** parameters will override the
         data holder default values. If you want to keep a different value for each data holder,

@@ -35,7 +35,7 @@ class TestLogistic(TestCase):
         out = torch.LongTensor([0, 0, 0, 0])
         ds = DataSet([data, out])
 
-        l = LogisticRegression(3)
-        sgd = optim.SGD(l.parameters(), lr=0.001)
+        lr = LogisticRegression(3)
+        sgd = optim.SGD(lr.parameters(), lr=0.001)
 
-        self.assertEqual(l.learn(ds, sgd, max_epochs=10), True)
+        self.assertEqual(lr.learn(ds, sgd, max_epochs=10), True)

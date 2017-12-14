@@ -33,3 +33,6 @@ class TestAsyncLoader(TestCase):
             for batch in self.loader:
                 self.assertEqual(len(batch), 5)
             loader.cache()
+
+    def test_repr(self):
+        self.assertEqual(repr(self.dh), repr(self.loader))

@@ -44,7 +44,7 @@ class LogisticRegression(Model):
         x = x.view(x.size(0), -1)
         data = F.dropout(x, self.arguments['dropout'])
         out = self.linear(data)
-        return F.log_softmax(out)
+        return F.log_softmax(out, dim=1)
 
     def loss(self, output, sample):
         expected = utils.to_variable(sample[1], torch.LongTensor, self.use_cuda)

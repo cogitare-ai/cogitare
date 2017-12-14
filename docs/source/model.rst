@@ -49,7 +49,7 @@ the input layer, it can be implemented as follows::
             data = F.dropout(x, self.arguments['dropout'])
             out = self.linear(data)
 
-            return F.log_softmax(out)
+            return F.log_softmax(out, 1)
 
         def loss(self, output, sample):
             # here, the sample will be a tuple with (x_data, y_data).
@@ -98,7 +98,8 @@ To use this model latter, you can load it from disk using::
 
 and make new predictions using::
 
-    output = l.predict(...)
+    for batch in data_validation:
+        output = l.predict(batch)
 
 
 As you can see, the model development is pretty similar to develop a pure

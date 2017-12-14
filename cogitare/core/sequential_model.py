@@ -7,6 +7,8 @@ from cogitare.utils import not_training, training
 @add_metaclass(ABCMeta)
 class SequentialModel(Model):
     """
+    .. warning:: This module is experimental and its interface may change in future releases.
+
     SequentialModel is an extension of :class:`~cogitare.Model` that includes support for sequential
     models. It's designed to work with RNNs, such as LSTM and GRUs, and can be easily used for any
     model that operates over timestep per timestep.
@@ -147,16 +149,16 @@ class SequentialModel(Model):
         seqlen = len(batch)
         losses = []
         total_loss = 0
-        self._state['num_timesteps'] = seqlen
-        self._state['losses_timestep'] = losses
-        self._state['current_timestep'] = None
+        self.state['num_timesteps'] = seqlen
+        self.state['losses_timestep'] = losses
+        self.state['current_timestep'] = None
 
         optimizer.zero_grad()
         hidden = self.get_initial_state(batch)
 
         for timestep, data in enumerate(batch, 1):
-            self._state['current_timestep'] = timestep
-            self._state['sample_at_timestep'] = data
+            self.state['current_timestep'] = timestep
+            self.state['sample_at_timestep'] = data
             self.hook('on_start_timestep')
 
             output, hidden = self.forward(data, hidden, timestep, seqlen)
@@ -167,10 +169,10 @@ class SequentialModel(Model):
                 total_loss += loss
                 losses.append(loss.data[0])
 
-            self._state['output_at_timestep'] = output
+            self.state['output_at_timestep'] = output
             self.hook('on_end_timestep')
 
-        self._state['output'] = output
+        self.state['output'] = output
 
         self.hook('before_backward')
         total_loss.backward()
@@ -182,11 +184,11 @@ class SequentialModel(Model):
     def _start_learn_state(self, dataset, optimizer, validation_dataset, max_epochs):
         super(SequentialModel, self)._start_learn_state(dataset, optimizer,
                                                         validation_dataset, max_epochs)
-        self._state.update({'num_timesteps': None,
-                            'losses_timestep': None,
-                            'current_timestep': None,
-                            'sample_at_timestep': None,
-                            'output_at_timestep': None})
+        self.state.update({'num_timesteps': None,
+                           'losses_timestep': None,
+                           'current_timestep': None,
+                           'sample_at_timestep': None,
+                           'output_at_timestep': None})
 
     @not_training
     def evaluate(self, dataset, *args, **kwargs):

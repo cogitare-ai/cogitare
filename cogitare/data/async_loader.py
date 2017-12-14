@@ -92,6 +92,9 @@ class AsyncDataLoader(object):
         self._thread = None
         self._on_batch_loaded = on_batch_loaded
 
+    def __repr__(self):
+        return repr(self._data)
+
     def _start(self):
         if self._thread is None:
             self._thread = Thread(target=self._produce)
