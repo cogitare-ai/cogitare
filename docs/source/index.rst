@@ -54,6 +54,7 @@ Contributions are welcome!
     sequential_data
     async_data
     plugins
+    monitor
     metrics
     utils
 

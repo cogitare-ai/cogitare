@@ -35,9 +35,3 @@ class Monitor(Thread):
                                           'save_on_disk': self._save_on_disk})
         self._namespace.emit('machine', machine_status())
         self._client.wait()
-
-    def watch(self, data):
-        pass
-
-    def show(self, variable, overwrite=True):
-        pass

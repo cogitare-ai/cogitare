@@ -252,7 +252,7 @@ class Model(nn.Module):
         self.state['output'] = output
 
         self.hook('before_backward')
-        if loss is not None:
+        if loss is not None and self.training:
             loss.backward()
             self.hook('before_step')
             optimizer.step()
@@ -393,6 +393,7 @@ class Model(nn.Module):
         """
         return self(*args, **kwargs)
 
+    @not_training
     def metric_loss(self, output, sample, *args, **kwargs):
         """metric_loss is a shortcut to use the model loss as a tranining metric.
 
