@@ -71,8 +71,8 @@ class TestSequentialModel(TestCase):
         model1 = Model1()
         model2 = Model1()
 
-        sgd1 = optim.Adam(model1.parameters(), lr=0.1)
-        sgd2 = optim.Adam(model2.parameters(), lr=0.1)
+        sgd1 = optim.Adam(model1.parameters(), lr=0.01)
+        sgd2 = optim.Adam(model2.parameters(), lr=0.01)
 
         model1.learn(self.data, sgd1, max_epochs=100)
         model2.learn(self.data, sgd2, max_epochs=100)

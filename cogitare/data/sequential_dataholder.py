@@ -49,6 +49,9 @@ class SequentialAbsDataHolder(AbsDataHolder):
             sizes in the same batch. When loading a batch, all sequences will have
             the same size. The padding_value is added to the right of each sequence to match the size
             of the longest sequence in the batch.
+        sort_by_len (int): if True, the sequences in the batch will be sorted by decreasing size. This is
+            useful to be load data for torch rnn.PackedSequence. If True, the iterator will return a
+            tuple with (data, original indices, sizes).
     """
 
     @property
@@ -63,6 +66,7 @@ class SequentialAbsDataHolder(AbsDataHolder):
 
     def __init__(self, *args, **kwargs):
         self._padding_value = kwargs.pop('padding_value', None)
+        self._sort_by_len = kwargs.pop('sort_by_len', False)
 
         super(SequentialAbsDataHolder, self).__init__(*args, **kwargs)
 
@@ -71,8 +75,18 @@ class SequentialAbsDataHolder(AbsDataHolder):
 
     def __next__(self):
         batch = super(SequentialAbsDataHolder, self).__next__()
-        data = zip_longest(*batch, fillvalue=self.padding_value)
-        return list(data)
+        if self._sort_by_len:
+            lengths = [len(v) for v in batch]
+            indices = [v[0] for v in sorted(enumerate(lengths), reverse=True, key=lambda x: x[1])]
+
+            sorted_batch = [batch[i] for i in indices]
+            sorted_lengths = [lengths[i] for i in indices]
+
+            data = zip_longest(*sorted_batch, fillvalue=self.padding_value)
+            return list(data), indices, sorted_lengths
+        else:
+            data = zip_longest(*batch, fillvalue=self.padding_value)
+            return list(data)
 
     next = __next__
 

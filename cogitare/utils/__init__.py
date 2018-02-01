@@ -175,7 +175,7 @@ def training(func):
 
 def _get_first_item(data_list, depth=0):
     depth += 1
-    if isinstance(data_list, list):
+    if isinstance(data_list, (list, tuple)):
         if len(data_list) == 0:
             raise ValueError('Empty list')
 
@@ -265,6 +265,7 @@ def to_tensor(data, dtype=None, use_cuda=None):
     # if list, cast it to the compatible tensor type
     converter = {
         list: _list_to_tensor,
+        tuple: _list_to_tensor,
         np.ndarray: torch.from_numpy,
         Variable: lambda x: x
     }

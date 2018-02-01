@@ -17,10 +17,6 @@ class EarlyStopping(PluginInterface):
     When stopping, the plugin will automatically restore the model to the best checkpoint. If
     you don't want to have this feature, set ``restore_checkpoint=False``.
 
-    It's recommended to use this plugin at the **on_end_epoch** hook since the validation loss
-    is calculated at this point.
-
-
     Args:
         max_tries (int): number of epochs before stopping the training
         path (str): path to save the best model
@@ -67,17 +63,19 @@ class EarlyStopping(PluginInterface):
         self.func = func
 
         self._best_epoch = 0
+        self._current_epoch = 0
         self._best_score = float('inf') if mode == 'min' else -float('inf')
 
-    def function(self, model, current_epoch, **kwargs):
+    def function(self, model, **kwargs):
         metric = self.func(kwargs.get(self.metric_name))
+        self._current_epoch += 1
 
         if self.op(metric, self._best_score) and abs(metric - self._best_score) > self.min_delta:
             self._best_score = metric
 
             model.save(self.path)
-            self._best_epoch = current_epoch
-        elif current_epoch - self._best_epoch > self.max_tries:
+            self._best_epoch = self._current_epoch
+        elif self._current_epoch - self._best_epoch > self.max_tries:
             print('\n\nStopping training after %d tries. Best score %.4f' % (
                 self.max_tries, self._best_score))
 

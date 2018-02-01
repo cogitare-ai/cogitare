@@ -49,7 +49,8 @@ class Model(nn.Module):
 
     def __init__(self):
         super(Model, self).__init__()
-        self._state = {}
+        self.state = {}
+
         self._plugins = dict((name, OrderedDict()) for name in self.valid_hooks)
         self._requires_register_default = False
         self._logger = utils.get_logger(__name__)
@@ -80,6 +81,9 @@ class Model(nn.Module):
         """
         .. note:: When developing a Model, the class must implement this method.
 
+        .. note:: If you don't want that Cogitare backward the loss automatically, you must return None in this
+            method. This should be useful if you want to do backprogragation yourself.
+
         It will receive the output of the :meth:`~cogitare.Model.forward` method and
         the data obtained by the dataset iterator (the same used in forward),
         and must return the model loss considering the model output and expected output.
@@ -94,7 +98,7 @@ class Model(nn.Module):
                 anything.
 
         Returns:
-            loss (torch.autograd.Variable): the model loss. The loss will be used to backpropagate the errors.
+            loss (torch.autograd.Variable, None): the model loss. The loss will be used to backpropagate the errors.
         """
         pass
 
@@ -103,8 +107,8 @@ class Model(nn.Module):
 
         plot = PlottingMatplotlib()
         plot.add_variable('loss', 'Loss', color='blue', use_std=True)
-        if self._state['validation_dataset']:
-            evaluator = Evaluator(self._state['validation_dataset'], {'loss': self.metric_loss})
+        if self.state['validation_dataset']:
+            evaluator = Evaluator(self.state['validation_dataset'], {'loss': self.metric_loss})
             plot.add_variable('on_end_epoch_Evaluator_loss', 'Loss', color='green', use_std=True)
             self.register_plugin(evaluator, 'on_end_epoch', True, False)
 
@@ -168,6 +172,23 @@ class Model(nn.Module):
         **on_stop_training**, for example, can be execute at any position of the learnining
         algorithm, so the valiables in the model state will depend on its current position.
 
+        The value returned by the plugin is stored in model state as: ``hook + '_' + plugin_name``.
+        If the return value is a dict, the state will have: ``hook + '_' + plugin_name + '_' + key`` for each key of the
+        return key, and a ``hook + '_' + plugin_name + '__dict'`` with the whole dict. Where the ``plugin_name``
+        if the function name, or the ``name`` attribute if using the :class:`~cogitare.core.PluginInterface`.
+
+        For example, if your plugin named Sample returns ``{a: 3, b: 5, c: "cogitare"}``, another plugin can make use
+        of this variables as follows::
+
+            def my_plugin1(on_end_bach_Sample_a, on_end_bach_Sample_b, on_end_bach_Sample__dict, **kw):
+                print(on_end_bach_Sample_a + on_end_bach_Sample_b)
+                print(on_end_bach_Sample__dict)
+
+        or::
+
+            def my_plugin2(model, **kw):
+                print(model.state['on_end_bach_Sample_a'] + model.state['on_end_bach_Sample_b'])
+                print(model.state['on_end_bach_Sample__dict'])
 
         Args:
             plugin (callable): a function to be called. The parameters will be sent
@@ -195,7 +216,8 @@ class Model(nn.Module):
 
     def _apply_plugin(self, plugin, hook, override):
         utils.assert_raise(hook in self.valid_hooks, ValueError,
-                           'Expected on of the following hooks: ' + ', '.join(self.valid_hooks))
+                           'Invalid hook {}. Expected on of the following: {}'.format(
+                               hook, ', '.join(self.valid_hooks)))
         plugin = utils._ntuple(plugin, 1)
 
         container = self._plugins[hook]
@@ -211,29 +233,31 @@ class Model(nn.Module):
 
     def hook(self, name):
         for key, plugin in self._plugins[name].items():
-            status = plugin(**self._state)
+            status = plugin(**self.state)
 
             state_name = name + '_' + key
             if isinstance(status, dict):
+                self.state[state_name + '__dict'] = status
                 for attr, value in status.items():
-                    self._state[state_name + '_' + attr] = value
+                    self.state[state_name + '_' + attr] = value
             else:
-                self._state[state_name] = status
+                self.state[state_name] = status
 
     def _forward_batch(self, batch_num, batch, optimizer):
         optimizer.zero_grad()
 
-        output = self.forward(batch)
+        output = self(batch)
         loss = self.loss(output, batch)
 
-        self._state['output'] = output
+        self.state['output'] = output
 
         self.hook('before_backward')
-        loss.backward()
-        self.hook('before_step')
-        optimizer.step()
+        if loss is not None and self.training:
+            loss.backward()
+            self.hook('before_step')
+            optimizer.step()
 
-        return loss.data[0]
+            return loss.data[0]
 
     def _start_learn_state(self, dataset, optimizer, validation_dataset, max_epochs):
         self._logger.info('Model: \n\n{}\n'.format(repr(self)))
@@ -247,7 +271,7 @@ class Model(nn.Module):
         self._logger.info('Total number of parameters: ' + humanize.intcomma(num_params[0] + num_params[1]))
         self._logger.info('Starting the training ...')
 
-        self._state = {
+        self.state = dict(**{
             'max_epochs': max_epochs,
             'num_batches': len(dataset),
             'model': self,
@@ -259,7 +283,7 @@ class Model(nn.Module):
             'loss': None,
             'loss_mean': None,
             'validation_dataset': validation_dataset
-        }
+        })
 
         if self._requires_register_default:
             self._register_default_plugins()
@@ -313,21 +337,21 @@ class Model(nn.Module):
             self.hook('on_start')
 
             for epoch in range(1, max_epochs + 1):
-                self._state['current_epoch'] = epoch
-                self._state['current_batch'] = 0
-                self._state['loss'] = None
-                self._state['loss_mean'] = None
-                self._state['sample'] = None
-                self._state['output'] = None
+                self.state['current_epoch'] = epoch
+                self.state['current_batch'] = 0
+                self.state['loss'] = None
+                self.state['loss_mean'] = None
+                self.state['sample'] = None
+                self.state['output'] = None
 
                 self.hook('on_start_epoch')
                 losses = []
-                self._state['loss'] = losses
+                self.state['loss'] = losses
 
                 for idx, sample in enumerate(dataset, 1):
-                    self._state['current_batch'] = idx
-                    self._state['sample'] = sample
-                    self._state['output'] = None
+                    self.state['current_batch'] = idx
+                    self.state['sample'] = sample
+                    self.state['output'] = None
                     self.hook('on_start_batch')
 
                     loss = self._forward_batch(idx, sample, optimizer)
@@ -335,10 +359,10 @@ class Model(nn.Module):
 
                     self.hook('on_end_batch')
 
-                self._state['current_batch'] = 0
-                self._state['sample'] = None
-                self._state['output'] = None
-                self._state['loss_mean'] = np.mean(self._state['loss'])
+                self.state['current_batch'] = 0
+                self.state['sample'] = None
+                self.state['output'] = None
+                self.state['loss_mean'] = np.mean(self.state['loss'])
 
                 self.hook('on_end_epoch')
 
@@ -346,9 +370,9 @@ class Model(nn.Module):
         except StopTraining:
             self.hook('on_stop_training')
             status = False
+            self._logger.info('Training stopped')
 
         self._requires_register_default = original_register_default
-        self._state.clear()
         self.hook('on_end')
 
         self._logger.info('Training finished')
@@ -367,9 +391,10 @@ class Model(nn.Module):
         Returns:
             output: the :meth:`~cogitare.Model.forward` output.
         """
-        return self.forward(*args, **kwargs)
+        return self(*args, **kwargs)
 
-    def metric_loss(self, output, sample):
+    @not_training
+    def metric_loss(self, output, sample, *args, **kwargs):
         """metric_loss is a shortcut to use the model loss as a tranining metric.
 
         Given the model output and the batch data, the metric_loss returns the
@@ -382,7 +407,7 @@ class Model(nn.Module):
         Returns:
             output (float): the model loss.
         """
-        loss = self.loss(output, sample)
+        loss = self.loss(output, sample, *args, **kwargs)
         return loss.data[0]
 
     @not_training
@@ -404,8 +429,8 @@ class Model(nn.Module):
 
         losses = []
         for sample in dataset:
-            output = self.predict(sample)
-            losses.append(self.metric_loss(output, sample))
+            output = self.predict(sample, *args, **kwargs)
+            losses.append(self.metric_loss(output, sample, *args, **kwargs))
 
         return losses
 

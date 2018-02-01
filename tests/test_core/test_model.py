@@ -37,7 +37,7 @@ class TestModel(TestCase):
     def test_model(self):
         model = Model1()
 
-        output = model.forward(self.data[0])
+        output = model(self.data[0])
         loss = model.loss(output, self.data[0])
         output2 = model.predict(self.data[0])
 
@@ -51,7 +51,7 @@ class TestModel(TestCase):
 
         with pytest.raises(ValueError) as info:
             model.register_plugin(lambda x: x, 'any', postpone=False)
-        self.assertIn('Expected on of the following hooks', str(info.value))
+        self.assertIn('Expected on of the following', str(info.value))
 
     def test_register_plugin_adds_to_hooks(self):
         model = Model1()
@@ -92,7 +92,7 @@ class TestModel(TestCase):
         model.hook('on_start')
 
         meth.assert_any_call()
-        self.assertEqual(model._state['on_start_test'], 3)
+        self.assertEqual(model.state['on_start_test'], 3)
 
     def test_register_default(self):
         model = Model1()
@@ -122,7 +122,7 @@ class TestModel(TestCase):
     def test_metric_loss(self):
         model = Model1()
 
-        output = model.forward(self.data[0])
+        output = model(self.data[0])
         loss = model.loss(output, self.data[0])
 
         self.assertEqual(loss.data[0], model.metric_loss(output, self.data[0]))

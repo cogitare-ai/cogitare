@@ -62,6 +62,27 @@ class TestCallableHolder(TestCase, _SequentialDataHolderAbs):
     def data(self):
         return get_data
 
+    def test_sort(self):
+        samples = [
+            [['a'], ['b'], ['c'], ['d']],
+            [['e'], ['f']],
+            [['g'], ['h'], ['i']]
+        ]
+
+        def load(pos):
+            return samples[pos]
+
+        dh = SequentialCallableHolder(load, batch_size=3, sort_by_len=True, total_samples=3,
+                                      padding_value=33, shuffle=False)
+        data, indices, sizes = next(dh)
+
+        self.assertListEqual(sizes, [4, 3, 2])
+        self.assertListEqual(indices, [0, 2, 1])
+        self.assertListEqual(data, [(['a'], ['g'], ['e']),
+                                    (['b'], ['h'], ['f']),
+                                    (['c'], ['i'], 33),
+                                    (['d'], 33, 33)])
+
 
 class TestSequentialAutorHolder(TestCase):
 

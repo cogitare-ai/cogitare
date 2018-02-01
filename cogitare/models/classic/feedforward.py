@@ -31,7 +31,7 @@ class FeedForward(Model):
         super(FeedForward, self).__init__()
         if activation is None:
             activation = [nn.Tanh()] * (num_layers - 1)
-            activation.append(nn.LogSoftmax())
+            activation.append(nn.LogSoftmax(dim=1))
         if loss_function is None:
             loss_function = nn.NLLLoss()
 
