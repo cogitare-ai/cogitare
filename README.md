@@ -37,14 +37,17 @@ of cuda and multi-core processing.
 Install
 -------
 
-- Install PyTorch from http://pytorch.org/
-- Install Cogitare from PIP:
+First, install PyTorch from http://pytorch.org/
 
-      pip install cogitare
+Then, you can install Cogitare from pip, using:
 
+    pip install cogitare
 
-Features
---------
+Test the installation by::
+
+    >>> import cogitare
+    >>> cogitare.__version__
+    '0.1.0'
 
 Contribution
 ------------

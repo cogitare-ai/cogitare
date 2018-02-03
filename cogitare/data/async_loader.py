@@ -91,6 +91,8 @@ class AsyncDataLoader(object):
         self._data = data
         self._thread = None
         self._on_batch_loaded = on_batch_loaded
+        self._cache_buffer = []
+        self._caching = False
 
     def __repr__(self):
         return repr(self._data)
@@ -115,9 +117,17 @@ class AsyncDataLoader(object):
             >>> print('done')
         """
 
+        self._caching = True
+        self._cache_buffer = []
+
         self._start()
         while not self._queue.full():
             time.sleep(0.1)
+
+        while not all(f.done() for f in self._cache_buffer):
+            time.sleep(0.1)
+
+        self._caching = False
 
     def _produce(self):
         idx = 0
@@ -126,6 +136,9 @@ class AsyncDataLoader(object):
             future = self._executor.submit(_fetch, self._on_batch_loaded, self._data)
             self._queue.put((idx, future))
             idx += 1
+
+            if self._caching:
+                self._cache_buffer.append(future)
 
     def __iter__(self):
         return self

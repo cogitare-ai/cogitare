@@ -1,9 +1,29 @@
 #!/usr/bin/env python
+import re
+import codecs
+import os
 from setuptools import setup, find_packages
+
+here = os.path.abspath(os.path.dirname(__file__))
+
+
+def read(*parts):
+    with codecs.open(os.path.join(here, *parts), 'r') as fp:
+        return fp.read()
+
+
+def find_version(*file_paths):
+    version_file = read(*file_paths)
+    version_match = re.search(r"^__version__ = ['\"]([^'\"]*)['\"]",
+                              version_file, re.M)
+    if version_match:
+        return version_match.group(1)
+    raise RuntimeError("Unable to find version string.")
+
 
 setup(
     name='cogitare',
-    version='0.1.0',
+    version=find_version('cogitare', '__init__.py'),
     url='https://github.com/cogitare-ai/cogitare',
     description=' Cogitare - A Modern, Powerful, and Modular Deep Learning and Machine Learning framework in Python.',
     author='Aron Bordin',

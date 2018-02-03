@@ -109,7 +109,7 @@ class Model(nn.Module):
         plot.add_variable('loss', 'Loss', color='blue', use_std=True)
         if self.state['validation_dataset']:
             evaluator = Evaluator(self.state['validation_dataset'], {'loss': self.metric_loss})
-            plot.add_variable('on_end_epoch_Evaluator_loss', 'Loss', color='green', use_std=True)
+            plot.add_variable('on_end_epoch_Evaluator_loss', 'Validation Loss', color='green', use_std=True)
             self.register_plugin(evaluator, 'on_end_epoch', True, False)
 
         self.register_plugin([

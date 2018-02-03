@@ -65,7 +65,8 @@ extensions = [
     'juliadoc.julia',
     'juliadoc.jlhelp',
     'sphinx.ext.napoleon',
-    'sphinxcontrib_rawfiles'
+    'sphinxcontrib_rawfiles',
+    'nbsphinx'
 ]
 napoleon_include_init_with_doc = True
 napoleon_include_special_with_doc = True
@@ -108,7 +109,7 @@ language = None
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This patterns also effect to html_static_path and html_extra_path
-exclude_patterns = []
+exclude_patterns = ['_build', '**.ipynb_checkpoints']
 
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = 'sphinx'

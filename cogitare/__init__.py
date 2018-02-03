@@ -7,6 +7,7 @@ from cogitare.core import SequentialModel
 
 
 __all__ = ['Model', 'SequentialModel', 'PluginInterface']
+__version__ = '0.1.0'
 
 
 def seed(value):
