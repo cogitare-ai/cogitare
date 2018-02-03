@@ -1,3 +1,5 @@
 -e git+https://github.com/JuliaLang/JuliaDoc.git#egg=JuliaDoc
 sphinx_rtd_theme
 sphinx-autobuild
+nbsphinx
+ipython
