@@ -7,8 +7,6 @@ http://docs.cogitare-ai.org/
 	
 [![Build Status](https://travis-ci.org/cogitare-ai/cogitare.svg?branch=master)](https://travis-ci.org/cogitare-ai/cogitare)
 [![codecov](https://codecov.io/gh/cogitare-ai/cogitare/branch/master/graph/badge.svg)](https://codecov.io/gh/cogitare-ai/cogitare)
-[![Code Climate](https://codeclimate.com/github/cogitare-ai/cogitare/badges/gpa.svg)](https://codeclimate.com/github/cogitare-ai/cogitare)
-
 
 It uses the best of [PyTorch](http://pytorch.org/), [Dask](https://dask.pydata.org/), [NumPy](http://www.numpy.org/), and others tools through a simple interface to train, to evaluate, to test
 models and more.
@@ -42,7 +40,9 @@ of cuda and multi-core processing.
 
       pip install cogitare
 
+- Cogitare is in active development, so it's recommended to get the latest version from GitHub. To install directly from GitHub, use:
 
+      pip install -e git+https://github.com/cogitare-ai/cogitare#egg=cogitare
 
 # 3. Quickstart
 
