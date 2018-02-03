@@ -30,4 +30,16 @@ setup(
     author_email='aron.bordin@gmail.com',
     keywords=['deep learning', 'framework', 'PyTorch'],
     packages=find_packages(exclude=('tests', 'tests.*')),
+    install_requires=[
+        'six>=1.10.0',
+        'numpy>=1.12.1',
+        'tqdm>=4.11.2',
+        'matplotlib>=2.0.2',
+        'dask>=0.15.2',
+        'toolz>=0.8.2',
+        'cloudpickle>=0.4.0',
+        'futures>=3.1.1',
+        'coloredlogs>=7.3',
+        'humanize>=0.5.1'
+    ]
 )
