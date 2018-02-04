@@ -50,7 +50,6 @@ class PlottingMatplotlib(PluginInterface):
         self._created = False
 
     def _create_plot(self):
-        plt.ion()
         plt.style.use(self._style)
         fig, ax = plt.subplots()
 
@@ -108,8 +107,7 @@ class PlottingMatplotlib(PluginInterface):
                                           color=plot['color'])
             self._ax.legend(loc=self._legend_pos)
         else:
-            plot['line'].set_ydata(plot['data'])
-            plot['line'].set_xdata(xdata)
+            plot['line'].set_data(xdata, plot['data'])
 
         if plot['use_std']:
             std = np.std(y)
@@ -145,3 +143,4 @@ class PlottingMatplotlib(PluginInterface):
 
         if self._file_name:
             self._fig.savefig(self._file_name)
+        self._fig.show()
