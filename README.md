@@ -1,12 +1,34 @@
 <p align="center"><img width="80%" src="https://raw.githubusercontent.com/cogitare-ai/cogitare/master/docs/source/art/logo-line.png" /></p>
 
-# 1. Cogitare
-**Cogitare** is a Modern, Fast, and Modular Deep Learning and Machine Learning framework in Python. A friendly interface for beginners and a powerful toolset for experts. 
+<h3 align="center"><b>Cogitare</b> is a Modern, Fast, and Modular Deep Learning and Machine Learning framework in Python. A friendly interface for beginners and a powerful toolset for experts.</h3>
 
-http://docs.cogitare-ai.org/
+<p align="center">
+  <a href="http://docs.cogitare-ai.org/">Documentation</a> •
+  <a href="http://tutorials.cogitare-ai.org/">Tutorials</a> •
+  <a href="#1-about">About</a> •
+  <a href="#2-install">Install</a> •
+  <a href="#3-quickstart">Quickstart</a> •
+  <a href="#4-contribution">Contribution</a>
+</p>
+
+
+<p align="center">
+	<a href="https://travis-ci.org/cogitare-ai/cogitare">
+		<img src="https://travis-ci.org/cogitare-ai/cogitare.svg?branch=master" />
+	</a>
+	<a href="https://codecov.io/gh/cogitare-ai/cogitare">
+		<img src="https://codecov.io/gh/cogitare-ai/cogitare/branch/master/graph/badge.svg" />
+	</a>
+	<a href="https://badge.fury.io/py/cogitare">
+		<img src="https://badge.fury.io/py/cogitare.svg" alt="PyPI version" height="18">
+	</a>
+</p>
+
 	
 [![Build Status](https://travis-ci.org/cogitare-ai/cogitare.svg?branch=master)](https://travis-ci.org/cogitare-ai/cogitare)
 [![codecov](https://codecov.io/gh/cogitare-ai/cogitare/branch/master/graph/badge.svg)](https://codecov.io/gh/cogitare-ai/cogitare)
+
+# 1. About
 
 It uses the best of [PyTorch](http://pytorch.org/), [Dask](https://dask.pydata.org/), [NumPy](http://www.numpy.org/), and others tools through a simple interface to train, to evaluate, to test
 models and more.
@@ -304,8 +326,8 @@ print('Accuracy: {}'.format(metrics_mean['accuracy'] / qtd))
 
 One of the advantages of Cogitare is the plug-and-play APIs, which let you add/remove functionalities easily. With this sample, we trained a model with training progress bar, error plotting, early stopping, grad clipping, and model evaluation easily.
 
-Contribution
-------------
+# 4. Contribution
+
 Cogitare is a work in progress project, and any contribution is welcome.
 
 You can contribute testing and providing bug reports, proposing feature ideas,
