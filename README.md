@@ -1,6 +1,6 @@
 <p align="center"><img width="80%" src="https://raw.githubusercontent.com/cogitare-ai/cogitare/master/docs/source/art/logo-line.png" /></p>
 
-<h3 align="center"><b>Cogitare</b> is a Modern, Fast, and Modular Deep Learning and Machine Learning framework in Python. A friendly interface for beginners and a powerful toolset for experts.</h3>
+<h3 align="center"><b>Cogitare</b> is a Modern, Fast, and Modular Deep Learning and Machine Learning framework for Python. A friendly interface for beginners and a powerful toolset for experts.</h3>
 
 <p align="center">
   <a href="http://docs.cogitare-ai.org/">Documentation</a> •
@@ -35,6 +35,8 @@ models and more.
 
 With Cogitare, you can use classical machine learning algorithms with high
 performance and develop state-of-the-art models quickly.
+
+Check the tutorials at http://tutorials.cogitare-ai.org/
 
 The primary objectives of Cogitare are:
 
