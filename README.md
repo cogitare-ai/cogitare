@@ -2,7 +2,7 @@
 
 <h3 align="center"><b>Cogitare</b> is a Modern, Fast, and Modular Deep Learning and Machine Learning framework for Python. A friendly interface for beginners and a powerful toolset for experts.</h3>
 
-<h3 align="center"><b>Cogitare</b> is a built on top of PyTorch.</h3>
+<h3 align="center"><b>Cogitare</b> is built on top of PyTorch.</h3>
 
 <p align="center">
   <a href="http://docs.cogitare-ai.org/">Documentation</a> •
