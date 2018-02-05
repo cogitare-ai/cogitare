@@ -1,0 +1,1004 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Quickstart &mdash; Cogitare 0.1 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/julia.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="_static/julia.css" type="text/css" />
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="Cogitare 0.1 documentation" href="index.html"/>
+        <link rel="next" title="Tutorials" href="tutorials.html"/>
+        <link rel="prev" title="Installation" href="installation.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+<a href="https://github.com/cogitare-ai/cogitare"><img style="z-index: 1; position: fixed; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="http://docs.cogitare-ai.org/"><img src="_static/logo-line.png" class="logo"></a>
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <p class="caption"><span class="caption-text">Introduction</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Model">Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Data-Loading">Data Loading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Training">Training</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Cogitare</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="model.html">Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="model.html#implementing-a-model">Implementing a Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model.html#api">API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sequential_model.html">Sequential Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sequential_model.html#implementing-a-sequential-model-many-to-many-many-to-one">Implementing a Sequential Model (Many-to-Many, Many-to-One)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sequential_model.html#api">API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="data.html">Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="data.html#absdataholder"><span class="hidden-section">AbsDataHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#tensorholder"><span class="hidden-section">TensorHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#numpyholder"><span class="hidden-section">NumpyHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#callableholder"><span class="hidden-section">CallableHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#autoholder"><span class="hidden-section">AutoHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#dataset"><span class="hidden-section">DataSet</span></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sequential_data.html">Sequential Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sequential_data.html#sequentialabsdataholder"><span class="hidden-section">SequentialAbsDataHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sequential_data.html#sequentialtensorholder"><span class="hidden-section">SequentialTensorHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sequential_data.html#sequentialnumpyholder"><span class="hidden-section">SequentialNumpyHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sequential_data.html#sequentialcallableholder"><span class="hidden-section">SequentialCallableHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sequential_data.html#sequentialautoholder"><span class="hidden-section">SequentialAutoHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sequential_data.html#sequentialdataset"><span class="hidden-section">SequentialDataSet</span></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="async_data.html">Async Data Loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plugins.html">Plugins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="plugins.html#custom-plugin">Custom Plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plugins.html#register-a-plugin">Register a plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plugins.html#official-plugins">Official Plugins</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="plugins.html#earlystopping"><span class="hidden-section">EarlyStopping</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="plugins.html#evaluator"><span class="hidden-section">Evaluator</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="plugins.html#logger"><span class="hidden-section">Logger</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="plugins.html#plottingmatplotlib"><span class="hidden-section">PlottingMatplotlib</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="plugins.html#progressbar"><span class="hidden-section">ProgressBar</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="monitor.html">Cogitare Monitor</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="monitor.html#how-to-use">How to Use</a></li>
+<li class="toctree-l2"><a class="reference internal" href="monitor.html#creating-a-custom-plugin">Creating a Custom Plugin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="metrics.html">Metrics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#module-cogitare.metrics.classification">Classification Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#module-cogitare.metrics.spatial">Spatial Metrics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">cogitare.utils</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="models/classic.html">Classic Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Extra</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="contribute.html">Contribute</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contribute.html#contributing-to-cogitare">Contributing to Cogitare</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Cogitare</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Quickstart</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/quickstart.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 7ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="Quickstart">
+<h1>Quickstart<a class="headerlink" href="#Quickstart" title="Permalink to this headline">¶</a></h1>
+<p>This is a simple tutorial to get started with Cogitare main
+functionalities.</p>
+<p>In this tutorial, we will write a Convolutional Neural Network (CNN) to
+classify handwritten digits (MNIST).</p>
+<div class="section" id="Model">
+<h2>Model<a class="headerlink" href="#Model" title="Permalink to this headline">¶</a></h2>
+<p>We start by defining our CNN model.</p>
+<p>When developing a model with Cogitare, your model must extend the
+<code class="docutils literal"><span class="pre">cogitare.Model</span></code> class. This class provides the Model interface, which
+allows you to train and evaluate the model efficiently.</p>
+<p>To implement a model, you must extend the <code class="docutils literal"><span class="pre">cogitare.Model</span></code> class and
+implement the <code class="docutils literal"><span class="pre">forward()</span></code> and <code class="docutils literal"><span class="pre">loss()</span></code> methods. The forward method
+will receive the batch. In this way, it is necessary to implement the
+forward pass through the network in this method, and then return the
+output of the net. The loss method will receive the output of the
+<code class="docutils literal"><span class="pre">forward()</span></code> and the batch received from the iterator, apply a loss
+function, compute and return it.</p>
+<p>The Model interface will iterate over the dataset, and execute each
+batch on <code class="docutils literal"><span class="pre">forward</span></code>, <code class="docutils literal"><span class="pre">loss</span></code>, and <code class="docutils literal"><span class="pre">backward</span></code>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># adapted from https://github.com/pytorch/examples/blob/master/mnist/main.py</span>
+<span class="kn">from</span> <span class="nn">cogitare</span> <span class="k">import</span> <span class="n">Model</span>
+<span class="kn">from</span> <span class="nn">cogitare</span> <span class="k">import</span> <span class="n">utils</span>
+<span class="kn">from</span> <span class="nn">cogitare.data</span> <span class="k">import</span> <span class="n">DataSet</span><span class="p">,</span> <span class="n">AsyncDataLoader</span>
+<span class="kn">from</span> <span class="nn">cogitare.plugins</span> <span class="k">import</span> <span class="n">EarlyStopping</span>
+<span class="kn">from</span> <span class="nn">cogitare.metrics.classification</span> <span class="k">import</span> <span class="n">accuracy</span>
+<span class="kn">import</span> <span class="nn">cogitare</span>
+
+<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="nn">F</span>
+<span class="kn">from</span> <span class="nn">torch.nn.utils</span> <span class="k">import</span> <span class="n">clip_grad_norm</span>
+<span class="kn">import</span> <span class="nn">torch.optim</span> <span class="k">as</span> <span class="nn">optim</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="k">import</span> <span class="n">fetch_mldata</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">CUDA</span> <span class="o">=</span> <span class="kc">True</span>
+
+
+<span class="n">cogitare</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">set_cuda</span><span class="p">(</span><span class="n">CUDA</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="k">class</span> <span class="nc">CNN</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">CNN</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+        <span class="c1"># define the model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conv1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conv2</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conv2_drop</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Dropout2d</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fc1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">320</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fc2</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">):</span>
+        <span class="c1"># in this sample, each batch will be a tuple containing (input_batch, expected_batch)</span>
+        <span class="c1"># in forward in are only interested in input so that we can ignore the second item of the tuple</span>
+        <span class="nb">input</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">batch</span>
+
+        <span class="c1"># batch X flat tensor -&gt; batch X 1 channel (gray) X width X heigth</span>
+        <span class="nb">input</span> <span class="o">=</span> <span class="nb">input</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">)</span>
+
+        <span class="c1"># pass the data in the net</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">max_pool2d</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conv1</span><span class="p">(</span><span class="nb">input</span><span class="p">),</span> <span class="mi">2</span><span class="p">))</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">max_pool2d</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conv2_drop</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conv2</span><span class="p">(</span><span class="n">x</span><span class="p">)),</span> <span class="mi">2</span><span class="p">))</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">320</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fc1</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">dropout</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">training</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">training</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fc2</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+        <span class="c1"># return the model output</span>
+        <span class="k">return</span> <span class="n">F</span><span class="o">.</span><span class="n">log_softmax</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">loss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">batch</span><span class="p">):</span>
+        <span class="c1"># in this sample, each batch will be a tuple containing (input_batch, expected_batch)</span>
+        <span class="c1"># in loss in are only interested in expected so that we can ignore the first item of the tuple</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">expected</span> <span class="o">=</span> <span class="n">batch</span>
+
+        <span class="k">return</span> <span class="n">F</span><span class="o">.</span><span class="n">nll_loss</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>The model class is simple; it only requires de forward and loss methods.
+By default, Cogitare will backward the loss returned by the <code class="docutils literal"><span class="pre">loss()</span></code>
+method, and optimize the model parameters. If you want to disable the
+Cogitare backward and optimization steps, just return <code class="docutils literal"><span class="pre">None</span></code> in the
+loss function. If you return None, you are responsible by backwarding
+and optimizing the parameters.</p>
+</div>
+<div class="section" id="Data-Loading">
+<h2>Data Loading<a class="headerlink" href="#Data-Loading" title="Permalink to this headline">¶</a></h2>
+<p>In this step, we will load the data from sklearn package.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">mnist</span> <span class="o">=</span> <span class="n">fetch_mldata</span><span class="p">(</span><span class="s1">&#39;MNIST original&#39;</span><span class="p">)</span>
+<span class="n">mnist</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">(</span><span class="n">mnist</span><span class="o">.</span><span class="n">data</span> <span class="o">/</span> <span class="mi">255</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Cogitare provides a toolbox to load and pre-process data for your
+models. In this introduction, we will use the <code class="docutils literal"><span class="pre">DataSet</span></code> and the
+<code class="docutils literal"><span class="pre">AsyncDataLoader</span></code> as examples.</p>
+<p>The <code class="docutils literal"><span class="pre">DataSet</span></code> is responsible by iterating over multiples data
+iterators (in our case, we’ll have two data iterators: input samples,
+expected samples).</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># as input, the DataSet is expected a list of iterators. In our case, the first iterator is the input</span>
+<span class="c1"># data and the second iterator is the target data</span>
+
+<span class="c1"># also, we set the batch size to 32 and enable the shuffling</span>
+
+<span class="c1"># drop the last batch if its size is different of 32</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">DataSet</span><span class="p">([</span><span class="n">mnist</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">mnist</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)],</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">drop_last</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># then, we split our dataset into a train and into a validation sets, by a ratio of 0.8</span>
+<span class="n">data_train</span><span class="p">,</span> <span class="n">data_validation</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="mf">0.8</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Notice that Cogitare accepts any iterator as input. Instead of using our
+DataSet, you can use the mnist.data itself, PyTorch’s data loaders, or
+any other input that acts as an iterator.</p>
+<p>In some cases, we can increase the model performance by loading the data
+using multiples threads/processes or by pre-loading the data before
+being requested by the model.</p>
+<p>With the <code class="docutils literal"><span class="pre">AsyncDataLoader</span></code>, we can load N batches ahead of the model
+execution in parallel. We present this technique in this sample because
+it can increase performance in a wide range of models (when the data
+loading or pre-processing is slower than the model execution).</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">pre_process</span><span class="p">(</span><span class="n">batch</span><span class="p">):</span>
+    <span class="nb">input</span><span class="p">,</span> <span class="n">expected</span> <span class="o">=</span> <span class="n">batch</span>
+
+    <span class="c1"># the data is a numpy.ndarray (loaded from sklearn), so we need to convert it to Variable</span>
+    <span class="nb">input</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">to_variable</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">)</span>  <span class="c1"># converts to a torch Variable of LongTensor</span>
+    <span class="n">expected</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">to_variable</span><span class="p">(</span><span class="n">expected</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">LongTensor</span><span class="p">)</span>  <span class="c1"># converts to a torch Variable of LongTensor</span>
+    <span class="k">return</span> <span class="nb">input</span><span class="p">,</span> <span class="n">expected</span>
+
+
+<span class="c1"># we wrap our data_train and data_validation iterators over the async data loader.</span>
+<span class="c1"># each loader will load 16 batches ahead of the model execution using 8 workers (8 threads, in this case).</span>
+<span class="c1"># for each batch, it will be pre-processed in parallel with the preprocess function, that will load the data</span>
+<span class="c1"># on GPU</span>
+<span class="n">data_train</span> <span class="o">=</span> <span class="n">AsyncDataLoader</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">buffer_size</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;threaded&#39;</span><span class="p">,</span> <span class="n">workers</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">on_batch_loaded</span><span class="o">=</span><span class="n">pre_process</span><span class="p">)</span>
+<span class="n">data_validation</span> <span class="o">=</span> <span class="n">AsyncDataLoader</span><span class="p">(</span><span class="n">data_validation</span><span class="p">,</span> <span class="n">buffer_size</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;threaded&#39;</span><span class="p">,</span> <span class="n">workers</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">on_batch_loaded</span><span class="o">=</span><span class="n">pre_process</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>to cache the async buffer before training, we can:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">data_train</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span>
+<span class="n">data_validation</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>Let’s look how the data looks like:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="nb">next</span><span class="p">(</span><span class="n">data_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[7]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>(Variable containing:
+  0.0000  0.0000  0.0000  ...   0.0000  0.0000  0.0000
+  0.0000  0.0000  0.0000  ...   0.0000  0.0000  0.0000
+  0.0000  0.0000  0.0000  ...   0.0000  0.0000  0.0000
+           ...             ⋱             ...
+  0.0000  0.0000  0.0000  ...   0.0000  0.0000  0.0000
+  0.0000  0.0000  0.0000  ...   0.0000  0.0000  0.0000
+  0.0000  0.0000  0.0000  ...   0.0000  0.0000  0.0000
+ [torch.cuda.FloatTensor of size 32x784 (GPU 0)], Variable containing:
+  6
+  0
+  5
+  8
+  1
+  7
+  3
+  2
+  3
+  5
+  2
+  6
+  2
+  7
+  2
+  5
+  8
+  1
+  3
+  8
+  8
+  4
+  4
+  0
+  9
+  0
+  2
+  6
+  6
+  6
+  6
+  2
+ [torch.cuda.LongTensor of size 32 (GPU 0)])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Training">
+<h2>Training<a class="headerlink" href="#Training" title="Permalink to this headline">¶</a></h2>
+<p>Now, we can train our model.</p>
+<p>First, lets create the model instance and add the default plugins to
+watch the training status. The default plugin includes:</p>
+<ul class="simple">
+<li>Progress bar per batch and epoch</li>
+<li>Plot training and validation losses (if validation_dataset is
+present)</li>
+<li>Log training loss</li>
+</ul>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">model</span> <span class="o">=</span> <span class="n">CNN</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">register_default_plugins</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>Besides that, we may want to add some extra plugins, such as the
+EarlyStopping. So, if the model is not decreasing the loss after N
+epochs, the training stops and the best model is used.</p>
+<p>To add the early stopping algorithm, you can use:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">early</span> <span class="o">=</span> <span class="n">EarlyStopping</span><span class="p">(</span><span class="n">max_tries</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s1">&#39;/tmp/model.pt&#39;</span><span class="p">)</span>
+<span class="c1"># after 10 epochs without decreasing the loss, stop the training and the best model is saved at /tmp/model.pt</span>
+
+<span class="c1"># the plugin will execute in the end of each epoch</span>
+<span class="n">model</span><span class="o">.</span><span class="n">register_plugin</span><span class="p">(</span><span class="n">early</span><span class="p">,</span> <span class="s1">&#39;on_end_epoch&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Also, a common technique is to clip the gradient during training. If you
+want to clip the grad, you can use:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">model</span><span class="o">.</span><span class="n">register_plugin</span><span class="p">(</span><span class="k">lambda</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">:</span> <span class="n">clip_grad_norm</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="mf">1.0</span><span class="p">),</span> <span class="s1">&#39;before_step&#39;</span><span class="p">)</span>
+<span class="c1"># will execute the clip_grad_norm before each optimization step</span>
+</pre></div>
+</div>
+</div>
+<p>Now, we define the optimizator, and then start the model training:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">CUDA</span><span class="p">:</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">learn</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">data_validation</span><span class="p">,</span> <span class="n">max_epochs</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="stderr output_area docutils container">
+<div class="highlight"><pre>
+2018-02-02 20:59:23 sprawl cogitare.core.model[2443] INFO Model:
+
+CNN(
+  (conv1): Conv2d (1, 10, kernel_size=(5, 5), stride=(1, 1))
+  (conv2): Conv2d (10, 20, kernel_size=(5, 5), stride=(1, 1))
+  (conv2_drop): Dropout2d(p=0.5)
+  (fc1): Linear(in_features=320, out_features=50)
+  (fc2): Linear(in_features=50, out_features=10)
+)
+
+2018-02-02 20:59:23 sprawl cogitare.core.model[2443] INFO Training data:
+
+DataSet with:
+    containers: [
+        TensorHolder with 1750x32 samples
+        TensorHolder with 1750x32 samples
+    ],
+    batch size: 32
+
+
+2018-02-02 20:59:23 sprawl cogitare.core.model[2443] INFO Number of trainable parameters: 21,840
+2018-02-02 20:59:23 sprawl cogitare.core.model[2443] INFO Number of non-trainable parameters: 0
+2018-02-02 20:59:23 sprawl cogitare.core.model[2443] INFO Total number of parameters: 21,840
+2018-02-02 20:59:23 sprawl cogitare.core.model[2443] INFO Starting the training ...
+2018-02-02 20:59:30 sprawl [CNN][2443] INFO [CNN] Loss: 0.547499 | 7 seconds
+batch: 100%|█████████▉| 1749/1750 [00:06&lt;00:00, 290.32it/s]
+
+                                           2018-02-02 20:59:37 sprawl [CNN][2443] INFO [CNN] Loss: 0.262575 | 13 seconds
+batch:   0%|          | 2/1750 [00:13&lt;00:05, 301.84it/s]
+epoch:   1%|          | 1/100 [00:06&lt;10:36,  6.43s/it]
+
+                                                   2018-02-02 20:59:43 sprawl [CNN][2443] INFO [CNN] Loss: 0.221933 | 20 seconds
+batch:   0%|          | 2/1750 [00:19&lt;00:05, 293.35it/s]
+epoch:   2%|▏         | 2/100 [00:12&lt;05:15,  3.22s/it]
+
+                                                   2018-02-02 20:59:49 sprawl [CNN][2443] INFO [CNN] Loss: 0.195854 | 26 seconds
+batch:   0%|          | 2/1750 [00:25&lt;00:05, 303.73it/s]
+epoch:   3%|▎         | 3/100 [00:19&lt;06:41,  4.14s/it]
+
+                                                   2018-02-02 20:59:56 sprawl [CNN][2443] INFO [CNN] Loss: 0.178861 | 32 seconds
+batch:   0%|          | 2/1750 [00:32&lt;00:05, 293.98it/s]
+epoch:   4%|▍         | 4/100 [00:25&lt;07:39,  4.79s/it]
+
+                                                   2018-02-02 21:00:02 sprawl [CNN][2443] INFO [CNN] Loss: 0.176302 | 39 seconds
+batch:   0%|          | 2/1750 [00:38&lt;00:05, 295.54it/s]
+epoch:   5%|▌         | 5/100 [00:31&lt;08:19,  5.26s/it]
+
+                                                   2018-02-02 21:00:09 sprawl [CNN][2443] INFO [CNN] Loss: 0.164552 | 45 seconds
+batch:   0%|          | 2/1750 [00:45&lt;00:05, 296.85it/s]
+epoch:   6%|▌         | 6/100 [00:38&lt;08:46,  5.60s/it]
+
+                                                   2018-02-02 21:00:15 sprawl [CNN][2443] INFO [CNN] Loss: 0.156181 | 52 seconds
+batch:   0%|          | 2/1750 [00:51&lt;00:06, 280.15it/s]
+epoch:   7%|▋         | 7/100 [00:44&lt;09:07,  5.89s/it]
+
+                                                   2018-02-02 21:00:22 sprawl [CNN][2443] INFO [CNN] Loss: 0.151165 | 58 seconds
+batch:   0%|          | 2/1750 [00:57&lt;00:05, 295.65it/s]
+epoch:   8%|▊         | 8/100 [00:51&lt;09:16,  6.05s/it]
+
+                                                   2018-02-02 21:00:28 sprawl [CNN][2443] INFO [CNN] Loss: 0.149550 | 1 minutes 5 seconds
+batch:   0%|          | 2/1750 [01:04&lt;00:05, 292.29it/s]
+epoch:   9%|▉         | 9/100 [00:57&lt;09:22,  6.18s/it]
+
+                                                    2018-02-02 21:00:35 sprawl [CNN][2443] INFO [CNN] Loss: 0.143826 | 1 minutes 11 seconds
+batch:   0%|          | 2/1750 [01:10&lt;00:05, 296.42it/s]
+epoch:  10%|█         | 10/100 [01:04&lt;09:23,  6.26s/it]
+
+                                                    2018-02-02 21:00:41 sprawl [CNN][2443] INFO [CNN] Loss: 0.137406 | 1 minutes 18 seconds
+batch:   0%|          | 2/1750 [01:17&lt;00:05, 293.46it/s]
+epoch:  11%|█         | 11/100 [01:10&lt;09:23,  6.33s/it]
+
+                                                    2018-02-02 21:00:48 sprawl [CNN][2443] INFO [CNN] Loss: 0.135855 | 1 minutes 24 seconds
+batch:   0%|          | 2/1750 [01:23&lt;00:06, 288.40it/s]
+epoch:  12%|█▏        | 12/100 [01:17&lt;09:21,  6.38s/it]
+
+                                                    2018-02-02 21:00:54 sprawl [CNN][2443] INFO [CNN] Loss: 0.137567 | 1 minutes 30 seconds
+batch:   0%|          | 2/1750 [01:30&lt;00:05, 300.62it/s]
+epoch:  13%|█▎        | 13/100 [01:23&lt;09:17,  6.41s/it]
+
+                                                    2018-02-02 21:01:00 sprawl [CNN][2443] INFO [CNN] Loss: 0.130688 | 1 minutes 37 seconds
+batch:   0%|          | 2/1750 [01:36&lt;00:05, 294.53it/s]
+epoch:  14%|█▍        | 14/100 [01:30&lt;09:11,  6.41s/it]
+
+                                                    2018-02-02 21:01:07 sprawl [CNN][2443] INFO [CNN] Loss: 0.124864 | 1 minutes 43 seconds
+batch:   0%|          | 2/1750 [01:43&lt;00:06, 290.84it/s]
+epoch:  15%|█▌        | 15/100 [01:36&lt;09:05,  6.42s/it]
+
+                                                    2018-02-02 21:01:13 sprawl [CNN][2443] INFO [CNN] Loss: 0.127796 | 1 minutes 50 seconds
+batch:   0%|          | 2/1750 [01:49&lt;00:06, 287.31it/s]
+epoch:  16%|█▌        | 16/100 [01:42&lt;08:59,  6.42s/it]
+
+                                                    2018-02-02 21:01:20 sprawl [CNN][2443] INFO [CNN] Loss: 0.127432 | 1 minutes 56 seconds
+batch:   0%|          | 2/1750 [01:55&lt;00:05, 299.11it/s]
+epoch:  17%|█▋        | 17/100 [01:49&lt;08:53,  6.43s/it]
+
+                                                    2018-02-02 21:01:26 sprawl [CNN][2443] INFO [CNN] Loss: 0.124323 | 2 minutes 2 seconds
+batch:   0%|          | 2/1750 [02:02&lt;00:05, 298.84it/s]
+epoch:  18%|█▊        | 18/100 [01:55&lt;08:45,  6.41s/it]
+
+                                                    2018-02-02 21:01:32 sprawl [CNN][2443] INFO [CNN] Loss: 0.121641 | 2 minutes 9 seconds
+batch:   0%|          | 2/1750 [02:08&lt;00:05, 297.19it/s]
+epoch:  19%|█▉        | 19/100 [02:01&lt;08:36,  6.38s/it]
+
+                                                    2018-02-02 21:01:39 sprawl [CNN][2443] INFO [CNN] Loss: 0.124505 | 2 minutes 15 seconds
+batch:   0%|          | 2/1750 [02:14&lt;00:05, 302.72it/s]
+epoch:  20%|██        | 20/100 [02:08&lt;08:29,  6.37s/it]
+
+                                                    2018-02-02 21:01:45 sprawl [CNN][2443] INFO [CNN] Loss: 0.123743 | 2 minutes 21 seconds
+batch:   0%|          | 2/1750 [02:21&lt;00:05, 296.21it/s]
+epoch:  21%|██        | 21/100 [02:14&lt;08:21,  6.34s/it]
+
+                                                    2018-02-02 21:01:51 sprawl [CNN][2443] INFO [CNN] Loss: 0.127134 | 2 minutes 28 seconds
+batch:   0%|          | 2/1750 [02:27&lt;00:05, 299.64it/s]
+epoch:  22%|██▏       | 22/100 [02:20&lt;08:13,  6.33s/it]
+
+                                                    2018-02-02 21:01:58 sprawl [CNN][2443] INFO [CNN] Loss: 0.122418 | 2 minutes 34 seconds
+batch:   0%|          | 2/1750 [02:33&lt;00:05, 306.62it/s]
+epoch:  23%|██▎       | 23/100 [02:27&lt;08:07,  6.34s/it]
+
+                                                    2018-02-02 21:02:04 sprawl [CNN][2443] INFO [CNN] Loss: 0.119646 | 2 minutes 40 seconds
+batch:   0%|          | 2/1750 [02:40&lt;00:05, 299.34it/s]
+epoch:  24%|██▍       | 24/100 [02:33&lt;07:59,  6.31s/it]
+epoch:  25%|██▌       | 25/100 [02:33&lt;07:54,  6.32s/it]2018-02-02 21:02:04 sprawl cogitare.core.model[2443] INFO Training stopped
+2018-02-02 21:02:04 sprawl cogitare.core.model[2443] INFO Training finished
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+
+Stopping training after 10 tries. Best score 0.0909
+Model restored from: /tmp/model.pt
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[11]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>False
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/quickstart_23_3.png" src="_images/quickstart_23_3.png" />
+</div>
+</div>
+<p>To check the model loss and accuracy on the validation dataset:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">model_accuracy</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">indices</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">accuracy</span><span class="p">(</span><span class="n">indices</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="c1"># evaluate the model loss and accuracy over the validation dataset</span>
+<span class="n">metrics</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">evaluate_with_metrics</span><span class="p">(</span><span class="n">data_validation</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;loss&#39;</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">metric_loss</span><span class="p">,</span> <span class="s1">&#39;accuracy&#39;</span><span class="p">:</span> <span class="n">model_accuracy</span><span class="p">})</span>
+
+<span class="c1"># the metrics is an dict mapping the metric name (loss or accuracy, in this sample) to a list of the accuracy output</span>
+<span class="c1"># we have a measurement per batch. So, to have a value of the full dataset, we take the mean value:</span>
+
+<span class="n">metrics_mean</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;loss&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;accuracy&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
+<span class="k">for</span> <span class="n">loss</span><span class="p">,</span> <span class="n">acc</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">metrics</span><span class="p">[</span><span class="s1">&#39;loss&#39;</span><span class="p">],</span> <span class="n">metrics</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">]):</span>
+    <span class="n">metrics_mean</span><span class="p">[</span><span class="s1">&#39;loss&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">loss</span>
+    <span class="n">metrics_mean</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">acc</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="n">qtd</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">metrics</span><span class="p">[</span><span class="s1">&#39;loss&#39;</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Loss: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">metrics_mean</span><span class="p">[</span><span class="s1">&#39;loss&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">qtd</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Accuracy: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">metrics_mean</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">qtd</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Loss: 0.10143917564566948
+Accuracy: 0.9846252860411899
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="stderr output_area docutils container">
+<div class="highlight"><pre>
+batch:   0%|          | 2/1750 [02:50&lt;00:05, 299.34it/s]
+</pre></div></div>
+</div>
+<p>One of the advantages of Cogitare is the plug-and-play APIs, which let
+you add/remove functionalities easily. With this sample, we trained a
+model with training progress bar, error plotting, early stopping, grad
+clipping, and model evaluation easily.</p>
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="tutorials.html" class="btn btn-neutral float-right" title="Tutorials" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="installation.html" class="btn btn-neutral" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Aron Bordin.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

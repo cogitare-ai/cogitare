@@ -1,0 +1,428 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Welcome to Cogitare’s documentation! &mdash; Cogitare 0.1 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/julia.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="_static/julia.css" type="text/css" />
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="Cogitare 0.1 documentation" href="#"/>
+        <link rel="next" title="Installation" href="installation.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+<a href="https://github.com/cogitare-ai/cogitare"><img style="z-index: 1; position: fixed; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="http://docs.cogitare-ai.org/"><img src="_static/logo-line.png" class="logo"></a>
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <p class="caption"><span class="caption-text">Introduction</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#Model">Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#Data-Loading">Data Loading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#Training">Training</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Cogitare</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="model.html">Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="model.html#implementing-a-model">Implementing a Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model.html#api">API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sequential_model.html">Sequential Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sequential_model.html#implementing-a-sequential-model-many-to-many-many-to-one">Implementing a Sequential Model (Many-to-Many, Many-to-One)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sequential_model.html#api">API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="data.html">Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="data.html#absdataholder"><span class="hidden-section">AbsDataHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#tensorholder"><span class="hidden-section">TensorHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#numpyholder"><span class="hidden-section">NumpyHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#callableholder"><span class="hidden-section">CallableHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#autoholder"><span class="hidden-section">AutoHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#dataset"><span class="hidden-section">DataSet</span></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sequential_data.html">Sequential Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sequential_data.html#sequentialabsdataholder"><span class="hidden-section">SequentialAbsDataHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sequential_data.html#sequentialtensorholder"><span class="hidden-section">SequentialTensorHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sequential_data.html#sequentialnumpyholder"><span class="hidden-section">SequentialNumpyHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sequential_data.html#sequentialcallableholder"><span class="hidden-section">SequentialCallableHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sequential_data.html#sequentialautoholder"><span class="hidden-section">SequentialAutoHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sequential_data.html#sequentialdataset"><span class="hidden-section">SequentialDataSet</span></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="async_data.html">Async Data Loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plugins.html">Plugins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="plugins.html#custom-plugin">Custom Plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plugins.html#register-a-plugin">Register a plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plugins.html#official-plugins">Official Plugins</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="plugins.html#earlystopping"><span class="hidden-section">EarlyStopping</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="plugins.html#evaluator"><span class="hidden-section">Evaluator</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="plugins.html#logger"><span class="hidden-section">Logger</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="plugins.html#plottingmatplotlib"><span class="hidden-section">PlottingMatplotlib</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="plugins.html#progressbar"><span class="hidden-section">ProgressBar</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="monitor.html">Cogitare Monitor</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="monitor.html#how-to-use">How to Use</a></li>
+<li class="toctree-l2"><a class="reference internal" href="monitor.html#creating-a-custom-plugin">Creating a Custom Plugin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="metrics.html">Metrics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#module-cogitare.metrics.classification">Classification Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#module-cogitare.metrics.spatial">Spatial Metrics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">cogitare.utils</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="models/classic.html">Classic Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Extra</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="contribute.html">Contribute</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contribute.html#contributing-to-cogitare">Contributing to Cogitare</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="#">Cogitare</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="#">Docs</a> &raquo;</li>
+        
+      <li>Welcome to Cogitare’s documentation!</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="welcome-to-cogitare-s-documentation">
+<h1>Welcome to Cogitare’s documentation!<a class="headerlink" href="#welcome-to-cogitare-s-documentation" title="Permalink to this headline">¶</a></h1>
+<img alt="_images/logo-line.png" src="_images/logo-line.png" />
+<p><strong>Cogitare</strong> is a Modern, Fast, and Modular Deep Learning and Machine Learning framework for Python. A friendly interface for beginners and a powerful toolset for experts.</p>
+<p>It uses the best of <a class="reference external" href="http://pytorch.org/">PyTorch</a>, <a class="reference external" href="https://dask.pydata.org/">Dask</a>, <a class="reference external" href="http://www.numpy.org/">NumPy</a>, and others tools through a simple interface to train, to evaluate, to test
+models and more with high performance.</p>
+<p>Check the tutorials at <a class="reference external" href="http://tutorials.cogitare-ai.org/">Cogitare Tutorials</a>.</p>
+<p>With Cogitare, you can use classical machine learning algorithms with high
+performance and develop state-of-the-art models quickly.</p>
+<p>The primary objectives of Cogitare are:</p>
+<ul class="simple">
+<li>provide an easy-to-use interface to train and evaluate models;</li>
+<li>provide tools to debug and analyze the model;</li>
+<li>provide implementations of state-of-the-art models (models for common tasks, ready
+to train and ready to use);</li>
+<li>provide ready-to-use implementations of straightforward and classical models (such as
+LogisticRegression);</li>
+<li>be compatible with models for a broad range of problems;</li>
+<li>be compatible with other tools (scikit-learn, etcs);</li>
+<li>keep growing with the community: accept as many new features as possible;</li>
+<li>provide a friendly interface to beginners, and powerful features for experts;</li>
+<li>take the best of the hardware through multi-processing and multi-threading;</li>
+<li>and others.</li>
+</ul>
+<p>Currently, it’s a work in progress project that aims to provide a complete
+toolchain for machine learning and deep learning development, taking the best
+of cuda and multi-core processing.</p>
+<p>Contributions are welcome!</p>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Introduction</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#Model">Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#Data-Loading">Data Loading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#Training">Training</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Cogitare</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="model.html">Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="model.html#implementing-a-model">Implementing a Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model.html#api">API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sequential_model.html">Sequential Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sequential_model.html#implementing-a-sequential-model-many-to-many-many-to-one">Implementing a Sequential Model (Many-to-Many, Many-to-One)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sequential_model.html#api">API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="data.html">Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="data.html#absdataholder"><span class="hidden-section">AbsDataHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#tensorholder"><span class="hidden-section">TensorHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#numpyholder"><span class="hidden-section">NumpyHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#callableholder"><span class="hidden-section">CallableHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#autoholder"><span class="hidden-section">AutoHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#dataset"><span class="hidden-section">DataSet</span></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sequential_data.html">Sequential Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sequential_data.html#sequentialabsdataholder"><span class="hidden-section">SequentialAbsDataHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sequential_data.html#sequentialtensorholder"><span class="hidden-section">SequentialTensorHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sequential_data.html#sequentialnumpyholder"><span class="hidden-section">SequentialNumpyHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sequential_data.html#sequentialcallableholder"><span class="hidden-section">SequentialCallableHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sequential_data.html#sequentialautoholder"><span class="hidden-section">SequentialAutoHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sequential_data.html#sequentialdataset"><span class="hidden-section">SequentialDataSet</span></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="async_data.html">Async Data Loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plugins.html">Plugins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="plugins.html#custom-plugin">Custom Plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plugins.html#register-a-plugin">Register a plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plugins.html#official-plugins">Official Plugins</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="plugins.html#earlystopping"><span class="hidden-section">EarlyStopping</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="plugins.html#evaluator"><span class="hidden-section">Evaluator</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="plugins.html#logger"><span class="hidden-section">Logger</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="plugins.html#plottingmatplotlib"><span class="hidden-section">PlottingMatplotlib</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="plugins.html#progressbar"><span class="hidden-section">ProgressBar</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="monitor.html">Cogitare Monitor</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="monitor.html#how-to-use">How to Use</a></li>
+<li class="toctree-l2"><a class="reference internal" href="monitor.html#creating-a-custom-plugin">Creating a Custom Plugin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="metrics.html">Metrics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#module-cogitare.metrics.classification">Classification Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#module-cogitare.metrics.spatial">Spatial Metrics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">cogitare.utils</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="models/classic.html">Classic Models</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Extra</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="contribute.html">Contribute</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contribute.html#contributing-to-cogitare">Contributing to Cogitare</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
+<li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
+<li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
+</ul>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="installation.html" class="btn btn-neutral float-right" title="Installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Aron Bordin.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

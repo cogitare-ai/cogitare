@@ -1,0 +1,542 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>cogitare.utils &mdash; Cogitare 0.1 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/julia.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="_static/julia.css" type="text/css" />
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="Cogitare 0.1 documentation" href="index.html"/>
+        <link rel="next" title="Classic Models" href="models/classic.html"/>
+        <link rel="prev" title="Metrics" href="metrics.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+<a href="https://github.com/cogitare-ai/cogitare"><img style="z-index: 1; position: fixed; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="http://docs.cogitare-ai.org/"><img src="_static/logo-line.png" class="logo"></a>
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <p class="caption"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#Model">Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#Data-Loading">Data Loading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#Training">Training</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Cogitare</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="model.html">Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="model.html#implementing-a-model">Implementing a Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model.html#api">API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sequential_model.html">Sequential Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sequential_model.html#implementing-a-sequential-model-many-to-many-many-to-one">Implementing a Sequential Model (Many-to-Many, Many-to-One)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sequential_model.html#api">API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="data.html">Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="data.html#absdataholder"><span class="hidden-section">AbsDataHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#tensorholder"><span class="hidden-section">TensorHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#numpyholder"><span class="hidden-section">NumpyHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#callableholder"><span class="hidden-section">CallableHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#autoholder"><span class="hidden-section">AutoHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#dataset"><span class="hidden-section">DataSet</span></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sequential_data.html">Sequential Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sequential_data.html#sequentialabsdataholder"><span class="hidden-section">SequentialAbsDataHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sequential_data.html#sequentialtensorholder"><span class="hidden-section">SequentialTensorHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sequential_data.html#sequentialnumpyholder"><span class="hidden-section">SequentialNumpyHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sequential_data.html#sequentialcallableholder"><span class="hidden-section">SequentialCallableHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sequential_data.html#sequentialautoholder"><span class="hidden-section">SequentialAutoHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sequential_data.html#sequentialdataset"><span class="hidden-section">SequentialDataSet</span></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="async_data.html">Async Data Loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plugins.html">Plugins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="plugins.html#custom-plugin">Custom Plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plugins.html#register-a-plugin">Register a plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plugins.html#official-plugins">Official Plugins</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="plugins.html#earlystopping"><span class="hidden-section">EarlyStopping</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="plugins.html#evaluator"><span class="hidden-section">Evaluator</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="plugins.html#logger"><span class="hidden-section">Logger</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="plugins.html#plottingmatplotlib"><span class="hidden-section">PlottingMatplotlib</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="plugins.html#progressbar"><span class="hidden-section">ProgressBar</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="monitor.html">Cogitare Monitor</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="monitor.html#how-to-use">How to Use</a></li>
+<li class="toctree-l2"><a class="reference internal" href="monitor.html#creating-a-custom-plugin">Creating a Custom Plugin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="metrics.html">Metrics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#module-cogitare.metrics.classification">Classification Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#module-cogitare.metrics.spatial">Spatial Metrics</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">cogitare.utils</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="models/classic.html">Classic Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Extra</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="contribute.html">Contribute</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contribute.html#contributing-to-cogitare">Contributing to Cogitare</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Cogitare</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>cogitare.utils</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/utils.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="cogitare-utils">
+<h1>cogitare.utils<a class="headerlink" href="#cogitare-utils" title="Permalink to this headline">¶</a></h1>
+<p>A set of utilities that can be used in the model development.</p>
+<span class="target" id="module-cogitare.utils"></span><dl class="exception">
+<dt id="cogitare.utils.StopTraining">
+<em class="property">exception </em><code class="descclassname">cogitare.utils.</code><code class="descname">StopTraining</code><a class="reference internal" href="_modules/cogitare/utils.html#StopTraining"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cogitare.utils.StopTraining" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is an Exception to stop the training process of a <a class="reference internal" href="model.html#cogitare.Model" title="cogitare.Model"><code class="xref py py-class docutils literal"><span class="pre">cogitare.Model</span></code></a>.</p>
+<p>While running the <a class="reference internal" href="model.html#cogitare.Model.learn" title="cogitare.Model.learn"><code class="xref py py-meth docutils literal"><span class="pre">cogitare.Model.learn()</span></code></a>, if a plugin raises this exception,
+the model will run the plugins in the <code class="docutils literal"><span class="pre">on_stop_training</span></code> hook, and stop the training.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="cogitare.utils.assert_dim">
+<code class="descclassname">cogitare.utils.</code><code class="descname">assert_dim</code><span class="sig-paren">(</span><em>tensor</em>, <em>name</em>, <em>expected</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cogitare/utils.html#assert_dim"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cogitare.utils.assert_dim" title="Permalink to this definition">¶</a></dt>
+<dd><p>Asserts if a tensor has a valid dimension.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>tensor</strong> (<a class="reference external" href="http://pytorch.org/docs/master/tensors.html#torch.Tensor" title="(in PyTorch vmaster (0.4.0a0+b08101e ))"><em>torch.Tensor</em></a>) – tensor to verify</li>
+<li><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – verbose tensor name to diplay in the exception message.</li>
+<li><strong>expected</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.6)"><em>list</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.6)"><em>tuple</em></a>) – list of ints with the accepted number of dimensions.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">valid</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>  <span class="c1"># accept 1D, 2D, and 3D tensor</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">assert_dim</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">valid</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">assert_dim</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">valid</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">assert_dim</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="n">valid</span><span class="p">)</span>
+<span class="go">ValueError: Expected 1D/2D/3D tensor on &quot;c&quot;. Got a 4D tensor instead.</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="cogitare.utils.assert_raise">
+<code class="descclassname">cogitare.utils.</code><code class="descname">assert_raise</code><span class="sig-paren">(</span><em>valid</em>, <em>exception</em>, <em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cogitare/utils.html#assert_raise"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cogitare.utils.assert_raise" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shortcut to assert if something is valid. If invalid,
+raises the exception with the provided message.</p>
+<p>Example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">assert_raise</span><span class="p">(</span><span class="mi">1</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">,</span> <span class="s1">&#39;The values must be equal&#39;</span><span class="p">)</span>
+<span class="go">ValueError: The values must be equal</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="cogitare.utils.get_cuda">
+<code class="descclassname">cogitare.utils.</code><code class="descname">get_cuda</code><span class="sig-paren">(</span><em>cuda=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cogitare/utils.html#get_cuda"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cogitare.utils.get_cuda" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the default cuda enabled/disabled variable.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>cuda</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a>) – if a boolean is provided, its value will be returned.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>enabled (bool)</em> – the <code class="docutils literal"><span class="pre">cuda</span></code> parameter, if provided, or the enaled/disabled status.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="cogitare.utils.not_training">
+<code class="descclassname">cogitare.utils.</code><code class="descname">not_training</code><span class="sig-paren">(</span><em>func</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cogitare/utils.html#not_training"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cogitare.utils.not_training" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decorator to disable the training during execution. Must be used inside a Module class.</p>
+<p>Example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="nd">@not_training</span>
+<span class="k">def</span> <span class="nf">my_func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">):</span>
+    <span class="c1"># do something that cannot affect training, such as evaluating a</span>
+    <span class="c1"># test set</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="cogitare.utils.number_parameters">
+<code class="descclassname">cogitare.utils.</code><code class="descname">number_parameters</code><span class="sig-paren">(</span><em>model</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cogitare/utils.html#number_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cogitare.utils.number_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Counts the number of trainable and non-trainable parameters in the model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>model</strong> (<a class="reference internal" href="model.html#cogitare.Model" title="cogitare.Model"><em>Model</em></a>) – model with training parameters</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>count (tuple)</em> – (trainable_params, non_trainable_params)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="cogitare.utils.set_cuda">
+<code class="descclassname">cogitare.utils.</code><code class="descname">set_cuda</code><span class="sig-paren">(</span><em>cuda</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cogitare/utils.html#set_cuda"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cogitare.utils.set_cuda" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set Cogitare default cuda enabled/disabled.</p>
+<p>This value is used by Cogitare’s models and some functions to determine if
+it’s necesary to automatically convert the Tensor/Module to cuda.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="cogitare.utils.tensorfy">
+<code class="descclassname">cogitare.utils.</code><code class="descname">tensorfy</code><span class="sig-paren">(</span><em>*params</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cogitare/utils.html#tensorfy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cogitare.utils.tensorfy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Utility decorator to automatically convert a function parameters to tensor.</p>
+<p>You can pass the argument position, or the parameter name that you wish to be converted to tensor.</p>
+<p>Example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="nd">@tensorfy</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">my_func</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
+    <span class="c1"># will convert a, b, and c to tensor</span>
+    <span class="k">pass</span>
+
+<span class="nd">@tensorfy</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;cmp&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">my_func2</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="nb">cmp</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="c1"># will convert a and cmp (if defined) to tensor</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="cogitare.utils.to_tensor">
+<code class="descclassname">cogitare.utils.</code><code class="descname">to_tensor</code><span class="sig-paren">(</span><em>data</em>, <em>dtype=None</em>, <em>use_cuda=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cogitare/utils.html#to_tensor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cogitare.utils.to_tensor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Try to conver a variable to a torch tensor.</p>
+<p>Data can be:</p>
+<blockquote>
+<div><ul class="simple">
+<li>list of Tensors</li>
+<li>list of list of list (…) of int/float</li>
+<li>list of numpy arrays</li>
+<li>numpy array</li>
+<li>tensor</li>
+</ul>
+</div></blockquote>
+<p>And this will return a torch tensor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.6)"><em>list</em></a><em>, </em><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.14)"><em>numpy.ndarray</em></a><em>, </em><a class="reference external" href="http://pytorch.org/docs/master/tensors.html#torch.Tensor" title="(in PyTorch vmaster (0.4.0a0+b08101e ))"><em>torch.Tensor</em></a>) – the data to be converted.</li>
+<li><strong>dtype</strong> (<a class="reference external" href="http://pytorch.org/docs/master/tensors.html#torch.Tensor" title="(in PyTorch vmaster (0.4.0a0+b08101e ))"><em>torch.Tensor</em></a>) – if provided, the output will have the same type
+as this class.</li>
+<li><strong>use_cuda</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a>) – if True, the tensor <code class="docutils literal"><span class="pre">.cuda()</span></code> will be returned. If None, the
+default value setted by <a class="reference internal" href="#cogitare.utils.set_cuda" title="cogitare.utils.set_cuda"><code class="xref py py-func docutils literal"><span class="pre">set_cuda()</span></code></a> will be used.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><em>tensor (torch.Tensor)</em> – the data converted to tensor type.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Examples:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">to_tensor</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="go"> 1</span>
+<span class="go"> 2</span>
+<span class="go"> 3</span>
+<span class="go">[torch.LongTensor of size 3]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">to_tensor</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">)</span>
+<span class="go"> 1  2  3</span>
+<span class="go"> 4  5  6</span>
+<span class="go">[torch.FloatTensor of size 2x3]</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span> <span class="o">=</span> <span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]),</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">])]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">to_tensor</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+<span class="go"> 1  2  3</span>
+<span class="go"> 4  5  6</span>
+<span class="go">[torch.FloatTensor of size 2x3]</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">])]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">to_tensor</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+<span class="go"> 1  2  3</span>
+<span class="go"> 4  5  6</span>
+<span class="go">[torch.LongTensor of size 2x3]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="cogitare.utils.to_variable">
+<code class="descclassname">cogitare.utils.</code><code class="descname">to_variable</code><span class="sig-paren">(</span><em>data</em>, <em>dtype=None</em>, <em>use_cuda=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cogitare/utils.html#to_variable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cogitare.utils.to_variable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Similar to <a class="reference internal" href="#cogitare.utils.to_tensor" title="cogitare.utils.to_tensor"><code class="xref py py-func docutils literal"><span class="pre">to_tensor()</span></code></a>, this function converts
+the <code class="docutils literal"><span class="pre">data</span></code> o a <a class="reference external" href="http://pytorch.org/docs/master/autograd.html#torch.autograd.Variable" title="(in PyTorch vmaster (0.4.0a0+b08101e ))"><code class="xref py py-class docutils literal"><span class="pre">torch.autograd.Variable</span></code></a>.</p>
+<p>If first convert the data to tensor using <a class="reference internal" href="#cogitare.utils.to_tensor" title="cogitare.utils.to_tensor"><code class="xref py py-func docutils literal"><span class="pre">to_tensor()</span></code></a>, and then cast it to a
+variable.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data</strong> – the data to convert.</li>
+<li><strong>dtype</strong> – a tensor class to use as the type of the data</li>
+<li><strong>use_cuda</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a>) – if True, move the tensor to cuda.</li>
+<li><strong>kwargs</strong> – extra parameters to the Variable class.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Example</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">to_variable</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="go">Variable containing:</span>
+<span class="go"> 1  2  3</span>
+<span class="go"> 4  5  6</span>
+<span class="go">[torch.LongTensor of size 2x3]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="cogitare.utils.training">
+<code class="descclassname">cogitare.utils.</code><code class="descname">training</code><span class="sig-paren">(</span><em>func</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cogitare/utils.html#training"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cogitare.utils.training" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decorator do enable the training during execution. Must be used inside a Module class.</p>
+<p>Example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="nd">@training</span>
+<span class="k">def</span> <span class="nf">my_func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">):</span>
+    <span class="c1"># do something that can affect training, such as forward your train</span>
+    <span class="c1"># data</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="models/classic.html" class="btn btn-neutral float-right" title="Classic Models" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="metrics.html" class="btn btn-neutral" title="Metrics" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Aron Bordin.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

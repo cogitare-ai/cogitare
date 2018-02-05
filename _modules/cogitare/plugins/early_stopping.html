@@ -1,0 +1,350 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>cogitare.plugins.early_stopping &mdash; Cogitare 0.1 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/julia.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../../_static/julia.css" type="text/css" />
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="Cogitare 0.1 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+<a href="https://github.com/cogitare-ai/cogitare"><img style="z-index: 1; position: fixed; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="http://docs.cogitare-ai.org/"><img src="../../../_static/logo-line.png" class="logo"></a>
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <p class="caption"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#Model">Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#Data-Loading">Data Loading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#Training">Training</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials.html">Tutorials</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Cogitare</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../model.html">Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../model.html#implementing-a-model">Implementing a Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../model.html#api">API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../sequential_model.html">Sequential Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../sequential_model.html#implementing-a-sequential-model-many-to-many-many-to-one">Implementing a Sequential Model (Many-to-Many, Many-to-One)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sequential_model.html#api">API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../data.html">Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../data.html#absdataholder"><span class="hidden-section">AbsDataHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../data.html#tensorholder"><span class="hidden-section">TensorHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../data.html#numpyholder"><span class="hidden-section">NumpyHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../data.html#callableholder"><span class="hidden-section">CallableHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../data.html#autoholder"><span class="hidden-section">AutoHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../data.html#dataset"><span class="hidden-section">DataSet</span></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../sequential_data.html">Sequential Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../sequential_data.html#sequentialabsdataholder"><span class="hidden-section">SequentialAbsDataHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sequential_data.html#sequentialtensorholder"><span class="hidden-section">SequentialTensorHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sequential_data.html#sequentialnumpyholder"><span class="hidden-section">SequentialNumpyHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sequential_data.html#sequentialcallableholder"><span class="hidden-section">SequentialCallableHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sequential_data.html#sequentialautoholder"><span class="hidden-section">SequentialAutoHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sequential_data.html#sequentialdataset"><span class="hidden-section">SequentialDataSet</span></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../async_data.html">Async Data Loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../plugins.html">Plugins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../plugins.html#custom-plugin">Custom Plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../plugins.html#register-a-plugin">Register a plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../plugins.html#official-plugins">Official Plugins</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../plugins.html#earlystopping"><span class="hidden-section">EarlyStopping</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../plugins.html#evaluator"><span class="hidden-section">Evaluator</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../plugins.html#logger"><span class="hidden-section">Logger</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../plugins.html#plottingmatplotlib"><span class="hidden-section">PlottingMatplotlib</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../plugins.html#progressbar"><span class="hidden-section">ProgressBar</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../monitor.html">Cogitare Monitor</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../monitor.html#how-to-use">How to Use</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../monitor.html#creating-a-custom-plugin">Creating a Custom Plugin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../metrics.html">Metrics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../metrics.html#module-cogitare.metrics.classification">Classification Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../metrics.html#module-cogitare.metrics.spatial">Spatial Metrics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../utils.html">cogitare.utils</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../models/classic.html">Classic Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Extra</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../contribute.html">Contribute</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../contribute.html#contributing-to-cogitare">Contributing to Cogitare</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">Cogitare</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>cogitare.plugins.early_stopping</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <h1>Source code for cogitare.plugins.early_stopping</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">cogitare.core</span> <span class="k">import</span> <span class="n">PluginInterface</span>
+<span class="kn">import</span> <span class="nn">operator</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">cogitare.utils</span> <span class="k">import</span> <span class="n">StopTraining</span>
+
+
+<div class="viewcode-block" id="EarlyStopping"><a class="viewcode-back" href="../../../plugins.html#cogitare.plugins.EarlyStopping">[docs]</a><span class="k">class</span> <span class="nc">EarlyStopping</span><span class="p">(</span><span class="n">PluginInterface</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This plugin provides the early stopping algorithm.</span>
+
+<span class="sd">    During training, it will check the validation loss and if after ``max_tries``</span>
+<span class="sd">    epochs the validation loss does not decrease, the training stops.</span>
+
+<span class="sd">    The parameters with the best score found is saved in disk using :func:`torch.save` in the</span>
+<span class="sd">    provided ``path``.</span>
+
+<span class="sd">    When stopping, the plugin will automatically restore the model to the best checkpoint. If</span>
+<span class="sd">    you don&#39;t want to have this feature, set ``restore_checkpoint=False``.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        max_tries (int): number of epochs before stopping the training</span>
+<span class="sd">        path (str): path to save the best model</span>
+<span class="sd">        name (str): the name of the variable used to use as a metric. As default,</span>
+<span class="sd">            get the loss in the validation dataset.</span>
+<span class="sd">        func (callabe): function to apply in the incoming data (useful for computing</span>
+<span class="sd">            the mean/norm/min/max of vectors to use as a metric, and defaults</span>
+<span class="sd">            on :func:`numpy.mean`.</span>
+<span class="sd">        restore_checkpoint (bool): if True,  restore the model parameters after stopping by</span>
+<span class="sd">            early-stopping.</span>
+<span class="sd">        min_delta: the minimum difference between losses to consider as an improviment.</span>
+<span class="sd">        mode (&#39;min&#39; or &#39;max&#39;): if ``min``, consider that this is a minimization problem, so the</span>
+<span class="sd">            loss should decrease to the model improve. If &#39;max&#39;, consider the opposite behavior.</span>
+<span class="sd">        freq (int): the frequency to execute this model. The model will execute at each ``freq`` call.</span>
+
+<span class="sd">    Example::</span>
+
+<span class="sd">        metrics = {</span>
+<span class="sd">            &#39;loss&#39;: model.metric_loss,</span>
+<span class="sd">            &#39;precision&#39;: precision</span>
+<span class="sd">        }</span>
+<span class="sd">        ev = Evaluator(validation_dataset, metrics)</span>
+
+<span class="sd">        # by default, the EarlyStopping uses the Evaluator &quot;loss&quot; metric.</span>
+<span class="sd">        early = EarlyStopping(max_tries=10, path=&#39;/tmp/model.pt&#39;)</span>
+
+<span class="sd">        # to use a different metric, use:</span>
+<span class="sd">        early = EarlyStopping(max_tries=10, path=&#39;/tmp/model.pt&#39;,</span>
+<span class="sd">                              name=&#39;on_end_batch_Evaluator_precision&#39;)</span>
+<span class="sd">        model.register_plugin([ev, early], &#39;on_end_epoch&#39;)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">max_tries</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;on_end_epoch_Evaluator_loss&#39;</span><span class="p">,</span>
+                 <span class="n">func</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="n">min_delta</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;min&#39;</span><span class="p">,</span> <span class="n">restore_checkpoint</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">EarlyStopping</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">freq</span><span class="o">=</span><span class="n">freq</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_tries</span> <span class="o">=</span> <span class="n">max_tries</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">min_delta</span> <span class="o">=</span> <span class="n">min_delta</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">op</span> <span class="o">=</span> <span class="n">operator</span><span class="o">.</span><span class="n">lt</span> <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;min&#39;</span> <span class="k">else</span> <span class="n">operator</span><span class="o">.</span><span class="n">gt</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">path</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">restore_checkpoint</span> <span class="o">=</span> <span class="n">restore_checkpoint</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metric_name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">func</span><span class="p">:</span>
+            <span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">x</span><span class="p">):</span> <span class="k">return</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">func</span> <span class="o">=</span> <span class="n">func</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_best_epoch</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_current_epoch</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_best_score</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;min&#39;</span> <span class="k">else</span> <span class="o">-</span><span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">metric</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">func</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">metric_name</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_current_epoch</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">op</span><span class="p">(</span><span class="n">metric</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_best_score</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">abs</span><span class="p">(</span><span class="n">metric</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_best_score</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_delta</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_best_score</span> <span class="o">=</span> <span class="n">metric</span>
+
+            <span class="n">model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_best_epoch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_epoch</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_epoch</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_best_epoch</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_tries</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">Stopping training after </span><span class="si">%d</span><span class="s1"> tries. Best score </span><span class="si">%.4f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">max_tries</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_best_score</span><span class="p">))</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">restore_checkpoint</span><span class="p">:</span>
+                <span class="n">model</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Model restored from: &#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+
+            <span class="k">raise</span> <span class="n">StopTraining</span></div>
+</pre></div>
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Aron Bordin.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

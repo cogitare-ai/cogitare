@@ -1,0 +1,813 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Data &mdash; Cogitare 0.1 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/julia.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="_static/julia.css" type="text/css" />
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="Cogitare 0.1 documentation" href="index.html"/>
+        <link rel="next" title="Sequential Data" href="sequential_data.html"/>
+        <link rel="prev" title="Sequential Model" href="sequential_model.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+<a href="https://github.com/cogitare-ai/cogitare"><img style="z-index: 1; position: fixed; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="http://docs.cogitare-ai.org/"><img src="_static/logo-line.png" class="logo"></a>
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <p class="caption"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#Model">Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#Data-Loading">Data Loading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#Training">Training</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Cogitare</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="model.html">Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="model.html#implementing-a-model">Implementing a Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model.html#api">API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sequential_model.html">Sequential Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sequential_model.html#implementing-a-sequential-model-many-to-many-many-to-one">Implementing a Sequential Model (Many-to-Many, Many-to-One)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sequential_model.html#api">API</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#absdataholder"><span class="hidden-section">AbsDataHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tensorholder"><span class="hidden-section">TensorHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#numpyholder"><span class="hidden-section">NumpyHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#callableholder"><span class="hidden-section">CallableHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#autoholder"><span class="hidden-section">AutoHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dataset"><span class="hidden-section">DataSet</span></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sequential_data.html">Sequential Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sequential_data.html#sequentialabsdataholder"><span class="hidden-section">SequentialAbsDataHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sequential_data.html#sequentialtensorholder"><span class="hidden-section">SequentialTensorHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sequential_data.html#sequentialnumpyholder"><span class="hidden-section">SequentialNumpyHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sequential_data.html#sequentialcallableholder"><span class="hidden-section">SequentialCallableHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sequential_data.html#sequentialautoholder"><span class="hidden-section">SequentialAutoHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sequential_data.html#sequentialdataset"><span class="hidden-section">SequentialDataSet</span></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="async_data.html">Async Data Loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plugins.html">Plugins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="plugins.html#custom-plugin">Custom Plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plugins.html#register-a-plugin">Register a plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plugins.html#official-plugins">Official Plugins</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="plugins.html#earlystopping"><span class="hidden-section">EarlyStopping</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="plugins.html#evaluator"><span class="hidden-section">Evaluator</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="plugins.html#logger"><span class="hidden-section">Logger</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="plugins.html#plottingmatplotlib"><span class="hidden-section">PlottingMatplotlib</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="plugins.html#progressbar"><span class="hidden-section">ProgressBar</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="monitor.html">Cogitare Monitor</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="monitor.html#how-to-use">How to Use</a></li>
+<li class="toctree-l2"><a class="reference internal" href="monitor.html#creating-a-custom-plugin">Creating a Custom Plugin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="metrics.html">Metrics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#module-cogitare.metrics.classification">Classification Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#module-cogitare.metrics.spatial">Spatial Metrics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">cogitare.utils</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="models/classic.html">Classic Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Extra</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="contribute.html">Contribute</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contribute.html#contributing-to-cogitare">Contributing to Cogitare</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Cogitare</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Data</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/data.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="data">
+<h1>Data<a class="headerlink" href="#data" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="absdataholder">
+<h2><span class="hidden-section">AbsDataHolder</span><a class="headerlink" href="#absdataholder" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="cogitare.data.AbsDataHolder">
+<em class="property">class </em><code class="descclassname">cogitare.data.</code><code class="descname">AbsDataHolder</code><span class="sig-paren">(</span><em>data</em>, <em>batch_size=1</em>, <em>shuffle=True</em>, <em>drop_last=False</em>, <em>total_samples=None</em>, <em>mode='sequential'</em>, <em>single=False</em>, <em>on_sample_loaded=None</em>, <em>on_batch_loaded=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cogitare/data/dataholder.html#AbsDataHolder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cogitare.data.AbsDataHolder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.6)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>An abstract object that acts as a data holder. A data holder is a utility to hold
+datasets, which provide some simple functions to work with the dataset, such as
+sorting, splitting, dividing it into chunks, loading batches using multi-thread, and so on.</p>
+<p>It’s the recommended way to pass data to Cogitare’s models because it already
+provides a compatible interface to iterate over batches.</p>
+<p>To improve the performance, the data holder loads batches using multiprocessing
+and multithreading data loader with <a class="reference external" href="http://dask.pydata.org/">Dask</a>.</p>
+<p>Usually, this object should not be used directly, only if you are developing a custom
+data loader. Cogitare already provides the following implementations for the most
+common data types:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Tensors: <a class="reference internal" href="#cogitare.data.TensorHolder" title="cogitare.data.TensorHolder"><code class="xref py py-class docutils literal"><span class="pre">TensorHolder</span></code></a></li>
+<li>Numpy: <a class="reference internal" href="#cogitare.data.NumpyHolder" title="cogitare.data.NumpyHolder"><code class="xref py py-class docutils literal"><span class="pre">NumpyHolder</span></code></a></li>
+<li>Callable (functions that receive the sample id, and returns its
+data): <a class="reference internal" href="#cogitare.data.CallableHolder" title="cogitare.data.CallableHolder"><code class="xref py py-class docutils literal"><span class="pre">CallableHolder</span></code></a></li>
+<li><a class="reference internal" href="#cogitare.data.AutoHolder" title="cogitare.data.AutoHolder"><code class="xref py py-class docutils literal"><span class="pre">AutoHolder</span></code></a>: inspect the data to choose one of the available data holders.</li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data</strong> (<a class="reference external" href="http://pytorch.org/docs/master/tensors.html#torch.Tensor" title="(in PyTorch vmaster (0.4.0a0+b08101e ))"><em>torch.Tensor</em></a><em>, </em><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.14)"><em>numpy.ndarray</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#callable" title="(in Python v3.6)"><em>callable</em></a>) – the data to be managed by the data holder.</li>
+<li><strong>batch_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – the size of the batch.</li>
+<li><strong>shuffle</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a>) – if True, shuffles the dataset after each iteration.</li>
+<li><strong>drop_last</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a>) – if True, then skip the batch if its size is lower that <strong>batch_size</strong> (can
+occur in the last batch).</li>
+<li><strong>total_samples</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – the number of total samples. If provided, this will limit the
+number of samples to be accessed in the data.</li>
+<li><strong>mode</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – must be one of: ‘sequential’, ‘threaded’, ‘multiprocessing’. Use one of them
+to choose the batch loading methods. Take a loook
+here: <a class="reference external" href="https://dask.pydata.org/en/latest/scheduler-choice.html">https://dask.pydata.org/en/latest/scheduler-choice.html</a> for an overview of the advantage of each mode.</li>
+<li><strong>single</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a>) – if True, returns only the first element of each batch.
+Is designed to be used with models where you only use one sample per
+batch (batch_size == 1). So instead of returning a list with a single sample, with
+<code class="docutils literal"><span class="pre">single</span> <span class="pre">==</span> <span class="pre">True</span></code>, the sample itself will be returned and not the list.</li>
+<li><strong>on_sample_loaded</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#callable" title="(in Python v3.6)"><em>callable</em></a>) – if provided, this function will be called when a new sample is loaded. It must
+receive one argument, the sample. And return one value that will replace the sample data.
+This is used to apply pre-processing on single samples while loading.</li>
+<li><strong>on_batch_loaded</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#callable" title="(in Python v3.6)"><em>callable</em></a>) – if provided, this function will be called when a new batch is loaded. It must
+receive one argument, the batch data. And return the batch after applying some operation on the data. This
+can be used to apply pre-processing functions on a batch of data (such as image filtering, moving the
+data to GPU, and etc).</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="cogitare.data.AbsDataHolder.__getitem__">
+<code class="descname">__getitem__</code><span class="sig-paren">(</span><em>key</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cogitare/data/dataholder.html#AbsDataHolder.__getitem__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cogitare.data.AbsDataHolder.__getitem__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a sample in the dataset using its indices.</p>
+<p>Example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sample</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">sample2</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cogitare.data.AbsDataHolder.__iter__">
+<code class="descname">__iter__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cogitare/data/dataholder.html#AbsDataHolder.__iter__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cogitare.data.AbsDataHolder.__iter__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates an iterator to iterate over batches in the dataset.</p>
+<p>After each iteration over the batches, the dataset will be shuffled if
+the <strong>shuffle</strong> parameter is True.</p>
+<p>Example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">sample</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cogitare.data.AbsDataHolder.__len__">
+<code class="descname">__len__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cogitare/data/dataholder.html#AbsDataHolder.__len__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cogitare.data.AbsDataHolder.__len__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the number of batches in the dataset.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cogitare.data.AbsDataHolder.__repr__">
+<code class="descname">__repr__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cogitare/data/dataholder.html#AbsDataHolder.__repr__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cogitare.data.AbsDataHolder.__repr__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Using repr(data) or str(data), display the shape of the data.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="cogitare.data.AbsDataHolder.__weakref__">
+<code class="descname">__weakref__</code><a class="headerlink" href="#cogitare.data.AbsDataHolder.__weakref__" title="Permalink to this definition">¶</a></dt>
+<dd><p>list of weak references to the object (if defined)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="cogitare.data.AbsDataHolder.batch_size">
+<code class="descname">batch_size</code><a class="headerlink" href="#cogitare.data.AbsDataHolder.batch_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>The size of the mini-batch used by the iterator.</p>
+<p>When a new batch_size is set, the iterator will reset.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cogitare.data.AbsDataHolder.reset">
+<code class="descname">reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cogitare/data/dataholder.html#AbsDataHolder.reset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cogitare.data.AbsDataHolder.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset the batch iterator.</p>
+<p>This method returns the iterator to the first sample, and shuffle the
+dataset if shuffle is enabled.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cogitare.data.AbsDataHolder.shuffle">
+<code class="descname">shuffle</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cogitare/data/dataholder.html#AbsDataHolder.shuffle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cogitare.data.AbsDataHolder.shuffle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shuffle the samples in the dataset.</p>
+<p>This operation will not affect the original data.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cogitare.data.AbsDataHolder.split">
+<code class="descname">split</code><span class="sig-paren">(</span><em>ratio</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cogitare/data/dataholder.html#AbsDataHolder.split"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cogitare.data.AbsDataHolder.split" title="Permalink to this definition">¶</a></dt>
+<dd><p>Split the data holder into two data holders.</p>
+<p>The first one will receive <em>total_samples * ratio</em> samples, and the second
+data holder will receive the remaining samples.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ratio</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><code class="xref py py-obj docutils literal"><span class="pre">float</span></code></a>) – ratio of the split. Must be between 0 and 1.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>(data1, data2)</em> – two data holder, in the same type that the original.</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="go">TensorHolder with 875x64 samples</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data1</span><span class="p">,</span> <span class="n">data2</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">data1</span><span class="p">)</span>
+<span class="go">TensorHolder with 700x64 samples</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">data2</span><span class="p">)</span>
+<span class="go">TensorHolder with 175x64 samples</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cogitare.data.AbsDataHolder.split_chunks">
+<code class="descname">split_chunks</code><span class="sig-paren">(</span><em>n</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cogitare/data/dataholder.html#AbsDataHolder.split_chunks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cogitare.data.AbsDataHolder.split_chunks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Split the data holder into N data holders with the sample number of samples each.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – number of new splits.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>output (list)</em> – list of N data holders.</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="go">TensorHolder with 875x64 samples</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data1</span><span class="p">,</span> <span class="n">data2</span><span class="p">,</span> <span class="n">data3</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">split_chunks</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">data1</span><span class="p">)</span>
+<span class="go">TensorHolder with 292x64 samples</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">data2</span><span class="p">)</span>
+<span class="go">TensorHolder with 292x64 samples</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">data3</span><span class="p">)</span>
+<span class="go">TensorHolder with 292x64 samples</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="cogitare.data.AbsDataHolder.total_samples">
+<code class="descname">total_samples</code><a class="headerlink" href="#cogitare.data.AbsDataHolder.total_samples" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the number of individual samples in this dataset.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="tensorholder">
+<h2><span class="hidden-section">TensorHolder</span><a class="headerlink" href="#tensorholder" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="cogitare.data.TensorHolder">
+<em class="property">class </em><code class="descclassname">cogitare.data.</code><code class="descname">TensorHolder</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cogitare/data/dataholder.html#TensorHolder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cogitare.data.TensorHolder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">cogitare.data.dataholder.AbsDataHolder</span></code></p>
+<p>A data holder to work with <a class="reference external" href="http://pytorch.org/docs/master/tensors.html#torch.Tensor" title="(in PyTorch vmaster (0.4.0a0+b08101e ))"><code class="xref py py-class docutils literal"><span class="pre">torch.Tensor</span></code></a> objects.</p>
+<p>Example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tensor</span>
+<span class="go">1  2  3</span>
+<span class="go">4  5  6</span>
+<span class="go">7  8  9</span>
+<span class="go">[torch.FloatTensor of size 3x3]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">TensorHolder</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">sample</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Sample:&#39;</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Sample as tensor:&#39;</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">to_tensor</span><span class="p">(</span><span class="n">sample</span><span class="p">))</span>
+<span class="go">Sample:</span>
+<span class="go">[</span>
+<span class="go"> 7</span>
+<span class="go"> 8</span>
+<span class="go"> 9</span>
+<span class="go">[torch.FloatTensor of size 3]</span>
+<span class="go">,</span>
+<span class="go"> 4</span>
+<span class="go"> 5</span>
+<span class="go"> 6</span>
+<span class="go">[torch.FloatTensor of size 3]</span>
+<span class="go">]</span>
+<span class="go">Sample as tensor:</span>
+
+<span class="go"> 7  8  9</span>
+<span class="go"> 4  5  6</span>
+<span class="go">[torch.FloatTensor of size 2x3]</span>
+
+<span class="go">Sample:</span>
+<span class="go">[</span>
+<span class="go"> 1</span>
+<span class="go"> 2</span>
+<span class="go"> 3</span>
+<span class="go">[torch.FloatTensor of size 3]</span>
+<span class="go">]</span>
+<span class="go">Sample as tensor:</span>
+
+<span class="go"> 1  2  3</span>
+<span class="go">[torch.FloatTensor of size 1x3]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="numpyholder">
+<h2><span class="hidden-section">NumpyHolder</span><a class="headerlink" href="#numpyholder" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="cogitare.data.NumpyHolder">
+<code class="descclassname">cogitare.data.</code><code class="descname">NumpyHolder</code><span class="sig-paren">(</span><em>data</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cogitare/data/dataholder.html#NumpyHolder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cogitare.data.NumpyHolder" title="Permalink to this definition">¶</a></dt>
+<dd><p>When creating the object, it converts the numpy data to Tensor using
+<a class="reference external" href="http://pytorch.org/docs/master/torch.html#torch.from_numpy" title="(in PyTorch vmaster (0.4.0a0+b08101e ))"><code class="xref py py-func docutils literal"><span class="pre">torch.from_numpy()</span></code></a> and then creates an <a class="reference internal" href="#cogitare.data.TensorHolder" title="cogitare.data.TensorHolder"><code class="xref py py-class docutils literal"><span class="pre">TensorHolder</span></code></a>
+instance.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="callableholder">
+<h2><span class="hidden-section">CallableHolder</span><a class="headerlink" href="#callableholder" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="cogitare.data.CallableHolder">
+<em class="property">class </em><code class="descclassname">cogitare.data.</code><code class="descname">CallableHolder</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cogitare/data/dataholder.html#CallableHolder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cogitare.data.CallableHolder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">cogitare.data.dataholder.AbsDataHolder</span></code></p>
+<p>CallableHolder is a data holder for abritary data type.</p>
+<p>As data input, it uses a callable that receive the sample index as parameter,
+and must return the sample.</p>
+<p>It can be used to load non-Tensor or non-numpy datasets, such as texts, dicts, and anything else.
+You are free to use CallableHolder with any data type.</p>
+<blockquote>
+<div><div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">When using CallableHolder, you must specify the number of samples
+in the dataset. The callable will be called asking for samples from 0 to (total_samples - 1).</p>
+</div>
+</div></blockquote>
+<p>Example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">load_sample</span><span class="p">(</span><span class="n">idx</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">idx</span> <span class="o">+</span> <span class="mi">10</span><span class="p">))</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># when using the CallableHolder. you must pass the number of samples to</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># be loaded.</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># you can set the total_samples using the parameter in the constructor</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">CallableHolder</span><span class="p">(</span><span class="n">load_sample</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">total_samples</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># or by setting the property</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span><span class="o">.</span><span class="n">total_samples</span> <span class="o">=</span> <span class="mi">20</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="go">[[8, 9, 10, 11, 12, 13, 14, 15, 16, 17],</span>
+<span class="go"> [9, 10, 11, 12, 13, 14, 15, 16, 17, 18],</span>
+<span class="go"> [6, 7, 8, 9, 10, 11, 12, 13, 14, 15],</span>
+<span class="go"> [11, 12, 13, 14, 15, 16, 17, 18, 19, 20],</span>
+<span class="go"> [13, 14, 15, 16, 17, 18, 19, 20, 21, 22],</span>
+<span class="go"> [7, 8, 9, 10, 11, 12, 13, 14, 15, 16],</span>
+<span class="go"> [18, 19, 20, 21, 22, 23, 24, 25, 26, 27],</span>
+<span class="go"> [17, 18, 19, 20, 21, 22, 23, 24, 25, 26]]</span>
+</pre></div>
+</div>
+<dl class="attribute">
+<dt id="cogitare.data.CallableHolder.total_samples">
+<code class="descname">total_samples</code><a class="headerlink" href="#cogitare.data.CallableHolder.total_samples" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of samples in the dataset. You must set this value before accessing the data.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="autoholder">
+<h2><span class="hidden-section">AutoHolder</span><a class="headerlink" href="#autoholder" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="cogitare.data.AutoHolder">
+<code class="descclassname">cogitare.data.</code><code class="descname">AutoHolder</code><span class="sig-paren">(</span><em>data</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cogitare/data/dataholder.html#AutoHolder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cogitare.data.AutoHolder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check the data type to infer which data holder to use.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="dataset">
+<h2><span class="hidden-section">DataSet</span><a class="headerlink" href="#dataset" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="cogitare.data.DataSet">
+<em class="property">class </em><code class="descclassname">cogitare.data.</code><code class="descname">DataSet</code><span class="sig-paren">(</span><em>data</em>, <em>batch_size=1</em>, <em>shuffle=True</em>, <em>drop_last=False</em>, <em>total_samples=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cogitare/data/dataset.html#DataSet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cogitare.data.DataSet" title="Permalink to this definition">¶</a></dt>
+<dd><p>This object is a container to multiple data holders.</p>
+<p>When creating it, the data parameter must be a list of data sources, and then
+the result of the iterator will be a batch got from each data source.</p>
+<p>It can be used to group input and target variables, for example, if they are not
+on the same object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.6)"><em>list</em></a>) – list of data holders or list of data (that will be converted to a
+data holder using the <a class="reference internal" href="#cogitare.data.AutoHolder" title="cogitare.data.AutoHolder"><code class="xref py py-class docutils literal"><span class="pre">AutoHolder</span></code></a>.</li>
+<li><strong>batch_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – the size of each batch.</li>
+<li><strong>shuffle</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a>) – if True, shuffles the samples of each data holder.</li>
+<li><strong>drop_last</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a>) – if True, then skip the batch if its size is lower that <strong>batch_size</strong> (can
+occur in the last batch).</li>
+<li><strong>total_samples</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a><em>, </em><em>optional</em>) – number of samples. If provided and smalled than the maximum number of samples,
+just the subset of size <code class="docutils literal"><span class="pre">total_samples</span></code> will be used.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The <strong>batch_size</strong>, <strong>shuffle</strong>, and <strong>drop_last</strong> parameters will override the
+data holder default values. If you want to keep a different value for each data holder,
+get its instance in the <code class="docutils literal"><span class="pre">container</span></code> attribute and edit manually.</p>
+</div>
+<dl class="method">
+<dt id="cogitare.data.DataSet.__getitem__">
+<code class="descname">__getitem__</code><span class="sig-paren">(</span><em>key</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cogitare/data/dataset.html#DataSet.__getitem__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cogitare.data.DataSet.__getitem__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of samples, getting the key-th sample for each data holder
+in the dataset.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cogitare.data.DataSet.__iter__">
+<code class="descname">__iter__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cogitare/data/dataset.html#DataSet.__iter__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cogitare.data.DataSet.__iter__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates an iterator to iterate over batches in the dataset.</p>
+<p>After each iteration over the batches, the dataset will be shuffled if
+the <strong>shuffle</strong> parameter is True.</p>
+<p>Each element of the iterator is a list with the length of data holders. Each
+item of the list is the n-th batch of each data holder.</p>
+<p>Example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">dataset</span> <span class="o">=</span> <span class="n">DataSet</span><span class="p">([</span><span class="n">dataholder1</span><span class="p">,</span> <span class="n">dataholder2</span><span class="p">])</span>
+<span class="k">for</span> <span class="n">data1</span><span class="p">,</span> <span class="n">data2</span> <span class="ow">in</span> <span class="n">dataset</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">data1</span><span class="p">,</span> <span class="n">data2</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cogitare.data.DataSet.__len__">
+<code class="descname">__len__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cogitare/data/dataset.html#DataSet.__len__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cogitare.data.DataSet.__len__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the number of batches in the dataset</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cogitare.data.DataSet.__repr__">
+<code class="descname">__repr__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cogitare/data/dataset.html#DataSet.__repr__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cogitare.data.DataSet.__repr__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display a summary of the dataset when using str(dataset) or repr(dataset).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="cogitare.data.DataSet.__weakref__">
+<code class="descname">__weakref__</code><a class="headerlink" href="#cogitare.data.DataSet.__weakref__" title="Permalink to this definition">¶</a></dt>
+<dd><p>list of weak references to the object (if defined)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cogitare.data.DataSet.reset">
+<code class="descname">reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cogitare/data/dataset.html#DataSet.reset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cogitare.data.DataSet.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check <a class="reference internal" href="#cogitare.data.AbsDataHolder.reset" title="cogitare.data.AbsDataHolder.reset"><code class="xref py py-meth docutils literal"><span class="pre">cogitare.data.AbsDataHolder.reset()</span></code></a>
+This reset all dataholder’s iterators.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cogitare.data.DataSet.shuffle">
+<code class="descname">shuffle</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cogitare/data/dataset.html#DataSet.shuffle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cogitare.data.DataSet.shuffle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shuffles all data holders in this container.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The shuffle keeps all data holder indices aligned. So if you have
+two data holders, one for x data and the other one for y data, for example,
+the pair of samples (x, y) will be shuffled together.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cogitare.data.DataSet.split">
+<code class="descname">split</code><span class="sig-paren">(</span><em>ratio</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cogitare/data/dataset.html#DataSet.split"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cogitare.data.DataSet.split" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check <a class="reference internal" href="#cogitare.data.AbsDataHolder.split" title="cogitare.data.AbsDataHolder.split"><code class="xref py py-meth docutils literal"><span class="pre">cogitare.data.AbsDataHolder.split()</span></code></a></p>
+<p>Split the <a class="reference internal" href="#cogitare.data.DataSet" title="cogitare.data.DataSet"><code class="xref py py-class docutils literal"><span class="pre">DataSet</span></code></a> into two <a class="reference internal" href="#cogitare.data.DataSet" title="cogitare.data.DataSet"><code class="xref py py-class docutils literal"><span class="pre">DataSet</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ratio</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><code class="xref py py-obj docutils literal"><span class="pre">float</span></code></a>) – ratio of the split. Must be between 0 and 1.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>(data1, data2)</em> – two <a class="reference internal" href="#cogitare.data.DataSet" title="cogitare.data.DataSet"><code class="xref py py-class docutils literal"><span class="pre">DataSet</span></code></a>.</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+<span class="go">DataSet with:</span>
+<span class="go">    containers: [</span>
+<span class="go">        TensorHolder with 1094x64 samples</span>
+<span class="go">        TensorHolder with 1094x64 samples</span>
+<span class="go">    ],</span>
+<span class="go">    batch size: 64</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ds1</span><span class="p">,</span> <span class="n">ds2</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">ds1</span><span class="p">)</span>
+<span class="go">DataSet with:</span>
+<span class="go">    containers: [</span>
+<span class="go">        TensorHolder with 875x64 samples</span>
+<span class="go">        TensorHolder with 875x64 samples</span>
+<span class="go">    ],</span>
+<span class="go">    batch size: 64</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">ds2</span><span class="p">)</span>
+<span class="go">DataSet with:</span>
+<span class="go">    containers: [</span>
+<span class="go">        TensorHolder with 219x64 samples</span>
+<span class="go">        TensorHolder with 219x64 samples</span>
+<span class="go">    ],</span>
+<span class="go">    batch size: 64</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cogitare.data.DataSet.split_chunks">
+<code class="descname">split_chunks</code><span class="sig-paren">(</span><em>n</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cogitare/data/dataset.html#DataSet.split_chunks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cogitare.data.DataSet.split_chunks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check <a class="reference internal" href="#cogitare.data.AbsDataHolder.split_chunks" title="cogitare.data.AbsDataHolder.split_chunks"><code class="xref py py-meth docutils literal"><span class="pre">cogitare.data.AbsDataHolder.split_chunks()</span></code></a></p>
+<p>Split the <a class="reference internal" href="#cogitare.data.DataSet" title="cogitare.data.DataSet"><code class="xref py py-class docutils literal"><span class="pre">DataSet</span></code></a> into N <a class="reference internal" href="#cogitare.data.DataSet" title="cogitare.data.DataSet"><code class="xref py py-class docutils literal"><span class="pre">DataSet</span></code></a>
+with the sample number of samples each.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – number of new splits.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>output (list)</em> – list of N <a class="reference internal" href="#cogitare.data.DataSet" title="cogitare.data.DataSet"><code class="xref py py-class docutils literal"><span class="pre">DataSet</span></code></a>.</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+<span class="go">DataSet with:</span>
+<span class="go">    containers: [</span>
+<span class="go">        TensorHolder with 1094x64 samples</span>
+<span class="go">        TensorHolder with 1094x64 samples</span>
+<span class="go">    ],</span>
+<span class="go">    batch size: 64</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ds1</span><span class="p">,</span> <span class="n">ds2</span><span class="p">,</span> <span class="n">ds3</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">split_chunks</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">data1</span><span class="p">)</span>
+<span class="go">DataSet with:</span>
+<span class="go">    containers: [</span>
+<span class="go">        TensorHolder with 365x64 samples</span>
+<span class="go">        TensorHolder with 365x64 samples</span>
+<span class="go">    ],</span>
+<span class="go">    batch size: 64</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">data2</span><span class="p">)</span>
+<span class="go">DataSet with:</span>
+<span class="go">    containers: [</span>
+<span class="go">        TensorHolder with 365x64 samples</span>
+<span class="go">        TensorHolder with 365x64 samples</span>
+<span class="go">    ],</span>
+<span class="go">    batch size: 64</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">data3</span><span class="p">)</span>
+<span class="go">DataSet with:</span>
+<span class="go">    containers: [</span>
+<span class="go">        TensorHolder with 365x64 samples</span>
+<span class="go">        TensorHolder with 365x64 samples</span>
+<span class="go">    ],</span>
+<span class="go">    batch size: 64</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="sequential_data.html" class="btn btn-neutral float-right" title="Sequential Data" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="sequential_model.html" class="btn btn-neutral" title="Sequential Model" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Aron Bordin.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,771 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>cogitare.core.model &mdash; Cogitare 0.1 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/julia.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../../_static/julia.css" type="text/css" />
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="Cogitare 0.1 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+<a href="https://github.com/cogitare-ai/cogitare"><img style="z-index: 1; position: fixed; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="http://docs.cogitare-ai.org/"><img src="../../../_static/logo-line.png" class="logo"></a>
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <p class="caption"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#Model">Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#Data-Loading">Data Loading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#Training">Training</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials.html">Tutorials</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Cogitare</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../model.html">Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../model.html#implementing-a-model">Implementing a Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../model.html#api">API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../sequential_model.html">Sequential Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../sequential_model.html#implementing-a-sequential-model-many-to-many-many-to-one">Implementing a Sequential Model (Many-to-Many, Many-to-One)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sequential_model.html#api">API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../data.html">Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../data.html#absdataholder"><span class="hidden-section">AbsDataHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../data.html#tensorholder"><span class="hidden-section">TensorHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../data.html#numpyholder"><span class="hidden-section">NumpyHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../data.html#callableholder"><span class="hidden-section">CallableHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../data.html#autoholder"><span class="hidden-section">AutoHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../data.html#dataset"><span class="hidden-section">DataSet</span></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../sequential_data.html">Sequential Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../sequential_data.html#sequentialabsdataholder"><span class="hidden-section">SequentialAbsDataHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sequential_data.html#sequentialtensorholder"><span class="hidden-section">SequentialTensorHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sequential_data.html#sequentialnumpyholder"><span class="hidden-section">SequentialNumpyHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sequential_data.html#sequentialcallableholder"><span class="hidden-section">SequentialCallableHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sequential_data.html#sequentialautoholder"><span class="hidden-section">SequentialAutoHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sequential_data.html#sequentialdataset"><span class="hidden-section">SequentialDataSet</span></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../async_data.html">Async Data Loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../plugins.html">Plugins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../plugins.html#custom-plugin">Custom Plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../plugins.html#register-a-plugin">Register a plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../plugins.html#official-plugins">Official Plugins</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../plugins.html#earlystopping"><span class="hidden-section">EarlyStopping</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../plugins.html#evaluator"><span class="hidden-section">Evaluator</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../plugins.html#logger"><span class="hidden-section">Logger</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../plugins.html#plottingmatplotlib"><span class="hidden-section">PlottingMatplotlib</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../plugins.html#progressbar"><span class="hidden-section">ProgressBar</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../monitor.html">Cogitare Monitor</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../monitor.html#how-to-use">How to Use</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../monitor.html#creating-a-custom-plugin">Creating a Custom Plugin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../metrics.html">Metrics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../metrics.html#module-cogitare.metrics.classification">Classification Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../metrics.html#module-cogitare.metrics.spatial">Spatial Metrics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../utils.html">cogitare.utils</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../models/classic.html">Classic Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Extra</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../contribute.html">Contribute</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../contribute.html#contributing-to-cogitare">Contributing to Cogitare</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">Cogitare</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>cogitare.core.model</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <h1>Source code for cogitare.core.model</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">torch</span> <span class="k">import</span> <span class="n">nn</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">humanize</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">cogitare.utils</span> <span class="k">import</span> <span class="n">not_training</span><span class="p">,</span> <span class="n">training</span><span class="p">,</span> <span class="n">StopTraining</span>
+<span class="kn">from</span> <span class="nn">cogitare.data</span> <span class="k">import</span> <span class="n">AbsDataHolder</span><span class="p">,</span> <span class="n">SequentialAbsDataHolder</span><span class="p">,</span> <span class="n">DataSet</span><span class="p">,</span> <span class="n">AsyncDataLoader</span>
+<span class="kn">from</span> <span class="nn">abc</span> <span class="k">import</span> <span class="n">ABCMeta</span><span class="p">,</span> <span class="n">abstractmethod</span>
+<span class="kn">from</span> <span class="nn">six</span> <span class="k">import</span> <span class="n">add_metaclass</span>
+<span class="kn">from</span> <span class="nn">cogitare.plugins</span> <span class="k">import</span> <span class="n">Logger</span><span class="p">,</span> <span class="n">ProgressBar</span><span class="p">,</span> <span class="n">PlottingMatplotlib</span><span class="p">,</span> <span class="n">Evaluator</span>
+<span class="kn">from</span> <span class="nn">cogitare</span> <span class="k">import</span> <span class="n">utils</span>
+<span class="kn">from</span> <span class="nn">cogitare.core.plugin_interface</span> <span class="k">import</span> <span class="n">PluginInterface</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">OrderedDict</span>
+
+
+<div class="viewcode-block" id="Model"><a class="viewcode-back" href="../../../model.html#cogitare.Model">[docs]</a><span class="nd">@add_metaclass</span><span class="p">(</span><span class="n">ABCMeta</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">Model</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Model is an extension of :class:`torch.nn.Module` that includes support for</span>
+<span class="sd">    training the model using the method :meth:`~cogitare.Model.learn`, and that provides integration</span>
+<span class="sd">    with plugins, model evalution metrics, and more.</span>
+
+<span class="sd">    For models with sequential data (LSTM, GRU, RNNs, etcs), check the</span>
+<span class="sd">    :class:`~cogitare.SequentialModel` model, that iterate over the timesteps per batch.</span>
+
+<span class="sd">    While training, you can use plugins to watch and interact with the model.</span>
+<span class="sd">    The plugin works like an event mechanism, you register a callback function to</span>
+<span class="sd">    a specific event, and then you gain access to some variables of the model at</span>
+<span class="sd">    specific steps of the training process.</span>
+<span class="sd">    Check the :meth:`~cogitare.Model.register_plugin` for more information about the</span>
+<span class="sd">    available events and variables that the model can interact with.</span>
+
+<span class="sd">    Methods that your model must implement:</span>
+
+<span class="sd">        - **forward** (data): where data is got from iterating over the dataset.</span>
+<span class="sd">        - **loss** (output, data): where output is value returned from forward, and</span>
+<span class="sd">          data is got from iterating over the dataset.</span>
+
+<span class="sd">    Expected input on :meth:`~cogitare.Model.learn`:</span>
+
+<span class="sd">        - **dataset** : an iterator, that returns one batch of samples per</span>
+<span class="sd">          iteration. The batch can be of any type (list, numpy array, tensor, string, etcs).</span>
+<span class="sd">          It is recommended to wrap your dataset using the :class:`~cogitare.data.DataSet` object,</span>
+<span class="sd">          that provides a high-performance data loading interface.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">valid_hooks</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;on_start&#39;</span><span class="p">,</span> <span class="s1">&#39;on_start_epoch&#39;</span><span class="p">,</span> <span class="s1">&#39;on_start_batch&#39;</span><span class="p">,</span>
+                   <span class="s1">&#39;on_end_batch&#39;</span><span class="p">,</span> <span class="s1">&#39;on_end_epoch&#39;</span><span class="p">,</span> <span class="s1">&#39;on_end&#39;</span><span class="p">,</span>
+                   <span class="s1">&#39;before_backward&#39;</span><span class="p">,</span> <span class="s1">&#39;before_step&#39;</span><span class="p">,</span> <span class="s1">&#39;on_stop_training&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Model</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_plugins</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">name</span><span class="p">,</span> <span class="n">OrderedDict</span><span class="p">())</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">valid_hooks</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_requires_register_default</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_logger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_to_register</span> <span class="o">=</span> <span class="p">[]</span>
+
+<div class="viewcode-block" id="Model.forward"><a class="viewcode-back" href="../../../model.html#cogitare.Model.forward">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        .. note:: When developing a Model, the class must implement this method.</span>
+
+<span class="sd">        The method receive one parameter, the data obtained by the dataset iterator,</span>
+<span class="sd">        and it must return the model output after forwarding the data.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            data: this is the data got from iterating over the dataset provided in the</span>
+<span class="sd">                :meth:`~cogitare.Model.learn` method. Its type and shape depend exclusively on</span>
+<span class="sd">                the input dataset, no transformations or type checking are made during training.</span>
+<span class="sd">                For most models, this will be a tuple containing ``(x_data, y_data)``, but can be</span>
+<span class="sd">                anything.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            output: the data after processing the input data. Usually, this is a :class:`torch.autograd.Variable`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="Model.loss"><a class="viewcode-back" href="../../../model.html#cogitare.Model.loss">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">loss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        .. note:: When developing a Model, the class must implement this method.</span>
+
+<span class="sd">        .. note:: If you don&#39;t want that Cogitare backward the loss automatically, you must return None in this</span>
+<span class="sd">            method. This should be useful if you want to do backprogragation yourself.</span>
+
+<span class="sd">        It will receive the output of the :meth:`~cogitare.Model.forward` method and</span>
+<span class="sd">        the data obtained by the dataset iterator (the same used in forward),</span>
+<span class="sd">        and must return the model loss considering the model output and expected output.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            output: the :meth:`~cogitare.Model.forward` output</span>
+<span class="sd">            data: (note, this is the same data received in :meth:`~cogitare.Model.forward`)</span>
+<span class="sd">                this is the data got from iterating over the dataset provided in the</span>
+<span class="sd">                :meth:`~cogitare.Model.learn` method. Its type and shape depend exclusively on</span>
+<span class="sd">                the input dataset, no transformations or type checking are made during training.</span>
+<span class="sd">                For most models, this will be a tuple containing ``(x_data, y_data)``, but can be</span>
+<span class="sd">                anything.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            loss (torch.autograd.Variable, None): the model loss. The loss will be used to backpropagate the errors.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+    <span class="k">def</span> <span class="nf">_register_default_plugins</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_requires_register_default</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="n">plot</span> <span class="o">=</span> <span class="n">PlottingMatplotlib</span><span class="p">()</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">add_variable</span><span class="p">(</span><span class="s1">&#39;loss&#39;</span><span class="p">,</span> <span class="s1">&#39;Loss&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">use_std</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;validation_dataset&#39;</span><span class="p">]:</span>
+            <span class="n">evaluator</span> <span class="o">=</span> <span class="n">Evaluator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;validation_dataset&#39;</span><span class="p">],</span> <span class="p">{</span><span class="s1">&#39;loss&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">metric_loss</span><span class="p">})</span>
+            <span class="n">plot</span><span class="o">.</span><span class="n">add_variable</span><span class="p">(</span><span class="s1">&#39;on_end_epoch_Evaluator_loss&#39;</span><span class="p">,</span> <span class="s1">&#39;Validation Loss&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">use_std</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">register_plugin</span><span class="p">(</span><span class="n">evaluator</span><span class="p">,</span> <span class="s1">&#39;on_end_epoch&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">register_plugin</span><span class="p">([</span>
+            <span class="n">Logger</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;[</span><span class="si">%s</span><span class="s1">]&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">),</span>
+            <span class="n">ProgressBar</span><span class="p">(),</span>
+            <span class="n">plot</span><span class="p">,</span>
+        <span class="p">],</span> <span class="s1">&#39;on_end_epoch&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">register_plugin</span><span class="p">([</span>
+            <span class="n">ProgressBar</span><span class="p">(</span><span class="n">monitor</span><span class="o">=</span><span class="s1">&#39;batch&#39;</span><span class="p">)</span>
+        <span class="p">],</span> <span class="s1">&#39;on_end_batch&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Model.register_default_plugins"><a class="viewcode-back" href="../../../model.html#cogitare.Model.register_default_plugins">[docs]</a>    <span class="k">def</span> <span class="nf">register_default_plugins</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method registers a set o common plugins to let you debug the model training.</span>
+
+<span class="sd">        Plugins included:</span>
+
+<span class="sd">            - Progress bar per batch and epoch</span>
+<span class="sd">            - Plot training and validation losses (if validation_dataset is present)</span>
+<span class="sd">            - Log training loss</span>
+
+<span class="sd">        If you want to have these plugins on training, just use this method before</span>
+<span class="sd">        :meth:`~cogitare.Model.learn`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_requires_register_default</span> <span class="o">=</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="Model.register_plugin"><a class="viewcode-back" href="../../../model.html#cogitare.Model.register_plugin">[docs]</a>    <span class="k">def</span> <span class="nf">register_plugin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plugin</span><span class="p">,</span> <span class="n">hook</span><span class="p">,</span> <span class="n">override</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">postpone</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;You can use this to register a plugin to a specific event of the model.</span>
+
+<span class="sd">        For each hook, the plugins will be called in the same order that they</span>
+<span class="sd">        were registered.</span>
+
+<span class="sd">        You can register (hook) a plugin to some specific events that may occur</span>
+<span class="sd">        during training:</span>
+
+<span class="sd">        +-------------------------+-------------+--------------+-------+-----------+----------------+----------------+---------+---------+---------+------------+---------------------+</span>
+<span class="sd">        | hook X parameter        | max_epochs  | num_batches  | model | optimizer | current_batch  | current_epoch  | sample  | output  | loss    | loss_mean  | validation_dataset  |</span>
+<span class="sd">        +=========================+=============+==============+=======+===========+================+================+=========+=========+=========+============+=====================+</span>
+<span class="sd">        | on_start                | OK          | OK           | OK    | OK        | 0              | 0              | None    | None    | None    | None       | OK                  |</span>
+<span class="sd">        +-------------------------+-------------+--------------+-------+-----------+----------------+----------------+---------+---------+---------+------------+---------------------+</span>
+<span class="sd">        | on_start_epoch          | OK          | OK           | OK    | OK        | 0              | OK             | None    | None    | None    | None       | OK                  |</span>
+<span class="sd">        +-------------------------+-------------+--------------+-------+-----------+----------------+----------------+---------+---------+---------+------------+---------------------+</span>
+<span class="sd">        | on_start_batch          | OK          | OK           | OK    | OK        | OK             | OK             | OK      | None    | OK      | OK         | OK                  |</span>
+<span class="sd">        +-------------------------+-------------+--------------+-------+-----------+----------------+----------------+---------+---------+---------+------------+---------------------+</span>
+<span class="sd">        | before_backward         | OK          | OK           | OK    | OK        | OK             | OK             | OK      | OK      | OK      | None       | OK                  |</span>
+<span class="sd">        +-------------------------+-------------+--------------+-------+-----------+----------------+----------------+---------+---------+---------+------------+---------------------+</span>
+<span class="sd">        | before_step             | OK          | OK           | OK    | OK        | OK             | OK             | OK      | OK      | OK      | None       | OK                  |</span>
+<span class="sd">        +-------------------------+-------------+--------------+-------+-----------+----------------+----------------+---------+---------+---------+------------+---------------------+</span>
+<span class="sd">        | on_end_batch            | OK          | OK           | OK    | OK        | OK             | OK             | OK      | OK      | OK      | None       | OK                  |</span>
+<span class="sd">        +-------------------------+-------------+--------------+-------+-----------+----------------+----------------+---------+---------+---------+------------+---------------------+</span>
+<span class="sd">        | on_end_epoch            | OK          | OK           | OK    | OK        | 0              | OK             | None    | None    | OK      | OK         | OK                  |</span>
+<span class="sd">        +-------------------------+-------------+--------------+-------+-----------+----------------+----------------+---------+---------+---------+------------+---------------------+</span>
+<span class="sd">        | on_stop_training        | OK          | OK           | OK    | OK        | depends        | depends        | depends | depends | depends | depends    | OK                  |</span>
+<span class="sd">        +-------------------------+-------------+--------------+-------+-----------+----------------+----------------+---------+---------+---------+------------+---------------------+</span>
+<span class="sd">        | on_end                  | OK          | OK           | OK    | OK        | depends        | depends        | depends | depends | depends | depends    | OK                  |</span>
+<span class="sd">        +-------------------------+-------------+--------------+-------+-----------+----------------+----------------+---------+---------+---------+------------+---------------------+</span>
+
+<span class="sd">        The value of some of the model states depends on the execution of the model. The</span>
+<span class="sd">        **on_stop_training**, for example, can be execute at any position of the learnining</span>
+<span class="sd">        algorithm, so the valiables in the model state will depend on its current position.</span>
+
+<span class="sd">        The value returned by the plugin is stored in model state as: ``hook + &#39;_&#39; + plugin_name``.</span>
+<span class="sd">        If the return value is a dict, the state will have: ``hook + &#39;_&#39; + plugin_name + &#39;_&#39; + key`` for each key of the</span>
+<span class="sd">        return key, and a ``hook + &#39;_&#39; + plugin_name + &#39;__dict&#39;`` with the whole dict. Where the ``plugin_name``</span>
+<span class="sd">        if the function name, or the ``name`` attribute if using the :class:`~cogitare.core.PluginInterface`.</span>
+
+<span class="sd">        For example, if your plugin named Sample returns ``{a: 3, b: 5, c: &quot;cogitare&quot;}``, another plugin can make use</span>
+<span class="sd">        of this variables as follows::</span>
+
+<span class="sd">            def my_plugin1(on_end_bach_Sample_a, on_end_bach_Sample_b, on_end_bach_Sample__dict, **kw):</span>
+<span class="sd">                print(on_end_bach_Sample_a + on_end_bach_Sample_b)</span>
+<span class="sd">                print(on_end_bach_Sample__dict)</span>
+
+<span class="sd">        or::</span>
+
+<span class="sd">            def my_plugin2(model, **kw):</span>
+<span class="sd">                print(model.state[&#39;on_end_bach_Sample_a&#39;] + model.state[&#39;on_end_bach_Sample_b&#39;])</span>
+<span class="sd">                print(model.state[&#39;on_end_bach_Sample__dict&#39;])</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            plugin (callable): a function to be called. The parameters will be sent</span>
+<span class="sd">                was described above</span>
+<span class="sd">            hook (str): the event to watch, as described above.</span>
+<span class="sd">            override (bool): if True, override a plugin at a specific hook if it has the</span>
+<span class="sd">                same name. If False, raises an exception.</span>
+<span class="sd">            postpone (bool): if True, creates the instance of the module only when</span>
+<span class="sd">                starting the learning step, or when manually calling :meth:`~cogitare.Model.apply_register_plugins`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+        <span class="k">if</span> <span class="n">postpone</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_to_register</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">plugin</span><span class="p">,</span> <span class="n">hook</span><span class="p">,</span> <span class="n">override</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_apply_plugin</span><span class="p">(</span><span class="n">plugin</span><span class="p">,</span> <span class="n">hook</span><span class="p">,</span> <span class="n">override</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Model.apply_register_plugins"><a class="viewcode-back" href="../../../model.html#cogitare.Model.apply_register_plugins">[docs]</a>    <span class="k">def</span> <span class="nf">apply_register_plugins</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Creates and definetily register all plugins added by :meth:`~cogitare.Model.register_plugin` with</span>
+<span class="sd">        `postpone=True`.</span>
+
+<span class="sd">        This method is automatically executed when starting the :meth:`~cogitare.Model.learn`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">params</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_to_register</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_apply_plugin</span><span class="p">(</span><span class="o">*</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_to_register</span> <span class="o">=</span> <span class="p">[]</span></div>
+
+    <span class="k">def</span> <span class="nf">_apply_plugin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plugin</span><span class="p">,</span> <span class="n">hook</span><span class="p">,</span> <span class="n">override</span><span class="p">):</span>
+        <span class="n">utils</span><span class="o">.</span><span class="n">assert_raise</span><span class="p">(</span><span class="n">hook</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">valid_hooks</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">,</span>
+                           <span class="s1">&#39;Invalid hook </span><span class="si">{}</span><span class="s1">. Expected on of the following: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                               <span class="n">hook</span><span class="p">,</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">valid_hooks</span><span class="p">)))</span>
+        <span class="n">plugin</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">_ntuple</span><span class="p">(</span><span class="n">plugin</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">container</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plugins</span><span class="p">[</span><span class="n">hook</span><span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">plugin</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">PluginInterface</span><span class="p">):</span>
+                <span class="n">p</span> <span class="o">=</span> <span class="n">PluginInterface</span><span class="o">.</span><span class="n">from_function</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">container</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">override</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;A plugin with name &quot;</span><span class="si">{}</span><span class="s1">&quot; already exists&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+
+            <span class="n">container</span><span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span>
+
+    <span class="k">def</span> <span class="nf">hook</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">plugin</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plugins</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="n">plugin</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">)</span>
+
+            <span class="n">state_name</span> <span class="o">=</span> <span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="n">key</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">[</span><span class="n">state_name</span> <span class="o">+</span> <span class="s1">&#39;__dict&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">status</span>
+                <span class="k">for</span> <span class="n">attr</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">status</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">[</span><span class="n">state_name</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="n">attr</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">[</span><span class="n">state_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">status</span>
+
+    <span class="k">def</span> <span class="nf">_forward_batch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch_num</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">):</span>
+        <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+
+        <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">batch</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;output&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">output</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">hook</span><span class="p">(</span><span class="s1">&#39;before_backward&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">loss</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">training</span><span class="p">:</span>
+            <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">hook</span><span class="p">(</span><span class="s1">&#39;before_step&#39;</span><span class="p">)</span>
+            <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+
+            <span class="k">return</span> <span class="n">loss</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_start_learn_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">validation_dataset</span><span class="p">,</span> <span class="n">max_epochs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Model: </span><span class="se">\n\n</span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)))</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="p">(</span><span class="n">AbsDataHolder</span><span class="p">,</span> <span class="n">SequentialAbsDataHolder</span><span class="p">,</span>
+                                <span class="n">DataSet</span><span class="p">,</span> <span class="n">AsyncDataLoader</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Training data: </span><span class="se">\n\n</span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">dataset</span><span class="p">)))</span>
+
+        <span class="n">num_params</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">number_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Number of trainable parameters: &#39;</span> <span class="o">+</span> <span class="n">humanize</span><span class="o">.</span><span class="n">intcomma</span><span class="p">(</span><span class="n">num_params</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Number of non-trainable parameters: &#39;</span> <span class="o">+</span> <span class="n">humanize</span><span class="o">.</span><span class="n">intcomma</span><span class="p">(</span><span class="n">num_params</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Total number of parameters: &#39;</span> <span class="o">+</span> <span class="n">humanize</span><span class="o">.</span><span class="n">intcomma</span><span class="p">(</span><span class="n">num_params</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">num_params</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Starting the training ...&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="o">**</span><span class="p">{</span>
+            <span class="s1">&#39;max_epochs&#39;</span><span class="p">:</span> <span class="n">max_epochs</span><span class="p">,</span>
+            <span class="s1">&#39;num_batches&#39;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">),</span>
+            <span class="s1">&#39;model&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="p">,</span>
+            <span class="s1">&#39;optimizer&#39;</span><span class="p">:</span> <span class="n">optimizer</span><span class="p">,</span>
+            <span class="s1">&#39;current_batch&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s1">&#39;current_epoch&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s1">&#39;sample&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="s1">&#39;output&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="s1">&#39;loss&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="s1">&#39;loss_mean&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="s1">&#39;validation_dataset&#39;</span><span class="p">:</span> <span class="n">validation_dataset</span>
+        <span class="p">})</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_requires_register_default</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_register_default_plugins</span><span class="p">()</span>
+
+<div class="viewcode-block" id="Model.learn"><a class="viewcode-back" href="../../../model.html#cogitare.Model.learn">[docs]</a>    <span class="nd">@training</span>
+    <span class="k">def</span> <span class="nf">learn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">validation_dataset</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_epochs</span><span class="o">=</span><span class="mi">50</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Optimize the model parameters using the dataset. This function use the algorithm::</span>
+
+<span class="sd">            for epoch in max_epochs:</span>
+<span class="sd">                try:</span>
+<span class="sd">                    for sample in data:</span>
+<span class="sd">                        # forward the data</span>
+<span class="sd">                        output = forward(sample)</span>
+<span class="sd">                        error = loss(output, sample)</span>
+
+<span class="sd">                        # optimize the parameters</span>
+<span class="sd">                        backward(error)</span>
+<span class="sd">                        optimizer.step()</span>
+
+<span class="sd">                    if validation_dataset:</span>
+<span class="sd">                        evaluate_model(validation_dataset)</span>
+<span class="sd">                except StopTraining:</span>
+<span class="sd">                    # stop the training process if request by a plugin</span>
+
+<span class="sd">        If the ``validation_dataset`` is present, it can be used by plugins to evaluate the</span>
+<span class="sd">        validation/test loss/error during training.</span>
+
+<span class="sd">        To achieve a better performance, and have access to everyday dataset manipulation</span>
+<span class="sd">        features, it&#39;s recommended to use the :class:`~cogitare.data.DataSet` class. It</span>
+<span class="sd">        provides a interface that loads batches using multiple threads/processes</span>
+<span class="sd">        and provides useful tasks such as data splitting, async data loading, shuffling, and more.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            dataset (iterator): an iterator that returns one batch per iteration. To have a better</span>
+<span class="sd">                performance and a easy to use interface, it is recommended to</span>
+<span class="sd">                use the :class:`~cogitare.data.DataSet`.</span>
+<span class="sd">            optimizer (torch.optim): the instance of a :class:`torch.optim.Optimizer` object.</span>
+<span class="sd">            validation_dataset (iterator, optional): if provided, must have the same</span>
+<span class="sd">                caracteristics that the ``dataset``. This may be used by the model and</span>
+<span class="sd">                by plugins to evaluate the model performance during training.</span>
+<span class="sd">            max_epochs (int): the number of epochs before ending the training procedure.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            status (bool): False if stopped by :class:`~cogitare.utils.StopTraining`. True otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">original_register_default</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_requires_register_default</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_start_learn_state</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">validation_dataset</span><span class="p">,</span> <span class="n">max_epochs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">apply_register_plugins</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">hook</span><span class="p">(</span><span class="s1">&#39;on_start&#39;</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">max_epochs</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;current_epoch&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">epoch</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;current_batch&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;loss&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;loss_mean&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;sample&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;output&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">hook</span><span class="p">(</span><span class="s1">&#39;on_start_epoch&#39;</span><span class="p">)</span>
+                <span class="n">losses</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;loss&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">losses</span>
+
+                <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">sample</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;current_batch&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">idx</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;sample&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sample</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;output&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">hook</span><span class="p">(</span><span class="s1">&#39;on_start_batch&#39;</span><span class="p">)</span>
+
+                    <span class="n">loss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_forward_batch</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">sample</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">)</span>
+                    <span class="n">losses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
+
+                    <span class="bp">self</span><span class="o">.</span><span class="n">hook</span><span class="p">(</span><span class="s1">&#39;on_end_batch&#39;</span><span class="p">)</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;current_batch&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;sample&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;output&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;loss_mean&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;loss&#39;</span><span class="p">])</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">hook</span><span class="p">(</span><span class="s1">&#39;on_end_epoch&#39;</span><span class="p">)</span>
+
+            <span class="n">status</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">except</span> <span class="n">StopTraining</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">hook</span><span class="p">(</span><span class="s1">&#39;on_stop_training&#39;</span><span class="p">)</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Training stopped&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_requires_register_default</span> <span class="o">=</span> <span class="n">original_register_default</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hook</span><span class="p">(</span><span class="s1">&#39;on_end&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Training finished&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">status</span></div>
+
+<div class="viewcode-block" id="Model.predict"><a class="viewcode-back" href="../../../model.html#cogitare.Model.predict">[docs]</a>    <span class="nd">@not_training</span>
+    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calls the forward on the provided data, but without affecting/using training</span>
+<span class="sd">        variables.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            args/kwargs: :meth:`~cogitare.Model.forward` arguments. If provided, the</span>
+<span class="sd">                forward will receive these parameters.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            output: the :meth:`~cogitare.Model.forward` output.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Model.metric_loss"><a class="viewcode-back" href="../../../model.html#cogitare.Model.metric_loss">[docs]</a>    <span class="nd">@not_training</span>
+    <span class="k">def</span> <span class="nf">metric_loss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">sample</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;metric_loss is a shortcut to use the model loss as a tranining metric.</span>
+
+<span class="sd">        Given the model output and the batch data, the metric_loss returns the</span>
+<span class="sd">        loss for this specific batch.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            output: model output</span>
+<span class="sd">            sample: batch data</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            output (float): the model loss.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">sample</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">loss</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="Model.evaluate"><a class="viewcode-back" href="../../../model.html#cogitare.Model.evaluate">[docs]</a>    <span class="nd">@not_training</span>
+    <span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Iterate over batches in the dataset and returns a list of the of losses of each batch.</span>
+
+<span class="sd">        This method does not affect training variables and can be used to evaluate the</span>
+<span class="sd">        model performance in a different data (such as validation and test sets).</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            dataset: batch iterator</span>
+<span class="sd">            args/kwargs: :meth:`~cogitare.Model.forward` arguments. If provided, the</span>
+<span class="sd">                forward will receive these parameters.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            output (list): the losses in the provided batches.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">losses</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">sample</span> <span class="ow">in</span> <span class="n">dataset</span><span class="p">:</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="n">losses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">metric_loss</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">sample</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">losses</span></div>
+
+<div class="viewcode-block" id="Model.evaluate_with_metrics"><a class="viewcode-back" href="../../../model.html#cogitare.Model.evaluate_with_metrics">[docs]</a>    <span class="nd">@not_training</span>
+    <span class="k">def</span> <span class="nf">evaluate_with_metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">metrics</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Iterate over batches in the dataset using metrics defined in the ``metrics``</span>
+<span class="sd">        argument, and then return a dict mapping {matric_name -&gt; list of results}.</span>
+
+<span class="sd">        This method does not affect training variables and can be used to evaluate the</span>
+<span class="sd">        model performance in a different data (such as validation and test sets).</span>
+
+<span class="sd">        The ``metrics`` must be defined as:</span>
+
+<span class="sd">            - key: a name for this metric. The metric name must follow variable naming convention.</span>
+
+<span class="sd">            - value: a callable object, that accepts two parameters as input. The first parameter</span>
+<span class="sd">              will be the model output, and the second parameter will be the batch data.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            dataset: batch iterator</span>
+<span class="sd">            metrics (dict): a dict mapping metric name to a callable.</span>
+<span class="sd">            args/kwargs: :meth:`~cogitare.Model.forward` arguments. If provided, the</span>
+<span class="sd">                forward will receive these parameters.</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">            output (dict): a dict mapping the metric name with a list containing the metric</span>
+<span class="sd">            output for each batch in the dataset.</span>
+
+
+<span class="sd">        Example::</span>
+
+<span class="sd">            &gt;&gt;&gt; metrics = {</span>
+<span class="sd">            ...     &#39;loss&#39;: model.metric_loss,</span>
+<span class="sd">            ...     &#39;precision&#39;: metrics.precision</span>
+<span class="sd">            ... }</span>
+
+<span class="sd">            &gt;&gt;&gt; model.evaluate_with_metrics(validation_dataset, metrics)</span>
+<span class="sd">            {&#39;loss&#39;: [1.0, 0.8, 0.9], &#39;precision&#39;: [0.6, 0.55, 0.58]}</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">utils</span><span class="o">.</span><span class="n">assert_raise</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">metrics</span><span class="p">,</span> <span class="nb">dict</span><span class="p">),</span> <span class="ne">ValueError</span><span class="p">,</span>
+                           <span class="s1">&#39;&quot;metrics&quot; must be a dict with metric_name -&gt; metric_function&#39;</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">sample</span> <span class="ow">in</span> <span class="n">dataset</span><span class="p">:</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">call</span> <span class="ow">in</span> <span class="n">metrics</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">holder</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">list</span><span class="p">())</span>
+                <span class="n">holder</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">call</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">sample</span><span class="p">))</span>
+
+                <span class="n">result</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">holder</span>
+
+        <span class="k">return</span> <span class="n">result</span></div>
+
+<div class="viewcode-block" id="Model.load"><a class="viewcode-back" href="../../../model.html#cogitare.Model.load">[docs]</a>    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Load the model parameters using :func:`torch.load` from a given path.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            path: path of the serialized state_dict.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">state</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Model.save"><a class="viewcode-back" href="../../../model.html#cogitare.Model.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Save the model parameters using :func:`torch.save` to a given path.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            path: path to save the model.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">state_dict</span><span class="p">()</span>
+        <span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Aron Bordin.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

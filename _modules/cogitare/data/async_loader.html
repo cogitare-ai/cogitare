@@ -1,0 +1,417 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>cogitare.data.async_loader &mdash; Cogitare 0.1 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/julia.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../../_static/julia.css" type="text/css" />
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="Cogitare 0.1 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+<a href="https://github.com/cogitare-ai/cogitare"><img style="z-index: 1; position: fixed; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="http://docs.cogitare-ai.org/"><img src="../../../_static/logo-line.png" class="logo"></a>
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <p class="caption"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#Model">Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#Data-Loading">Data Loading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#Training">Training</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials.html">Tutorials</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Cogitare</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../model.html">Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../model.html#implementing-a-model">Implementing a Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../model.html#api">API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../sequential_model.html">Sequential Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../sequential_model.html#implementing-a-sequential-model-many-to-many-many-to-one">Implementing a Sequential Model (Many-to-Many, Many-to-One)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sequential_model.html#api">API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../data.html">Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../data.html#absdataholder"><span class="hidden-section">AbsDataHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../data.html#tensorholder"><span class="hidden-section">TensorHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../data.html#numpyholder"><span class="hidden-section">NumpyHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../data.html#callableholder"><span class="hidden-section">CallableHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../data.html#autoholder"><span class="hidden-section">AutoHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../data.html#dataset"><span class="hidden-section">DataSet</span></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../sequential_data.html">Sequential Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../sequential_data.html#sequentialabsdataholder"><span class="hidden-section">SequentialAbsDataHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sequential_data.html#sequentialtensorholder"><span class="hidden-section">SequentialTensorHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sequential_data.html#sequentialnumpyholder"><span class="hidden-section">SequentialNumpyHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sequential_data.html#sequentialcallableholder"><span class="hidden-section">SequentialCallableHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sequential_data.html#sequentialautoholder"><span class="hidden-section">SequentialAutoHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sequential_data.html#sequentialdataset"><span class="hidden-section">SequentialDataSet</span></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../async_data.html">Async Data Loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../plugins.html">Plugins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../plugins.html#custom-plugin">Custom Plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../plugins.html#register-a-plugin">Register a plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../plugins.html#official-plugins">Official Plugins</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../plugins.html#earlystopping"><span class="hidden-section">EarlyStopping</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../plugins.html#evaluator"><span class="hidden-section">Evaluator</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../plugins.html#logger"><span class="hidden-section">Logger</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../plugins.html#plottingmatplotlib"><span class="hidden-section">PlottingMatplotlib</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../plugins.html#progressbar"><span class="hidden-section">ProgressBar</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../monitor.html">Cogitare Monitor</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../monitor.html#how-to-use">How to Use</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../monitor.html#creating-a-custom-plugin">Creating a Custom Plugin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../metrics.html">Metrics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../metrics.html#module-cogitare.metrics.classification">Classification Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../metrics.html#module-cogitare.metrics.spatial">Spatial Metrics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../utils.html">cogitare.utils</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../models/classic.html">Classic Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Extra</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../contribute.html">Contribute</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../contribute.html#contributing-to-cogitare">Contributing to Cogitare</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">Cogitare</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>cogitare.data.async_loader</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <h1>Source code for cogitare.data.async_loader</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">cogitare</span> <span class="k">import</span> <span class="n">utils</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">concurrent.futures</span> <span class="k">as</span> <span class="nn">C</span>
+<span class="kn">from</span> <span class="nn">six.moves.queue</span> <span class="k">import</span> <span class="n">PriorityQueue</span>
+<span class="kn">from</span> <span class="nn">threading</span> <span class="k">import</span> <span class="n">Thread</span>
+
+
+<span class="k">def</span> <span class="nf">_identity</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span>
+
+
+<span class="k">def</span> <span class="nf">_fetch</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="n">batch</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">f</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="AsyncDataLoader"><a class="viewcode-back" href="../../../async_data.html#cogitare.data.AsyncDataLoader">[docs]</a><span class="k">class</span> <span class="nc">AsyncDataLoader</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The AsyncDataLoader is a wrapper to asynchronous loading multiples batches of data.</span>
+
+<span class="sd">    It keeps a buffer of batches, so when the model asks for a new batch, it&#39;s</span>
+<span class="sd">    already in memory. After sending the batch to the model, it is removed from</span>
+<span class="sd">    the buffer, and a new batch can be loaded.</span>
+
+<span class="sd">    The buffer is filled using a separated thread. Then, each batch can be loaded</span>
+<span class="sd">    using multiple processes, or multiples threads.</span>
+
+<span class="sd">    This async batch loader is designed for heavy IO or heavy CPU batch generation.</span>
+
+<span class="sd">    .. warning:: When using the multiprocessing batch loader, watch the ram usage,</span>
+<span class="sd">        and avoid a high number of processes. Multiprocessing can easily lead</span>
+<span class="sd">        to memory overflow.</span>
+
+<span class="sd">    - Should I use the Async Data Loader ?</span>
+
+<span class="sd">        If you check the Cogitare&#39;s DataHolder, it already provides the execution</span>
+<span class="sd">        of the data loading through multiple threads or multiple processes. So you should</span>
+<span class="sd">        use this if the time to generate a whole batch is expensive.</span>
+
+<span class="sd">    - Should I use threads or processes ?</span>
+
+<span class="sd">        It&#39;s recommended to use threads, they are lightweight and fast.</span>
+
+<span class="sd">        Multiple processing usually will lead to a worse performance and memory</span>
+<span class="sd">        usage, due to the communication pipe between processes and due to</span>
+<span class="sd">        the extension sharing of the memory. However, it can be</span>
+<span class="sd">        useful for CPU expensive operations, because will not suffer from GIL.</span>
+
+<span class="sd">        Threads, in the other way, are lightweight and usually fast, but can suffer from GIL.</span>
+<span class="sd">        For tasks with heavy IO, it is a good choice.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data (DataSet, AbsDataHolder, SequentialDataSet, SequentialAbsDataHolder): data holder,</span>
+<span class="sd">            or dataset instance.</span>
+<span class="sd">        buffer_size (int): size of the batch buffer. The async data loader will keep around</span>
+<span class="sd">            ``buffer_size`` batches in memory.</span>
+<span class="sd">        mode (str): should be ``threaded`` or ``multiprocessing``, indicating how to fetch batches.</span>
+<span class="sd">        workers (int): the number of threads/processes used to load the batches. If None,</span>
+<span class="sd">            will use the number of cores in the CPU.</span>
+<span class="sd">        on_batch_loaded (callable): if provided, this function will be called when a new batch is loaded. It must</span>
+<span class="sd">            receive one argument, the batch data. And return the batch after applying some operation on the data. This</span>
+<span class="sd">            can be used to apply pre-processing functions on a batch of data (such as image filtering, moving the</span>
+
+<span class="sd">    Example::</span>
+
+<span class="sd">        &gt;&gt;&gt; mnist = fetch_mldata(&#39;MNIST original&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; mnist.data = mnist.data / 255</span>
+<span class="sd">        &gt;&gt;&gt; data = DataSet([mnist.data, mnist.target.astype(int)], batch_size=64)</span>
+<span class="sd">        &gt;&gt;&gt; data_train, data_validation = data.split(0.8)</span>
+
+<span class="sd">        &gt;&gt;&gt; # wraps the data_train dataset with the async loader.</span>
+<span class="sd">        &gt;&gt;&gt; data_train = AsyncDataLoader(data_train)</span>
+
+<span class="sd">        &gt;&gt;&gt; model.learn(data_train, optimizer)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">buffer_size</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;threaded&#39;</span><span class="p">,</span> <span class="n">workers</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">on_batch_loaded</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">valid</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;threaded&#39;</span><span class="p">,</span> <span class="s1">&#39;multiprocessing&#39;</span><span class="p">,</span> <span class="p">)</span>
+        <span class="n">utils</span><span class="o">.</span><span class="n">assert_raise</span><span class="p">(</span><span class="n">mode</span> <span class="ow">in</span> <span class="n">valid</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">,</span>
+                           <span class="s1">&#39;mode must be one of: &#39;</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">valid</span><span class="p">))</span>
+        <span class="n">utils</span><span class="o">.</span><span class="n">assert_raise</span><span class="p">(</span><span class="n">buffer_size</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">,</span>
+                           <span class="s1">&#39;buffer_size must be greater or equal to 2&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;threaded&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_executor</span> <span class="o">=</span> <span class="n">C</span><span class="o">.</span><span class="n">ThreadPoolExecutor</span><span class="p">(</span><span class="n">workers</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_executor</span> <span class="o">=</span> <span class="n">C</span><span class="o">.</span><span class="n">ProcessPoolExecutor</span><span class="p">(</span><span class="n">workers</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">on_batch_loaded</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">on_batch_loaded</span> <span class="o">=</span> <span class="n">_identity</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_queue</span> <span class="o">=</span> <span class="n">PriorityQueue</span><span class="p">(</span><span class="n">buffer_size</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_thread</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_on_batch_loaded</span> <span class="o">=</span> <span class="n">on_batch_loaded</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cache_buffer</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_caching</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_thread</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_thread</span> <span class="o">=</span> <span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_produce</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_thread</span><span class="o">.</span><span class="n">daemon</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+<div class="viewcode-block" id="AsyncDataLoader.cache"><a class="viewcode-back" href="../../../async_data.html#cogitare.data.AsyncDataLoader.cache">[docs]</a>    <span class="k">def</span> <span class="nf">cache</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Start to load batches to buffer, and wait the buffer be full.</span>
+<span class="sd">        This can be used before start the model training to cache the samples</span>
+<span class="sd">        and speed up the model execution.</span>
+
+<span class="sd">        Example::</span>
+
+<span class="sd">            &gt;&gt;&gt; dh = CallableHolder(s.__next__, mode=&#39;sequential&#39;, total_samples=20000000, single=True)</span>
+<span class="sd">            &gt;&gt;&gt; dh = AsyncDataLoader(dh, buffer_size=64000, mode=&#39;threaded&#39;, workers=1)</span>
+<span class="sd">            &gt;&gt;&gt; print(&#39;caching ...&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; dh.cache()</span>
+<span class="sd">            &gt;&gt;&gt; print(&#39;done&#39;)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_caching</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cache_buffer</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_start</span><span class="p">()</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_queue</span><span class="o">.</span><span class="n">full</span><span class="p">():</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+
+        <span class="k">while</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">done</span><span class="p">()</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache_buffer</span><span class="p">):</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_caching</span> <span class="o">=</span> <span class="kc">False</span></div>
+
+    <span class="k">def</span> <span class="nf">_produce</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">future</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">_fetch</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_on_batch_loaded</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_queue</span><span class="o">.</span><span class="n">put</span><span class="p">((</span><span class="n">idx</span><span class="p">,</span> <span class="n">future</span><span class="p">))</span>
+            <span class="n">idx</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_caching</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_cache_buffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">future</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">__next__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_start</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_queue</span><span class="o">.</span><span class="n">get</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+
+    <span class="nb">next</span> <span class="o">=</span> <span class="fm">__next__</span>
+
+    <span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Aron Bordin.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

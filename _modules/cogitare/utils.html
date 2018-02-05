@@ -1,0 +1,617 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>cogitare.utils &mdash; Cogitare 0.1 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/julia.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../_static/julia.css" type="text/css" />
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="Cogitare 0.1 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+<a href="https://github.com/cogitare-ai/cogitare"><img style="z-index: 1; position: fixed; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="http://docs.cogitare-ai.org/"><img src="../../_static/logo-line.png" class="logo"></a>
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <p class="caption"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../quickstart.html#Model">Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../quickstart.html#Data-Loading">Data Loading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../quickstart.html#Training">Training</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials.html">Tutorials</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Cogitare</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../model.html">Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../model.html#implementing-a-model">Implementing a Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../model.html#api">API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../sequential_model.html">Sequential Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../sequential_model.html#implementing-a-sequential-model-many-to-many-many-to-one">Implementing a Sequential Model (Many-to-Many, Many-to-One)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sequential_model.html#api">API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../data.html">Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../data.html#absdataholder"><span class="hidden-section">AbsDataHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../data.html#tensorholder"><span class="hidden-section">TensorHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../data.html#numpyholder"><span class="hidden-section">NumpyHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../data.html#callableholder"><span class="hidden-section">CallableHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../data.html#autoholder"><span class="hidden-section">AutoHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../data.html#dataset"><span class="hidden-section">DataSet</span></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../sequential_data.html">Sequential Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../sequential_data.html#sequentialabsdataholder"><span class="hidden-section">SequentialAbsDataHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sequential_data.html#sequentialtensorholder"><span class="hidden-section">SequentialTensorHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sequential_data.html#sequentialnumpyholder"><span class="hidden-section">SequentialNumpyHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sequential_data.html#sequentialcallableholder"><span class="hidden-section">SequentialCallableHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sequential_data.html#sequentialautoholder"><span class="hidden-section">SequentialAutoHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sequential_data.html#sequentialdataset"><span class="hidden-section">SequentialDataSet</span></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../async_data.html">Async Data Loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../plugins.html">Plugins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../plugins.html#custom-plugin">Custom Plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../plugins.html#register-a-plugin">Register a plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../plugins.html#official-plugins">Official Plugins</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../plugins.html#earlystopping"><span class="hidden-section">EarlyStopping</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../plugins.html#evaluator"><span class="hidden-section">Evaluator</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../plugins.html#logger"><span class="hidden-section">Logger</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../plugins.html#plottingmatplotlib"><span class="hidden-section">PlottingMatplotlib</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../plugins.html#progressbar"><span class="hidden-section">ProgressBar</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../monitor.html">Cogitare Monitor</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../monitor.html#how-to-use">How to Use</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../monitor.html#creating-a-custom-plugin">Creating a Custom Plugin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../metrics.html">Metrics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../metrics.html#module-cogitare.metrics.classification">Classification Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../metrics.html#module-cogitare.metrics.spatial">Spatial Metrics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../utils.html">cogitare.utils</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../models/classic.html">Classic Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Extra</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../contribute.html">Contribute</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../contribute.html#contributing-to-cogitare">Contributing to Cogitare</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">Cogitare</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>cogitare.utils</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <h1>Source code for cogitare.utils</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">torch.autograd</span> <span class="k">import</span> <span class="n">Variable</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">coloredlogs</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="n">repeat</span>
+<span class="kn">import</span> <span class="nn">functools</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">torch.nn</span> <span class="k">import</span> <span class="n">Module</span>
+
+
+<span class="n">_CUDA_ENABLED</span> <span class="o">=</span> <span class="kc">False</span>
+
+
+<div class="viewcode-block" id="StopTraining"><a class="viewcode-back" href="../../utils.html#cogitare.utils.StopTraining">[docs]</a><span class="k">class</span> <span class="nc">StopTraining</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This is an Exception to stop the training process of a :class:`cogitare.Model`.</span>
+
+<span class="sd">    While running the :meth:`cogitare.Model.learn`, if a plugin raises this exception,</span>
+<span class="sd">    the model will run the plugins in the ``on_stop_training`` hook, and stop the training.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+
+
+<span class="k">def</span> <span class="nf">get_logger</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="n">_LOGGER</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+    <span class="n">_LOGGER</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">NullHandler</span><span class="p">())</span>
+    <span class="n">coloredlogs</span><span class="o">.</span><span class="n">install</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="s1">&#39;DEBUG&#39;</span><span class="p">,</span> <span class="n">logger</span><span class="o">=</span><span class="n">_LOGGER</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">_LOGGER</span>
+
+
+<div class="viewcode-block" id="tensorfy"><a class="viewcode-back" href="../../utils.html#cogitare.utils.tensorfy">[docs]</a><span class="k">def</span> <span class="nf">tensorfy</span><span class="p">(</span><span class="o">*</span><span class="n">params</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Utility decorator to automatically convert a function parameters to tensor.</span>
+
+<span class="sd">    You can pass the argument position, or the parameter name that you wish to be converted to tensor.</span>
+
+<span class="sd">    Example::</span>
+
+<span class="sd">        @tensorfy(0, 1, 2)</span>
+<span class="sd">        def my_func(a, b, c, d, e):</span>
+<span class="sd">            # will convert a, b, and c to tensor</span>
+<span class="sd">            pass</span>
+
+<span class="sd">        @tensorfy(0, 2, &#39;cmp&#39;)</span>
+<span class="sd">        def my_func2(a, b, cmp=None):</span>
+<span class="sd">            # will convert a and cmp (if defined) to tensor</span>
+<span class="sd">            pass</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">decorator</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+        <span class="nd">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="n">args</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+            <span class="n">kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+
+            <span class="n">kw</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;dtype&#39;</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">p</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+                        <span class="n">args</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="n">to_tensor</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="n">p</span><span class="p">],</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="kc">None</span><span class="p">):</span>
+                        <span class="n">kwargs</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="n">to_tensor</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="n">p</span><span class="p">],</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">f</span>
+    <span class="k">return</span> <span class="n">decorator</span></div>
+
+
+<div class="viewcode-block" id="assert_dim"><a class="viewcode-back" href="../../utils.html#cogitare.utils.assert_dim">[docs]</a><span class="k">def</span> <span class="nf">assert_dim</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">expected</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Asserts if a tensor has a valid dimension.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        tensor (torch.Tensor): tensor to verify</span>
+<span class="sd">        name (str): verbose tensor name to diplay in the exception message.</span>
+<span class="sd">        expected (list, tuple): list of ints with the accepted number of dimensions.</span>
+
+<span class="sd">    Example::</span>
+
+<span class="sd">        &gt;&gt;&gt; a = torch.rand(2, 3)</span>
+<span class="sd">        &gt;&gt;&gt; b = torch.rand(2, 3, 4)</span>
+<span class="sd">        &gt;&gt;&gt; c = torch.rand(2, 3, 5, 5)</span>
+
+<span class="sd">        &gt;&gt;&gt; valid = (1, 2, 3)  # accept 1D, 2D, and 3D tensor</span>
+<span class="sd">        &gt;&gt;&gt; assert_dim(a, &#39;a&#39;, valid)</span>
+<span class="sd">        &gt;&gt;&gt; assert_dim(b, &#39;b&#39;, valid)</span>
+<span class="sd">        &gt;&gt;&gt; assert_dim(c, &#39;c&#39;, valid)</span>
+<span class="sd">        ValueError: Expected 1D/2D/3D tensor on &quot;c&quot;. Got a 4D tensor instead.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dim</span> <span class="o">=</span> <span class="n">tensor</span><span class="o">.</span><span class="n">dim</span><span class="p">()</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;Expected </span><span class="si">{}</span><span class="s1"> tensor on </span><span class="si">{}</span><span class="s1">. Got a </span><span class="si">{}</span><span class="s1">D tensor instead.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="s1">&#39;/&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;D&#39;</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">expected</span><span class="p">),</span>
+        <span class="s1">&#39;&quot;</span><span class="si">{}</span><span class="s1">&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">),</span>
+        <span class="n">dim</span><span class="p">)</span>
+
+    <span class="n">assert_raise</span><span class="p">(</span><span class="n">dim</span> <span class="ow">in</span> <span class="n">expected</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">_as_2d</span><span class="p">(</span><span class="o">*</span><span class="n">items</span><span class="p">):</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
+        <span class="n">assert_dim</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">dim</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">result</span>
+
+
+<span class="k">def</span> <span class="nf">_assert_same_dim</span><span class="p">(</span><span class="o">*</span><span class="n">items</span><span class="p">):</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;&quot;</span><span class="si">{}</span><span class="s1">&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">items</span><span class="p">]</span>
+    <span class="n">items</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">items</span><span class="p">]</span>
+
+    <span class="n">size</span> <span class="o">=</span> <span class="n">items</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+    <span class="n">valid</span> <span class="o">=</span> <span class="nb">all</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">size</span><span class="p">()</span> <span class="o">==</span> <span class="n">size</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">items</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+    <span class="n">assert_raise</span><span class="p">(</span><span class="n">valid</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">,</span> <span class="s2">&quot;The tensors </span><span class="si">{}</span><span class="s2"> should all have the same dimension.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="s1">&#39;/&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">labels</span><span class="p">)))</span>
+
+
+<div class="viewcode-block" id="number_parameters"><a class="viewcode-back" href="../../utils.html#cogitare.utils.number_parameters">[docs]</a><span class="k">def</span> <span class="nf">number_parameters</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Counts the number of trainable and non-trainable parameters in the model.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        model (Model): model with training parameters</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        count (tuple): (trainable_params, non_trainable_params)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">trainable</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">size</span><span class="p">())</span> <span class="k">for</span> <span class="n">params</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">()</span> <span class="k">if</span> <span class="n">params</span><span class="o">.</span><span class="n">requires_grad</span><span class="p">)</span>
+    <span class="n">non_trainable</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">size</span><span class="p">())</span> <span class="k">for</span> <span class="n">params</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">()</span> <span class="k">if</span> <span class="n">params</span><span class="o">.</span><span class="n">requires_grad</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">trainable</span><span class="p">,</span> <span class="n">non_trainable</span></div>
+
+
+<span class="k">def</span> <span class="nf">_training_mode</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
+    <span class="nd">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Module</span><span class="p">)</span>
+        <span class="n">default</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">training</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">default</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">value</span>
+    <span class="k">return</span> <span class="n">f</span>
+
+
+<div class="viewcode-block" id="not_training"><a class="viewcode-back" href="../../utils.html#cogitare.utils.not_training">[docs]</a><span class="k">def</span> <span class="nf">not_training</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Decorator to disable the training during execution. Must be used inside a Module class.</span>
+
+<span class="sd">    Example::</span>
+
+<span class="sd">        @not_training</span>
+<span class="sd">        def my_func(self, arg1, arg2):</span>
+<span class="sd">            # do something that cannot affect training, such as evaluating a</span>
+<span class="sd">            # test set</span>
+<span class="sd">            pass</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_training_mode</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="training"><a class="viewcode-back" href="../../utils.html#cogitare.utils.training">[docs]</a><span class="k">def</span> <span class="nf">training</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Decorator do enable the training during execution. Must be used inside a Module class.</span>
+
+<span class="sd">    Example::</span>
+
+<span class="sd">        @training</span>
+<span class="sd">        def my_func(self, arg1, arg2):</span>
+<span class="sd">            # do something that can affect training, such as forward your train</span>
+<span class="sd">            # data</span>
+<span class="sd">            pass</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_training_mode</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">_get_first_item</span><span class="p">(</span><span class="n">data_list</span><span class="p">,</span> <span class="n">depth</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="n">depth</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data_list</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Empty list&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">_get_first_item</span><span class="p">(</span><span class="n">data_list</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">depth</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">data_list</span><span class="p">,</span> <span class="n">depth</span>
+
+
+<span class="k">def</span> <span class="nf">_list_to_tensor</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="n">item</span><span class="p">,</span> <span class="n">depth</span> <span class="o">=</span> <span class="n">_get_first_item</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">converter</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="nb">int</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">LongTensor</span><span class="p">,</span>
+        <span class="nb">float</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">DoubleTensor</span><span class="p">,</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">is_tensor</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">depth</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Cannot convert nested list of tensors&#39;</span><span class="p">)</span>
+        <span class="n">tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="ow">in</span> <span class="n">converter</span><span class="p">:</span>
+        <span class="n">tensor</span> <span class="o">=</span> <span class="n">converter</span><span class="p">[</span><span class="nb">type</span><span class="p">(</span><span class="n">item</span><span class="p">)](</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Invalid data type: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">item</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">tensor</span>
+
+
+<span class="k">def</span> <span class="nf">_convert_tensor</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="n">dtype</span><span class="p">,</span> <span class="n">use_cuda</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">dtype</span><span class="p">:</span>
+        <span class="n">tensor</span> <span class="o">=</span> <span class="n">tensor</span><span class="o">.</span><span class="n">type</span><span class="p">(</span><span class="n">dtype</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">get_cuda</span><span class="p">(</span><span class="n">use_cuda</span><span class="p">):</span>
+        <span class="n">tensor</span> <span class="o">=</span> <span class="n">tensor</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">tensor</span>
+
+
+<div class="viewcode-block" id="to_tensor"><a class="viewcode-back" href="../../utils.html#cogitare.utils.to_tensor">[docs]</a><span class="k">def</span> <span class="nf">to_tensor</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">use_cuda</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Try to conver a variable to a torch tensor.</span>
+
+<span class="sd">    Data can be:</span>
+
+<span class="sd">        - list of Tensors</span>
+<span class="sd">        - list of list of list (...) of int/float</span>
+<span class="sd">        - list of numpy arrays</span>
+<span class="sd">        - numpy array</span>
+<span class="sd">        - tensor</span>
+
+<span class="sd">    And this will return a torch tensor.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data (list, numpy.ndarray, torch.Tensor): the data to be converted.</span>
+<span class="sd">        dtype (torch.Tensor): if provided, the output will have the same type</span>
+<span class="sd">            as this class.</span>
+<span class="sd">        use_cuda (bool): if True, the tensor ``.cuda()`` will be returned. If None, the</span>
+<span class="sd">            default value setted by :func:`~cogitare.utils.set_cuda` will be used.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        tensor (torch.Tensor): the data converted to tensor type.</span>
+
+<span class="sd">    Examples::</span>
+
+<span class="sd">        &gt;&gt;&gt; a = [1, 2, 3]</span>
+<span class="sd">        &gt;&gt;&gt; b = [[1, 2, 3], [4, 5, 6]]</span>
+<span class="sd">        &gt;&gt;&gt; to_tensor(a)</span>
+<span class="sd">         1</span>
+<span class="sd">         2</span>
+<span class="sd">         3</span>
+<span class="sd">        [torch.LongTensor of size 3]</span>
+<span class="sd">        &gt;&gt;&gt; to_tensor(b, torch.FloatTensor)</span>
+<span class="sd">         1  2  3</span>
+<span class="sd">         4  5  6</span>
+<span class="sd">        [torch.FloatTensor of size 2x3]</span>
+
+<span class="sd">        &gt;&gt;&gt; c = [torch.Tensor([1, 2, 3]), torch.Tensor([4, 5, 6])]</span>
+<span class="sd">        &gt;&gt;&gt; to_tensor(c)</span>
+<span class="sd">         1  2  3</span>
+<span class="sd">         4  5  6</span>
+<span class="sd">        [torch.FloatTensor of size 2x3]</span>
+
+<span class="sd">        &gt;&gt;&gt; d = [np.asarray([1, 2, 3]), np.asarray([4, 5, 6])]</span>
+<span class="sd">        &gt;&gt;&gt; to_tensor(d)</span>
+<span class="sd">         1  2  3</span>
+<span class="sd">         4  5  6</span>
+<span class="sd">        [torch.LongTensor of size 2x3]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># if list, cast it to the compatible tensor type</span>
+    <span class="n">converter</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="nb">list</span><span class="p">:</span> <span class="n">_list_to_tensor</span><span class="p">,</span>
+        <span class="nb">tuple</span><span class="p">:</span> <span class="n">_list_to_tensor</span><span class="p">,</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">,</span>
+        <span class="n">Variable</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="ow">in</span> <span class="n">converter</span><span class="p">:</span>
+        <span class="n">tensor</span> <span class="o">=</span> <span class="n">converter</span><span class="p">[</span><span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">)](</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">torch</span><span class="o">.</span><span class="n">is_tensor</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+        <span class="n">tensor</span> <span class="o">=</span> <span class="n">data</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Invalid data type: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span>
+
+    <span class="n">tensor</span> <span class="o">=</span> <span class="n">_convert_tensor</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="n">dtype</span><span class="p">,</span> <span class="n">use_cuda</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">tensor</span></div>
+
+
+<div class="viewcode-block" id="to_variable"><a class="viewcode-back" href="../../utils.html#cogitare.utils.to_variable">[docs]</a><span class="k">def</span> <span class="nf">to_variable</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">use_cuda</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Similar to :func:`~cogitare.utils.to_tensor`, this function converts</span>
+<span class="sd">    the ``data`` o a :class:`torch.autograd.Variable`.</span>
+
+<span class="sd">    If first convert the data to tensor using :func:`to_tensor`, and then cast it to a</span>
+<span class="sd">    variable.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data: the data to convert.</span>
+<span class="sd">        dtype: a tensor class to use as the type of the data</span>
+<span class="sd">        use_cuda (bool): if True, move the tensor to cuda.</span>
+<span class="sd">        kwargs: extra parameters to the Variable class.</span>
+
+<span class="sd">    Example:</span>
+
+<span class="sd">        &gt;&gt;&gt; a = [[1, 2,3], [4, 5, 6]]</span>
+<span class="sd">        &gt;&gt;&gt; to_variable(a)</span>
+<span class="sd">        Variable containing:</span>
+<span class="sd">         1  2  3</span>
+<span class="sd">         4  5  6</span>
+<span class="sd">        [torch.LongTensor of size 2x3]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">tensor</span> <span class="o">=</span> <span class="n">to_tensor</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span> <span class="n">use_cuda</span><span class="o">=</span><span class="n">use_cuda</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="n">Variable</span><span class="p">):</span>
+        <span class="n">tensor</span> <span class="o">=</span> <span class="n">Variable</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">tensor</span></div>
+
+
+<div class="viewcode-block" id="assert_raise"><a class="viewcode-back" href="../../utils.html#cogitare.utils.assert_raise">[docs]</a><span class="k">def</span> <span class="nf">assert_raise</span><span class="p">(</span><span class="n">valid</span><span class="p">,</span> <span class="n">exception</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Shortcut to assert if something is valid. If invalid,</span>
+<span class="sd">    raises the exception with the provided message.</span>
+
+<span class="sd">    Example::</span>
+
+<span class="sd">        &gt;&gt;&gt; assert_raise(1 == 2, ValueError, &#39;The values must be equal&#39;)</span>
+<span class="sd">        ValueError: The values must be equal</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">valid</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">exception</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_cuda"><a class="viewcode-back" href="../../utils.html#cogitare.utils.get_cuda">[docs]</a><span class="k">def</span> <span class="nf">get_cuda</span><span class="p">(</span><span class="n">cuda</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get the default cuda enabled/disabled variable.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        cuda (bool): if a boolean is provided, its value will be returned.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        enabled (bool): the ``cuda`` parameter, if provided, or the enaled/disabled status.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">cuda</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_CUDA_ENABLED</span>
+    <span class="k">return</span> <span class="n">cuda</span></div>
+
+
+<div class="viewcode-block" id="set_cuda"><a class="viewcode-back" href="../../utils.html#cogitare.utils.set_cuda">[docs]</a><span class="k">def</span> <span class="nf">set_cuda</span><span class="p">(</span><span class="n">cuda</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Set Cogitare default cuda enabled/disabled.</span>
+
+<span class="sd">    This value is used by Cogitare&#39;s models and some functions to determine if</span>
+<span class="sd">    it&#39;s necesary to automatically convert the Tensor/Module to cuda.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">global</span> <span class="n">_CUDA_ENABLED</span>
+    <span class="n">_CUDA_ENABLED</span> <span class="o">=</span> <span class="n">cuda</span></div>
+
+
+<span class="k">def</span> <span class="nf">_ntuple</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+        <span class="k">return</span> <span class="n">item</span>
+    <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">repeat</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
+</pre></div>
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Aron Bordin.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

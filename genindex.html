@@ -1,0 +1,784 @@
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Index &mdash; Cogitare 0.1 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/julia.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="_static/julia.css" type="text/css" />
+  
+        <link rel="index" title="Index"
+              href="#"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="Cogitare 0.1 documentation" href="index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+<a href="https://github.com/cogitare-ai/cogitare"><img style="z-index: 1; position: fixed; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="http://docs.cogitare-ai.org/"><img src="_static/logo-line.png" class="logo"></a>
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <p class="caption"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#Model">Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#Data-Loading">Data Loading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#Training">Training</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Cogitare</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="model.html">Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="model.html#implementing-a-model">Implementing a Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model.html#api">API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sequential_model.html">Sequential Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sequential_model.html#implementing-a-sequential-model-many-to-many-many-to-one">Implementing a Sequential Model (Many-to-Many, Many-to-One)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sequential_model.html#api">API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="data.html">Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="data.html#absdataholder"><span class="hidden-section">AbsDataHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#tensorholder"><span class="hidden-section">TensorHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#numpyholder"><span class="hidden-section">NumpyHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#callableholder"><span class="hidden-section">CallableHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#autoholder"><span class="hidden-section">AutoHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#dataset"><span class="hidden-section">DataSet</span></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sequential_data.html">Sequential Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sequential_data.html#sequentialabsdataholder"><span class="hidden-section">SequentialAbsDataHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sequential_data.html#sequentialtensorholder"><span class="hidden-section">SequentialTensorHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sequential_data.html#sequentialnumpyholder"><span class="hidden-section">SequentialNumpyHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sequential_data.html#sequentialcallableholder"><span class="hidden-section">SequentialCallableHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sequential_data.html#sequentialautoholder"><span class="hidden-section">SequentialAutoHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sequential_data.html#sequentialdataset"><span class="hidden-section">SequentialDataSet</span></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="async_data.html">Async Data Loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plugins.html">Plugins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="plugins.html#custom-plugin">Custom Plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plugins.html#register-a-plugin">Register a plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plugins.html#official-plugins">Official Plugins</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="plugins.html#earlystopping"><span class="hidden-section">EarlyStopping</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="plugins.html#evaluator"><span class="hidden-section">Evaluator</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="plugins.html#logger"><span class="hidden-section">Logger</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="plugins.html#plottingmatplotlib"><span class="hidden-section">PlottingMatplotlib</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="plugins.html#progressbar"><span class="hidden-section">ProgressBar</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="monitor.html">Cogitare Monitor</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="monitor.html#how-to-use">How to Use</a></li>
+<li class="toctree-l2"><a class="reference internal" href="monitor.html#creating-a-custom-plugin">Creating a Custom Plugin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="metrics.html">Metrics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#module-cogitare.metrics.classification">Classification Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#module-cogitare.metrics.spatial">Spatial Metrics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">cogitare.utils</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="models/classic.html">Classic Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Extra</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="contribute.html">Contribute</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contribute.html#contributing-to-cogitare">Contributing to Cogitare</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Cogitare</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Index</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+
+<h1 id="index">Index</h1>
+
+<div class="genindex-jumpbox">
+ <a href="#_"><strong>_</strong></a>
+ | <a href="#A"><strong>A</strong></a>
+ | <a href="#B"><strong>B</strong></a>
+ | <a href="#C"><strong>C</strong></a>
+ | <a href="#D"><strong>D</strong></a>
+ | <a href="#E"><strong>E</strong></a>
+ | <a href="#F"><strong>F</strong></a>
+ | <a href="#G"><strong>G</strong></a>
+ | <a href="#H"><strong>H</strong></a>
+ | <a href="#L"><strong>L</strong></a>
+ | <a href="#M"><strong>M</strong></a>
+ | <a href="#N"><strong>N</strong></a>
+ | <a href="#P"><strong>P</strong></a>
+ | <a href="#R"><strong>R</strong></a>
+ | <a href="#S"><strong>S</strong></a>
+ | <a href="#T"><strong>T</strong></a>
+ | <a href="#Z"><strong>Z</strong></a>
+ 
+</div>
+<h2 id="_">_</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="data.html#cogitare.data.AbsDataHolder.__getitem__">__getitem__() (cogitare.data.AbsDataHolder method)</a>
+
+      <ul>
+        <li><a href="data.html#cogitare.data.DataSet.__getitem__">(cogitare.data.DataSet method)</a>
+</li>
+      </ul></li>
+      <li><a href="data.html#cogitare.data.AbsDataHolder.__iter__">__iter__() (cogitare.data.AbsDataHolder method)</a>
+
+      <ul>
+        <li><a href="data.html#cogitare.data.DataSet.__iter__">(cogitare.data.DataSet method)</a>
+</li>
+      </ul></li>
+      <li><a href="data.html#cogitare.data.AbsDataHolder.__len__">__len__() (cogitare.data.AbsDataHolder method)</a>
+
+      <ul>
+        <li><a href="data.html#cogitare.data.DataSet.__len__">(cogitare.data.DataSet method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="data.html#cogitare.data.AbsDataHolder.__repr__">__repr__() (cogitare.data.AbsDataHolder method)</a>
+
+      <ul>
+        <li><a href="data.html#cogitare.data.DataSet.__repr__">(cogitare.data.DataSet method)</a>
+</li>
+      </ul></li>
+      <li><a href="data.html#cogitare.data.AbsDataHolder.__weakref__">__weakref__ (cogitare.data.AbsDataHolder attribute)</a>
+
+      <ul>
+        <li><a href="data.html#cogitare.data.DataSet.__weakref__">(cogitare.data.DataSet attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="A">A</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="data.html#cogitare.data.AbsDataHolder">AbsDataHolder (class in cogitare.data)</a>
+</li>
+      <li><a href="metrics.html#cogitare.metrics.classification.accuracy">accuracy() (in module cogitare.metrics.classification)</a>
+</li>
+      <li><a href="model.html#cogitare.Model.add_module">add_module() (cogitare.Model method)</a>
+
+      <ul>
+        <li><a href="sequential_model.html#cogitare.SequentialModel.add_module">(cogitare.SequentialModel method)</a>
+</li>
+      </ul></li>
+      <li><a href="plugins.html#cogitare.plugins.PlottingMatplotlib.add_variable">add_variable() (cogitare.plugins.PlottingMatplotlib method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="model.html#cogitare.Model.apply_register_plugins">apply_register_plugins() (cogitare.Model method)</a>
+
+      <ul>
+        <li><a href="sequential_model.html#cogitare.SequentialModel.apply_register_plugins">(cogitare.SequentialModel method)</a>
+</li>
+      </ul></li>
+      <li><a href="utils.html#cogitare.utils.assert_dim">assert_dim() (in module cogitare.utils)</a>
+</li>
+      <li><a href="utils.html#cogitare.utils.assert_raise">assert_raise() (in module cogitare.utils)</a>
+</li>
+      <li><a href="async_data.html#cogitare.data.AsyncDataLoader">AsyncDataLoader (class in cogitare.data)</a>
+</li>
+      <li><a href="data.html#cogitare.data.AutoHolder">AutoHolder() (in module cogitare.data)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="B">B</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="data.html#cogitare.data.AbsDataHolder.batch_size">batch_size (cogitare.data.AbsDataHolder attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="metrics.html#cogitare.metrics.spatial.braycurtis_distance">braycurtis_distance() (in module cogitare.metrics.spatial)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="C">C</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="async_data.html#cogitare.data.AsyncDataLoader.cache">cache() (cogitare.data.AsyncDataLoader method)</a>
+</li>
+      <li><a href="data.html#cogitare.data.CallableHolder">CallableHolder (class in cogitare.data)</a>
+</li>
+      <li><a href="metrics.html#cogitare.metrics.spatial.canberra_distance">canberra_distance() (in module cogitare.metrics.spatial)</a>
+</li>
+      <li><a href="metrics.html#cogitare.metrics.spatial.chebyshev_distance">chebyshev_distance() (in module cogitare.metrics.spatial)</a>
+</li>
+      <li><a href="model.html#cogitare.Model.children">children() (cogitare.Model method)</a>
+
+      <ul>
+        <li><a href="sequential_model.html#cogitare.SequentialModel.children">(cogitare.SequentialModel method)</a>
+</li>
+      </ul></li>
+      <li><a href="metrics.html#module-cogitare.metrics.classification">cogitare.metrics.classification (module)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="metrics.html#module-cogitare.metrics.spatial">cogitare.metrics.spatial (module)</a>
+</li>
+      <li><a href="utils.html#module-cogitare.utils">cogitare.utils (module)</a>
+</li>
+      <li><a href="metrics.html#cogitare.metrics.spatial.cosine_distance">cosine_distance() (in module cogitare.metrics.spatial)</a>
+</li>
+      <li><a href="metrics.html#cogitare.metrics.spatial.cosine_similarity">cosine_similarity() (in module cogitare.metrics.spatial)</a>
+</li>
+      <li><a href="model.html#cogitare.Model.cpu">cpu() (cogitare.Model method)</a>
+
+      <ul>
+        <li><a href="sequential_model.html#cogitare.SequentialModel.cpu">(cogitare.SequentialModel method)</a>
+</li>
+      </ul></li>
+      <li><a href="model.html#cogitare.Model.cuda">cuda() (cogitare.Model method)</a>
+
+      <ul>
+        <li><a href="sequential_model.html#cogitare.SequentialModel.cuda">(cogitare.SequentialModel method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="D">D</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="data.html#cogitare.data.DataSet">DataSet (class in cogitare.data)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="model.html#cogitare.Model.double">double() (cogitare.Model method)</a>
+
+      <ul>
+        <li><a href="sequential_model.html#cogitare.SequentialModel.double">(cogitare.SequentialModel method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="E">E</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="plugins.html#cogitare.plugins.EarlyStopping">EarlyStopping (class in cogitare.plugins)</a>
+</li>
+      <li><a href="metrics.html#cogitare.metrics.spatial.euclidian_distance">euclidian_distance() (in module cogitare.metrics.spatial)</a>
+</li>
+      <li><a href="model.html#cogitare.Model.eval">eval() (cogitare.Model method)</a>
+
+      <ul>
+        <li><a href="sequential_model.html#cogitare.SequentialModel.eval">(cogitare.SequentialModel method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="model.html#cogitare.Model.evaluate">evaluate() (cogitare.Model method)</a>
+
+      <ul>
+        <li><a href="sequential_model.html#cogitare.SequentialModel.evaluate">(cogitare.SequentialModel method)</a>
+</li>
+      </ul></li>
+      <li><a href="model.html#cogitare.Model.evaluate_with_metrics">evaluate_with_metrics() (cogitare.Model method)</a>
+
+      <ul>
+        <li><a href="sequential_model.html#cogitare.SequentialModel.evaluate_with_metrics">(cogitare.SequentialModel method)</a>
+</li>
+      </ul></li>
+      <li><a href="plugins.html#cogitare.plugins.Evaluator">Evaluator (class in cogitare.plugins)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="F">F</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="models/classic.html#cogitare.models.classic.FeedForward">FeedForward (class in cogitare.models.classic)</a>
+</li>
+      <li><a href="metrics.html#cogitare.metrics.classification.filter_labels">filter_labels() (in module cogitare.metrics.classification)</a>
+</li>
+      <li><a href="model.html#cogitare.Model.float">float() (cogitare.Model method)</a>
+
+      <ul>
+        <li><a href="sequential_model.html#cogitare.SequentialModel.float">(cogitare.SequentialModel method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="model.html#cogitare.Model.forward">forward() (cogitare.Model method)</a>
+
+      <ul>
+        <li><a href="sequential_model.html#cogitare.SequentialModel.forward">(cogitare.SequentialModel method)</a>
+</li>
+      </ul></li>
+      <li><a href="sequential_model.html#cogitare.SequentialModel.forward_seq">forward_seq() (cogitare.SequentialModel method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="G">G</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="utils.html#cogitare.utils.get_cuda">get_cuda() (in module cogitare.utils)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="sequential_model.html#cogitare.SequentialModel.get_initial_state">get_initial_state() (cogitare.SequentialModel method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="H">H</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="model.html#cogitare.Model.half">half() (cogitare.Model method)</a>
+
+      <ul>
+        <li><a href="sequential_model.html#cogitare.SequentialModel.half">(cogitare.SequentialModel method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="L">L</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="model.html#cogitare.Model.learn">learn() (cogitare.Model method)</a>
+
+      <ul>
+        <li><a href="sequential_model.html#cogitare.SequentialModel.learn">(cogitare.SequentialModel method)</a>
+</li>
+      </ul></li>
+      <li><a href="model.html#cogitare.Model.load">load() (cogitare.Model method)</a>
+
+      <ul>
+        <li><a href="sequential_model.html#cogitare.SequentialModel.load">(cogitare.SequentialModel method)</a>
+</li>
+      </ul></li>
+      <li><a href="model.html#cogitare.Model.load_state_dict">load_state_dict() (cogitare.Model method)</a>
+
+      <ul>
+        <li><a href="sequential_model.html#cogitare.SequentialModel.load_state_dict">(cogitare.SequentialModel method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="plugins.html#cogitare.plugins.Logger">Logger (class in cogitare.plugins)</a>
+</li>
+      <li><a href="models/classic.html#cogitare.models.classic.LogisticRegression">LogisticRegression (class in cogitare.models.classic)</a>
+</li>
+      <li><a href="model.html#cogitare.Model.loss">loss() (cogitare.Model method)</a>
+
+      <ul>
+        <li><a href="sequential_model.html#cogitare.SequentialModel.loss">(cogitare.SequentialModel method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="M">M</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="metrics.html#cogitare.metrics.spatial.manhattan_distance">manhattan_distance() (in module cogitare.metrics.spatial)</a>
+</li>
+      <li><a href="model.html#cogitare.Model.metric_loss">metric_loss() (cogitare.Model method)</a>
+
+      <ul>
+        <li><a href="sequential_model.html#cogitare.SequentialModel.metric_loss">(cogitare.SequentialModel method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="model.html#cogitare.Model">Model (class in cogitare)</a>
+</li>
+      <li><a href="model.html#cogitare.Model.modules">modules() (cogitare.Model method)</a>
+
+      <ul>
+        <li><a href="sequential_model.html#cogitare.SequentialModel.modules">(cogitare.SequentialModel method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="N">N</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="model.html#cogitare.Model.named_children">named_children() (cogitare.Model method)</a>
+
+      <ul>
+        <li><a href="sequential_model.html#cogitare.SequentialModel.named_children">(cogitare.SequentialModel method)</a>
+</li>
+      </ul></li>
+      <li><a href="model.html#cogitare.Model.named_modules">named_modules() (cogitare.Model method)</a>
+
+      <ul>
+        <li><a href="sequential_model.html#cogitare.SequentialModel.named_modules">(cogitare.SequentialModel method)</a>
+</li>
+      </ul></li>
+      <li><a href="model.html#cogitare.Model.named_parameters">named_parameters() (cogitare.Model method)</a>
+
+      <ul>
+        <li><a href="sequential_model.html#cogitare.SequentialModel.named_parameters">(cogitare.SequentialModel method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="metrics.html#cogitare.metrics.spatial.norm_distance">norm_distance() (in module cogitare.metrics.spatial)</a>
+</li>
+      <li><a href="utils.html#cogitare.utils.not_training">not_training() (in module cogitare.utils)</a>
+</li>
+      <li><a href="utils.html#cogitare.utils.number_parameters">number_parameters() (in module cogitare.utils)</a>
+</li>
+      <li><a href="data.html#cogitare.data.NumpyHolder">NumpyHolder() (in module cogitare.data)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="P">P</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="sequential_data.html#cogitare.data.SequentialAbsDataHolder.padding_value">padding_value (cogitare.data.SequentialAbsDataHolder attribute)</a>
+</li>
+      <li><a href="model.html#cogitare.Model.parameters">parameters() (cogitare.Model method)</a>
+
+      <ul>
+        <li><a href="sequential_model.html#cogitare.SequentialModel.parameters">(cogitare.SequentialModel method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="plugins.html#cogitare.plugins.PlottingMatplotlib">PlottingMatplotlib (class in cogitare.plugins)</a>
+</li>
+      <li><a href="model.html#cogitare.Model.predict">predict() (cogitare.Model method)</a>
+
+      <ul>
+        <li><a href="sequential_model.html#cogitare.SequentialModel.predict">(cogitare.SequentialModel method)</a>
+</li>
+      </ul></li>
+      <li><a href="plugins.html#cogitare.plugins.ProgressBar">ProgressBar (class in cogitare.plugins)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="R">R</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="model.html#cogitare.Model.register_backward_hook">register_backward_hook() (cogitare.Model method)</a>
+
+      <ul>
+        <li><a href="sequential_model.html#cogitare.SequentialModel.register_backward_hook">(cogitare.SequentialModel method)</a>
+</li>
+      </ul></li>
+      <li><a href="model.html#cogitare.Model.register_buffer">register_buffer() (cogitare.Model method)</a>
+
+      <ul>
+        <li><a href="sequential_model.html#cogitare.SequentialModel.register_buffer">(cogitare.SequentialModel method)</a>
+</li>
+      </ul></li>
+      <li><a href="model.html#cogitare.Model.register_default_plugins">register_default_plugins() (cogitare.Model method)</a>
+
+      <ul>
+        <li><a href="sequential_model.html#cogitare.SequentialModel.register_default_plugins">(cogitare.SequentialModel method)</a>
+</li>
+      </ul></li>
+      <li><a href="model.html#cogitare.Model.register_forward_hook">register_forward_hook() (cogitare.Model method)</a>
+
+      <ul>
+        <li><a href="sequential_model.html#cogitare.SequentialModel.register_forward_hook">(cogitare.SequentialModel method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="model.html#cogitare.Model.register_forward_pre_hook">register_forward_pre_hook() (cogitare.Model method)</a>
+
+      <ul>
+        <li><a href="sequential_model.html#cogitare.SequentialModel.register_forward_pre_hook">(cogitare.SequentialModel method)</a>
+</li>
+      </ul></li>
+      <li><a href="model.html#cogitare.Model.register_parameter">register_parameter() (cogitare.Model method)</a>
+
+      <ul>
+        <li><a href="sequential_model.html#cogitare.SequentialModel.register_parameter">(cogitare.SequentialModel method)</a>
+</li>
+      </ul></li>
+      <li><a href="model.html#cogitare.Model.register_plugin">register_plugin() (cogitare.Model method)</a>
+
+      <ul>
+        <li><a href="sequential_model.html#cogitare.SequentialModel.register_plugin">(cogitare.SequentialModel method)</a>
+</li>
+      </ul></li>
+      <li><a href="data.html#cogitare.data.AbsDataHolder.reset">reset() (cogitare.data.AbsDataHolder method)</a>
+
+      <ul>
+        <li><a href="data.html#cogitare.data.DataSet.reset">(cogitare.data.DataSet method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="S">S</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="model.html#cogitare.Model.save">save() (cogitare.Model method)</a>
+
+      <ul>
+        <li><a href="sequential_model.html#cogitare.SequentialModel.save">(cogitare.SequentialModel method)</a>
+</li>
+      </ul></li>
+      <li><a href="sequential_data.html#cogitare.data.SequentialAbsDataHolder">SequentialAbsDataHolder (class in cogitare.data)</a>
+</li>
+      <li><a href="sequential_data.html#cogitare.data.SequentialAutoHolder">SequentialAutoHolder() (in module cogitare.data)</a>
+</li>
+      <li><a href="sequential_data.html#cogitare.data.SequentialCallableHolder">SequentialCallableHolder (class in cogitare.data)</a>
+</li>
+      <li><a href="sequential_data.html#cogitare.data.SequentialDataSet">SequentialDataSet (class in cogitare.data)</a>
+</li>
+      <li><a href="sequential_model.html#cogitare.SequentialModel">SequentialModel (class in cogitare)</a>
+</li>
+      <li><a href="sequential_data.html#cogitare.data.SequentialNumpyHolder">SequentialNumpyHolder() (in module cogitare.data)</a>
+</li>
+      <li><a href="sequential_data.html#cogitare.data.SequentialTensorHolder">SequentialTensorHolder (class in cogitare.data)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="utils.html#cogitare.utils.set_cuda">set_cuda() (in module cogitare.utils)</a>
+</li>
+      <li><a href="data.html#cogitare.data.AbsDataHolder.shuffle">shuffle() (cogitare.data.AbsDataHolder method)</a>
+
+      <ul>
+        <li><a href="data.html#cogitare.data.DataSet.shuffle">(cogitare.data.DataSet method)</a>
+</li>
+      </ul></li>
+      <li><a href="data.html#cogitare.data.AbsDataHolder.split">split() (cogitare.data.AbsDataHolder method)</a>
+
+      <ul>
+        <li><a href="data.html#cogitare.data.DataSet.split">(cogitare.data.DataSet method)</a>
+</li>
+      </ul></li>
+      <li><a href="data.html#cogitare.data.AbsDataHolder.split_chunks">split_chunks() (cogitare.data.AbsDataHolder method)</a>
+
+      <ul>
+        <li><a href="data.html#cogitare.data.DataSet.split_chunks">(cogitare.data.DataSet method)</a>
+</li>
+      </ul></li>
+      <li><a href="model.html#cogitare.Model.state_dict">state_dict() (cogitare.Model method)</a>
+
+      <ul>
+        <li><a href="sequential_model.html#cogitare.SequentialModel.state_dict">(cogitare.SequentialModel method)</a>
+</li>
+      </ul></li>
+      <li><a href="utils.html#cogitare.utils.StopTraining">StopTraining</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="T">T</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="utils.html#cogitare.utils.tensorfy">tensorfy() (in module cogitare.utils)</a>
+</li>
+      <li><a href="data.html#cogitare.data.TensorHolder">TensorHolder (class in cogitare.data)</a>
+</li>
+      <li><a href="utils.html#cogitare.utils.to_tensor">to_tensor() (in module cogitare.utils)</a>
+</li>
+      <li><a href="utils.html#cogitare.utils.to_variable">to_variable() (in module cogitare.utils)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="data.html#cogitare.data.AbsDataHolder.total_samples">total_samples (cogitare.data.AbsDataHolder attribute)</a>
+
+      <ul>
+        <li><a href="data.html#cogitare.data.CallableHolder.total_samples">(cogitare.data.CallableHolder attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="model.html#cogitare.Model.train">train() (cogitare.Model method)</a>
+
+      <ul>
+        <li><a href="sequential_model.html#cogitare.SequentialModel.train">(cogitare.SequentialModel method)</a>
+</li>
+      </ul></li>
+      <li><a href="utils.html#cogitare.utils.training">training() (in module cogitare.utils)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="Z">Z</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="model.html#cogitare.Model.zero_grad">zero_grad() (cogitare.Model method)</a>
+
+      <ul>
+        <li><a href="sequential_model.html#cogitare.SequentialModel.zero_grad">(cogitare.SequentialModel method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Aron Bordin.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

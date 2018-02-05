@@ -1,0 +1,724 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>cogitare.data.dataholder &mdash; Cogitare 0.1 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/julia.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../../_static/julia.css" type="text/css" />
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="Cogitare 0.1 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+<a href="https://github.com/cogitare-ai/cogitare"><img style="z-index: 1; position: fixed; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="http://docs.cogitare-ai.org/"><img src="../../../_static/logo-line.png" class="logo"></a>
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <p class="caption"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#Model">Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#Data-Loading">Data Loading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#Training">Training</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials.html">Tutorials</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Cogitare</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../model.html">Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../model.html#implementing-a-model">Implementing a Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../model.html#api">API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../sequential_model.html">Sequential Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../sequential_model.html#implementing-a-sequential-model-many-to-many-many-to-one">Implementing a Sequential Model (Many-to-Many, Many-to-One)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sequential_model.html#api">API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../data.html">Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../data.html#absdataholder"><span class="hidden-section">AbsDataHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../data.html#tensorholder"><span class="hidden-section">TensorHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../data.html#numpyholder"><span class="hidden-section">NumpyHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../data.html#callableholder"><span class="hidden-section">CallableHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../data.html#autoholder"><span class="hidden-section">AutoHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../data.html#dataset"><span class="hidden-section">DataSet</span></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../sequential_data.html">Sequential Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../sequential_data.html#sequentialabsdataholder"><span class="hidden-section">SequentialAbsDataHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sequential_data.html#sequentialtensorholder"><span class="hidden-section">SequentialTensorHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sequential_data.html#sequentialnumpyholder"><span class="hidden-section">SequentialNumpyHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sequential_data.html#sequentialcallableholder"><span class="hidden-section">SequentialCallableHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sequential_data.html#sequentialautoholder"><span class="hidden-section">SequentialAutoHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sequential_data.html#sequentialdataset"><span class="hidden-section">SequentialDataSet</span></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../async_data.html">Async Data Loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../plugins.html">Plugins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../plugins.html#custom-plugin">Custom Plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../plugins.html#register-a-plugin">Register a plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../plugins.html#official-plugins">Official Plugins</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../plugins.html#earlystopping"><span class="hidden-section">EarlyStopping</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../plugins.html#evaluator"><span class="hidden-section">Evaluator</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../plugins.html#logger"><span class="hidden-section">Logger</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../plugins.html#plottingmatplotlib"><span class="hidden-section">PlottingMatplotlib</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../plugins.html#progressbar"><span class="hidden-section">ProgressBar</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../monitor.html">Cogitare Monitor</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../monitor.html#how-to-use">How to Use</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../monitor.html#creating-a-custom-plugin">Creating a Custom Plugin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../metrics.html">Metrics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../metrics.html#module-cogitare.metrics.classification">Classification Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../metrics.html#module-cogitare.metrics.spatial">Spatial Metrics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../utils.html">cogitare.utils</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../models/classic.html">Classic Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Extra</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../contribute.html">Contribute</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../contribute.html#contributing-to-cogitare">Contributing to Cogitare</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">Cogitare</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>cogitare.data.dataholder</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <h1>Source code for cogitare.data.dataholder</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">from</span> <span class="nn">abc</span> <span class="k">import</span> <span class="n">ABCMeta</span><span class="p">,</span> <span class="n">abstractmethod</span>
+<span class="kn">from</span> <span class="nn">cogitare</span> <span class="k">import</span> <span class="n">utils</span>
+<span class="kn">from</span> <span class="nn">six</span> <span class="k">import</span> <span class="n">add_metaclass</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">from</span> <span class="nn">dask</span> <span class="k">import</span> <span class="n">threaded</span><span class="p">,</span> <span class="n">delayed</span><span class="p">,</span> <span class="n">compute</span><span class="p">,</span> <span class="n">multiprocessing</span>
+
+
+<span class="k">def</span> <span class="nf">_identity</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span>
+
+
+<div class="viewcode-block" id="AbsDataHolder"><a class="viewcode-back" href="../../../data.html#cogitare.data.AbsDataHolder">[docs]</a><span class="nd">@add_metaclass</span><span class="p">(</span><span class="n">ABCMeta</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">AbsDataHolder</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    An abstract object that acts as a data holder. A data holder is a utility to hold</span>
+<span class="sd">    datasets, which provide some simple functions to work with the dataset, such as</span>
+<span class="sd">    sorting, splitting, dividing it into chunks, loading batches using multi-thread, and so on.</span>
+
+<span class="sd">    It&#39;s the recommended way to pass data to Cogitare&#39;s models because it already</span>
+<span class="sd">    provides a compatible interface to iterate over batches.</span>
+
+<span class="sd">    To improve the performance, the data holder loads batches using multiprocessing</span>
+<span class="sd">    and multithreading data loader with `Dask &lt;http://dask.pydata.org/&gt;`_.</span>
+
+<span class="sd">    Usually, this object should not be used directly, only if you are developing a custom</span>
+<span class="sd">    data loader. Cogitare already provides the following implementations for the most</span>
+<span class="sd">    common data types:</span>
+
+<span class="sd">        - Tensors: :class:`~cogitare.data.TensorHolder`</span>
+<span class="sd">        - Numpy: :class:`~cogitare.data.NumpyHolder`</span>
+<span class="sd">        - Callable (functions that receive the sample id, and returns its</span>
+<span class="sd">          data): :class:`~cogitare.data.CallableHolder`</span>
+<span class="sd">        - :class:`~cogitare.data.AutoHolder`: inspect the data to choose one of the available data holders.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data (torch.Tensor, numpy.ndarray, callable): the data to be managed by the data holder.</span>
+<span class="sd">        batch_size (int): the size of the batch.</span>
+<span class="sd">        shuffle (bool): if True, shuffles the dataset after each iteration.</span>
+<span class="sd">        drop_last (bool): if True, then skip the batch if its size is lower that **batch_size** (can</span>
+<span class="sd">            occur in the last batch).</span>
+<span class="sd">        total_samples (int): the number of total samples. If provided, this will limit the</span>
+<span class="sd">            number of samples to be accessed in the data.</span>
+<span class="sd">        mode (str): must be one of: &#39;sequential&#39;, &#39;threaded&#39;, &#39;multiprocessing&#39;. Use one of them</span>
+<span class="sd">            to choose the batch loading methods. Take a loook</span>
+<span class="sd">            here: https://dask.pydata.org/en/latest/scheduler-choice.html for an overview of the advantage of each mode.</span>
+<span class="sd">        single (bool): if True, returns only the first element of each batch.</span>
+<span class="sd">            Is designed to be used with models where you only use one sample per</span>
+<span class="sd">            batch (batch_size == 1). So instead of returning a list with a single sample, with</span>
+<span class="sd">            ``single == True``, the sample itself will be returned and not the list.</span>
+<span class="sd">        on_sample_loaded (callable): if provided, this function will be called when a new sample is loaded. It must</span>
+<span class="sd">            receive one argument, the sample. And return one value that will replace the sample data.</span>
+<span class="sd">            This is used to apply pre-processing on single samples while loading.</span>
+<span class="sd">        on_batch_loaded (callable): if provided, this function will be called when a new batch is loaded. It must</span>
+<span class="sd">            receive one argument, the batch data. And return the batch after applying some operation on the data. This</span>
+<span class="sd">            can be used to apply pre-processing functions on a batch of data (such as image filtering, moving the</span>
+<span class="sd">            data to GPU, and etc).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">total_samples</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the number of individual samples in this dataset.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_total_samples</span>
+
+    <span class="nd">@total_samples</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">total_samples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">,</span> <span class="s1">&#39;__len__&#39;</span><span class="p">):</span>
+            <span class="n">size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">size</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="n">size</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">utils</span><span class="o">.</span><span class="n">assert_raise</span><span class="p">(</span><span class="n">value</span> <span class="o">&lt;=</span> <span class="n">size</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">,</span>
+                               <span class="s1">&#39;The value must be lesser or equal to the&#39;</span>
+                               <span class="s1">&#39;length of the input data&#39;</span><span class="p">)</span>
+        <span class="n">utils</span><span class="o">.</span><span class="n">assert_raise</span><span class="p">(</span><span class="n">value</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">,</span>
+                           <span class="s1">&#39;number of samples must be greater or equal to 1&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_total_samples</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_remaining_samples</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_requires_reset</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">indices</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_indices</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_indices</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">total_samples</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_indices</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">batch_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The size of the mini-batch used by the iterator.</span>
+
+<span class="sd">        When a new batch_size is set, the iterator will reset.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_batch_size</span>
+
+    <span class="nd">@batch_size</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">batch_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_batch_size</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_requires_reset</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">drop_last</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                 <span class="n">total_samples</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;sequential&#39;</span><span class="p">,</span> <span class="n">single</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                 <span class="n">on_sample_loaded</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">on_batch_loaded</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">valid_modes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;threaded&#39;</span><span class="p">,</span> <span class="s1">&#39;multiprocessing&#39;</span><span class="p">,</span> <span class="s1">&#39;sequential&#39;</span><span class="p">]</span>
+        <span class="n">utils</span><span class="o">.</span><span class="n">assert_raise</span><span class="p">(</span><span class="n">mode</span> <span class="ow">in</span> <span class="n">valid_modes</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">,</span>
+                           <span class="s1">&#39;&quot;mode&quot; must be one of: &#39;</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">valid_modes</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">on_sample_loaded</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">on_sample_loaded</span> <span class="o">=</span> <span class="n">_identity</span>
+        <span class="k">if</span> <span class="n">on_batch_loaded</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">on_batch_loaded</span> <span class="o">=</span> <span class="n">_identity</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_indices</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_single</span> <span class="o">=</span> <span class="n">single</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">=</span> <span class="n">mode</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_total_samples</span> <span class="o">=</span> <span class="n">total_samples</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_remaining_samples</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_on_sample_loaded</span> <span class="o">=</span> <span class="n">on_sample_loaded</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_on_batch_loaded</span> <span class="o">=</span> <span class="n">on_batch_loaded</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_batch_size</span> <span class="o">=</span> <span class="n">batch_size</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_current_batch</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_drop_last</span> <span class="o">=</span> <span class="n">drop_last</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_shuffle</span> <span class="o">=</span> <span class="n">shuffle</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_requires_reset</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;sequential&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_get</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;threaded&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_get</span> <span class="o">=</span> <span class="n">threaded</span><span class="o">.</span><span class="n">get</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_get</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">get</span>
+
+    <span class="k">def</span> <span class="nf">_clone</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_batch_size</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_shuffle</span><span class="p">,</span>
+                          <span class="n">drop_last</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_drop_last</span><span class="p">,</span> <span class="n">total_samples</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_total_samples</span><span class="p">,</span>
+                          <span class="n">mode</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_mode</span><span class="p">,</span> <span class="n">single</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_single</span><span class="p">,</span> <span class="n">on_sample_loaded</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_sample_loaded</span><span class="p">,</span>
+                          <span class="n">on_batch_loaded</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_batch_loaded</span><span class="p">)</span>
+
+<div class="viewcode-block" id="AbsDataHolder.__repr__"><a class="viewcode-back" href="../../../data.html#cogitare.data.AbsDataHolder.__repr__">[docs]</a>    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Using repr(data) or str(data), display the shape of the data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> with </span><span class="si">{}</span><span class="s1">x</span><span class="si">{}</span><span class="s1"> samples&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_batch_size</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AbsDataHolder.__getitem__"><a class="viewcode-back" href="../../../data.html#cogitare.data.AbsDataHolder.__getitem__">[docs]</a>    <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get a sample in the dataset using its indices.</span>
+
+<span class="sd">        Example::</span>
+
+<span class="sd">            sample = data[0]</span>
+<span class="sd">            sample2 = data[1]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_on_sample_loaded</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_sample</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">indices</span><span class="p">[</span><span class="n">key</span><span class="p">]))</span></div>
+
+    <span class="k">def</span> <span class="nf">_get_batch_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">batch_size</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_batch_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_remaining_samples</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">batch_size</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_batch_size</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_drop_last</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_requires_reset</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">raise</span> <span class="ne">StopIteration</span>
+
+        <span class="k">if</span> <span class="n">batch_size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_requires_reset</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">raise</span> <span class="ne">StopIteration</span>
+
+        <span class="k">return</span> <span class="n">batch_size</span>
+
+    <span class="k">def</span> <span class="nf">_get_batch</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_requires_reset</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+
+        <span class="n">batch_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_batch_size</span><span class="p">()</span>
+
+        <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="n">loader</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">loader</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">)(</span><span class="bp">self</span><span class="o">.</span><span class="n">_current_batch</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_batch_size</span> <span class="o">+</span> <span class="n">i</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">batch_size</span><span class="p">)]</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get</span><span class="p">:</span>
+            <span class="c1"># use dask</span>
+            <span class="n">jobs</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">delayed</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">traverse</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+            <span class="n">results</span> <span class="o">=</span> <span class="n">compute</span><span class="p">(</span><span class="n">jobs</span><span class="p">,</span> <span class="n">get</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">results</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="n">_identity</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_current_batch</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_remaining_samples</span> <span class="o">-=</span> <span class="n">batch_size</span>
+
+        <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_on_batch_loaded</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_single</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">results</span>
+
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">get_sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<div class="viewcode-block" id="AbsDataHolder.__len__"><a class="viewcode-back" href="../../../data.html#cogitare.data.AbsDataHolder.__len__">[docs]</a>    <span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the number of batches in the dataset.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_drop_last</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_samples</span> <span class="o">//</span> <span class="bp">self</span><span class="o">.</span><span class="n">_batch_size</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">total_samples</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_batch_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="bp">self</span><span class="o">.</span><span class="n">_batch_size</span></div>
+
+<div class="viewcode-block" id="AbsDataHolder.__iter__"><a class="viewcode-back" href="../../../data.html#cogitare.data.AbsDataHolder.__iter__">[docs]</a>    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Creates an iterator to iterate over batches in the dataset.</span>
+
+<span class="sd">        After each iteration over the batches, the dataset will be shuffled if</span>
+<span class="sd">        the **shuffle** parameter is True.</span>
+
+<span class="sd">        Example::</span>
+
+<span class="sd">            for sample in data:</span>
+<span class="sd">                print(sample)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+    <span class="k">def</span> <span class="nf">__next__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_batch</span><span class="p">()</span>
+
+    <span class="nb">next</span> <span class="o">=</span> <span class="fm">__next__</span>
+
+<div class="viewcode-block" id="AbsDataHolder.reset"><a class="viewcode-back" href="../../../data.html#cogitare.data.AbsDataHolder.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Reset the batch iterator.</span>
+
+<span class="sd">        This method returns the iterator to the first sample, and shuffle the</span>
+<span class="sd">        dataset if shuffle is enabled.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_requires_reset</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_current_batch</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_remaining_samples</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_samples</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shuffle</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">shuffle</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="AbsDataHolder.shuffle"><a class="viewcode-back" href="../../../data.html#cogitare.data.AbsDataHolder.shuffle">[docs]</a>    <span class="k">def</span> <span class="nf">shuffle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Shuffle the samples in the dataset.</span>
+
+<span class="sd">        This operation will not affect the original data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">indices</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AbsDataHolder.split"><a class="viewcode-back" href="../../../data.html#cogitare.data.AbsDataHolder.split">[docs]</a>    <span class="k">def</span> <span class="nf">split</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ratio</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Split the data holder into two data holders.</span>
+
+<span class="sd">        The first one will receive *total_samples * ratio* samples, and the second</span>
+<span class="sd">        data holder will receive the remaining samples.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            ratio (:obj:`float`): ratio of the split. Must be between 0 and 1.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (data1, data2): two data holder, in the same type that the original.</span>
+
+<span class="sd">        Example::</span>
+
+<span class="sd">            &gt;&gt;&gt; print(data)</span>
+<span class="sd">            TensorHolder with 875x64 samples</span>
+<span class="sd">            &gt;&gt;&gt; data1, data2 = data.split(0.8)</span>
+<span class="sd">            &gt;&gt;&gt; print(data1)</span>
+<span class="sd">            TensorHolder with 700x64 samples</span>
+<span class="sd">            &gt;&gt;&gt; print(data2)</span>
+<span class="sd">            TensorHolder with 175x64 samples</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">utils</span><span class="o">.</span><span class="n">assert_raise</span><span class="p">(</span><span class="mi">0</span> <span class="o">&lt;</span> <span class="n">ratio</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">,</span> <span class="s1">&#39;&quot;ratio&quot; must be between 0 and 1&#39;</span><span class="p">)</span>
+
+        <span class="n">pos</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">total_samples</span> <span class="o">*</span> <span class="n">ratio</span><span class="p">))</span>
+
+        <span class="n">data1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_clone</span><span class="p">()</span>
+        <span class="n">data2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_clone</span><span class="p">()</span>
+
+        <span class="n">data1</span><span class="o">.</span><span class="n">_indices</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">indices</span><span class="p">[:</span><span class="n">pos</span><span class="p">]</span>
+        <span class="n">data2</span><span class="o">.</span><span class="n">_indices</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">indices</span><span class="p">[</span><span class="n">pos</span><span class="p">:]</span>
+        <span class="n">data1</span><span class="o">.</span><span class="n">_total_samples</span> <span class="o">=</span> <span class="n">pos</span>
+        <span class="n">data2</span><span class="o">.</span><span class="n">_total_samples</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_samples</span> <span class="o">-</span> <span class="n">pos</span>
+
+        <span class="k">return</span> <span class="n">data1</span><span class="p">,</span> <span class="n">data2</span></div>
+
+<div class="viewcode-block" id="AbsDataHolder.split_chunks"><a class="viewcode-back" href="../../../data.html#cogitare.data.AbsDataHolder.split_chunks">[docs]</a>    <span class="k">def</span> <span class="nf">split_chunks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Split the data holder into N data holders with the sample number of samples each.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            n (int): number of new splits.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            output (list): list of N data holders.</span>
+
+<span class="sd">        Example::</span>
+
+<span class="sd">            &gt;&gt;&gt; print(data)</span>
+<span class="sd">            TensorHolder with 875x64 samples</span>
+<span class="sd">            &gt;&gt;&gt; data1, data2, data3 = data.split_chunks(3)</span>
+<span class="sd">            &gt;&gt;&gt; print(data1)</span>
+<span class="sd">            TensorHolder with 292x64 samples</span>
+<span class="sd">            &gt;&gt;&gt; print(data2)</span>
+<span class="sd">            TensorHolder with 292x64 samples</span>
+<span class="sd">            &gt;&gt;&gt; print(data3)</span>
+<span class="sd">            TensorHolder with 292x64 samples</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_samples</span> <span class="o">//</span> <span class="n">n</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="n">begin</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="n">size</span><span class="p">,</span> <span class="nb">min</span><span class="p">((</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_samples</span><span class="p">)</span>
+
+            <span class="n">holder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_clone</span><span class="p">()</span>
+            <span class="n">holder</span><span class="o">.</span><span class="n">_indices</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">indices</span><span class="p">[</span><span class="n">begin</span><span class="p">:</span><span class="n">end</span><span class="p">]</span>
+            <span class="n">holder</span><span class="o">.</span><span class="n">_total_samples</span> <span class="o">=</span> <span class="n">end</span> <span class="o">-</span> <span class="n">begin</span>
+
+            <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">holder</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">data</span></div></div>
+
+
+<div class="viewcode-block" id="CallableHolder"><a class="viewcode-back" href="../../../data.html#cogitare.data.CallableHolder">[docs]</a><span class="k">class</span> <span class="nc">CallableHolder</span><span class="p">(</span><span class="n">AbsDataHolder</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;CallableHolder is a data holder for abritary data type.</span>
+
+<span class="sd">    As data input, it uses a callable that receive the sample index as parameter,</span>
+<span class="sd">    and must return the sample.</span>
+
+<span class="sd">    It can be used to load non-Tensor or non-numpy datasets, such as texts, dicts, and anything else.</span>
+<span class="sd">    You are free to use CallableHolder with any data type.</span>
+
+<span class="sd">        .. note:: When using CallableHolder, you must specify the number of samples</span>
+<span class="sd">            in the dataset. The callable will be called asking for samples from 0 to (total_samples - 1).</span>
+
+<span class="sd">    Example::</span>
+
+<span class="sd">        &gt;&gt;&gt; def load_sample(idx):</span>
+<span class="sd">        ...     return list(range(idx, idx + 10))</span>
+
+<span class="sd">        &gt;&gt;&gt; # when using the CallableHolder. you must pass the number of samples to</span>
+<span class="sd">        &gt;&gt;&gt; # be loaded.</span>
+
+<span class="sd">        &gt;&gt;&gt; # you can set the total_samples using the parameter in the constructor</span>
+<span class="sd">        &gt;&gt;&gt; data = CallableHolder(load_sample, batch_size=8, total_samples=20)</span>
+<span class="sd">        &gt;&gt;&gt; # or by setting the property</span>
+<span class="sd">        &gt;&gt;&gt; data.total_samples = 20</span>
+
+<span class="sd">        &gt;&gt;&gt; next(data)</span>
+<span class="sd">        [[8, 9, 10, 11, 12, 13, 14, 15, 16, 17],</span>
+<span class="sd">         [9, 10, 11, 12, 13, 14, 15, 16, 17, 18],</span>
+<span class="sd">         [6, 7, 8, 9, 10, 11, 12, 13, 14, 15],</span>
+<span class="sd">         [11, 12, 13, 14, 15, 16, 17, 18, 19, 20],</span>
+<span class="sd">         [13, 14, 15, 16, 17, 18, 19, 20, 21, 22],</span>
+<span class="sd">         [7, 8, 9, 10, 11, 12, 13, 14, 15, 16],</span>
+<span class="sd">         [18, 19, 20, 21, 22, 23, 24, 25, 26, 27],</span>
+<span class="sd">         [17, 18, 19, 20, 21, 22, 23, 24, 25, 26]]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">total_samples</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The number of samples in the dataset. You must set this value before accessing the data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_total_samples</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;&quot;total_samples&quot; not defined. Callable objects requires the&#39;</span>
+                             <span class="s1">&#39; number of total_samples before being used&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">CallableHolder</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">total_samples</span>
+
+    <span class="nd">@total_samples</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">total_samples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">CallableHolder</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">)</span><span class="o">.</span><span class="n">total_samples</span><span class="o">.</span><span class="n">fset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">CallableHolder</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">(</span><span class="n">key</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TensorHolder"><a class="viewcode-back" href="../../../data.html#cogitare.data.TensorHolder">[docs]</a><span class="k">class</span> <span class="nc">TensorHolder</span><span class="p">(</span><span class="n">AbsDataHolder</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A data holder to work with :class:`torch.Tensor` objects.</span>
+
+<span class="sd">    Example::</span>
+
+<span class="sd">        &gt;&gt;&gt; tensor = torch.Tensor([[1,2,3], [4,5,6], [7,8,9]])</span>
+<span class="sd">        &gt;&gt;&gt; tensor</span>
+<span class="sd">        1  2  3</span>
+<span class="sd">        4  5  6</span>
+<span class="sd">        7  8  9</span>
+<span class="sd">        [torch.FloatTensor of size 3x3]</span>
+<span class="sd">        &gt;&gt;&gt; data = TensorHolder(tensor, batch_size=2)</span>
+<span class="sd">        &gt;&gt;&gt; for sample in data:</span>
+<span class="sd">        ...     print(&#39;Sample:&#39;)</span>
+<span class="sd">        ...     print(sample)</span>
+<span class="sd">        ...     print(&#39;Sample as tensor:&#39;)</span>
+<span class="sd">        ...     print(utils.to_tensor(sample))</span>
+<span class="sd">        Sample:</span>
+<span class="sd">        [</span>
+<span class="sd">         7</span>
+<span class="sd">         8</span>
+<span class="sd">         9</span>
+<span class="sd">        [torch.FloatTensor of size 3]</span>
+<span class="sd">        ,</span>
+<span class="sd">         4</span>
+<span class="sd">         5</span>
+<span class="sd">         6</span>
+<span class="sd">        [torch.FloatTensor of size 3]</span>
+<span class="sd">        ]</span>
+<span class="sd">        Sample as tensor:</span>
+
+<span class="sd">         7  8  9</span>
+<span class="sd">         4  5  6</span>
+<span class="sd">        [torch.FloatTensor of size 2x3]</span>
+
+<span class="sd">        Sample:</span>
+<span class="sd">        [</span>
+<span class="sd">         1</span>
+<span class="sd">         2</span>
+<span class="sd">         3</span>
+<span class="sd">        [torch.FloatTensor of size 3]</span>
+<span class="sd">        ]</span>
+<span class="sd">        Sample as tensor:</span>
+
+<span class="sd">         1  2  3</span>
+<span class="sd">        [torch.FloatTensor of size 1x3]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">TensorHolder</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_total_samples</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">total_samples</span> <span class="o">=</span> <span class="n">size</span>
+
+    <span class="k">def</span> <span class="nf">get_sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="NumpyHolder"><a class="viewcode-back" href="../../../data.html#cogitare.data.NumpyHolder">[docs]</a><span class="k">def</span> <span class="nf">NumpyHolder</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    When creating the object, it converts the numpy data to Tensor using</span>
+<span class="sd">    :func:`torch.from_numpy` and then creates an :class:`~cogitare.data.TensorHolder`</span>
+<span class="sd">    instance.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">TensorHolder</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="AutoHolder"><a class="viewcode-back" href="../../../data.html#cogitare.data.AutoHolder">[docs]</a><span class="k">def</span> <span class="nf">AutoHolder</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Check the data type to infer which data holder to use.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">is_tensor</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">TensorHolder</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">NumpyHolder</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">callable</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">CallableHolder</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Unable to infer data type!&#39;</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Aron Bordin.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

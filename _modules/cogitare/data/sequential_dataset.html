@@ -1,0 +1,365 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>cogitare.data.sequential_dataset &mdash; Cogitare 0.1 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/julia.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../../_static/julia.css" type="text/css" />
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="Cogitare 0.1 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+<a href="https://github.com/cogitare-ai/cogitare"><img style="z-index: 1; position: fixed; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="http://docs.cogitare-ai.org/"><img src="../../../_static/logo-line.png" class="logo"></a>
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <p class="caption"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#Model">Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#Data-Loading">Data Loading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#Training">Training</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials.html">Tutorials</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Cogitare</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../model.html">Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../model.html#implementing-a-model">Implementing a Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../model.html#api">API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../sequential_model.html">Sequential Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../sequential_model.html#implementing-a-sequential-model-many-to-many-many-to-one">Implementing a Sequential Model (Many-to-Many, Many-to-One)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sequential_model.html#api">API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../data.html">Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../data.html#absdataholder"><span class="hidden-section">AbsDataHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../data.html#tensorholder"><span class="hidden-section">TensorHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../data.html#numpyholder"><span class="hidden-section">NumpyHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../data.html#callableholder"><span class="hidden-section">CallableHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../data.html#autoholder"><span class="hidden-section">AutoHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../data.html#dataset"><span class="hidden-section">DataSet</span></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../sequential_data.html">Sequential Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../sequential_data.html#sequentialabsdataholder"><span class="hidden-section">SequentialAbsDataHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sequential_data.html#sequentialtensorholder"><span class="hidden-section">SequentialTensorHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sequential_data.html#sequentialnumpyholder"><span class="hidden-section">SequentialNumpyHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sequential_data.html#sequentialcallableholder"><span class="hidden-section">SequentialCallableHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sequential_data.html#sequentialautoholder"><span class="hidden-section">SequentialAutoHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sequential_data.html#sequentialdataset"><span class="hidden-section">SequentialDataSet</span></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../async_data.html">Async Data Loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../plugins.html">Plugins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../plugins.html#custom-plugin">Custom Plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../plugins.html#register-a-plugin">Register a plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../plugins.html#official-plugins">Official Plugins</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../plugins.html#earlystopping"><span class="hidden-section">EarlyStopping</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../plugins.html#evaluator"><span class="hidden-section">Evaluator</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../plugins.html#logger"><span class="hidden-section">Logger</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../plugins.html#plottingmatplotlib"><span class="hidden-section">PlottingMatplotlib</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../plugins.html#progressbar"><span class="hidden-section">ProgressBar</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../monitor.html">Cogitare Monitor</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../monitor.html#how-to-use">How to Use</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../monitor.html#creating-a-custom-plugin">Creating a Custom Plugin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../metrics.html">Metrics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../metrics.html#module-cogitare.metrics.classification">Classification Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../metrics.html#module-cogitare.metrics.spatial">Spatial Metrics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../utils.html">cogitare.utils</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../models/classic.html">Classic Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Extra</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../contribute.html">Contribute</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../contribute.html#contributing-to-cogitare">Contributing to Cogitare</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">Cogitare</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>cogitare.data.sequential_dataset</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <h1>Source code for cogitare.data.sequential_dataset</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">cogitare.data.dataset</span> <span class="k">import</span> <span class="n">DataSet</span>
+<span class="kn">from</span> <span class="nn">cogitare.data.sequential_dataholder</span> <span class="k">import</span> <span class="n">SequentialAutoHolder</span><span class="p">,</span> <span class="n">SequentialAbsDataHolder</span>
+<span class="kn">from</span> <span class="nn">six.moves</span> <span class="k">import</span> <span class="n">zip_longest</span>
+
+
+<div class="viewcode-block" id="SequentialDataSet"><a class="viewcode-back" href="../../../sequential_data.html#cogitare.data.SequentialDataSet">[docs]</a><span class="k">class</span> <span class="nc">SequentialDataSet</span><span class="p">(</span><span class="n">DataSet</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This object is a container to multiple sequential data holders. Its an extension of</span>
+<span class="sd">    :class:`~cogitare.data.DataSet`.</span>
+
+<span class="sd">    Check the :class:`cogitare.data.DataSet` docs for more information.</span>
+
+<span class="sd">    When creating it, the data parameter must be a list of data sources, and then</span>
+<span class="sd">    the result of the iterator will be a batch got from each data source that contains</span>
+<span class="sd">    timesteps for each sample.</span>
+
+<span class="sd">    It can be used to group input and target variables, for example, if they are not</span>
+<span class="sd">    on the same object, or two sequences in the case of a sequence to sequnce (seq2seq),</span>
+<span class="sd">    encode-decode model.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data (list): list of sequential data holders or list of data (that will be converted to a</span>
+<span class="sd">            data holder using the :class:`~cogitare.data.SequentialAutoHolder`.</span>
+<span class="sd">        data_types (dataholder, list): A list of data holder classes to be used to</span>
+<span class="sd">            create the holder for each input.</span>
+<span class="sd">            If it is a list, must have the same size of the data.</span>
+<span class="sd">            If data_types is None, the :class:`~cogitare.data.AutoHolder` will be used.</span>
+<span class="sd">        batch_size (int): the size of each batch.</span>
+<span class="sd">        shuffle (bool): if True, shuffles the samples of each data holder.</span>
+<span class="sd">        drop_last (bool): if True, then skip the batch if its size is lower that **batch_size** (can</span>
+<span class="sd">            occur in the last batch).</span>
+<span class="sd">        padding_value: this value will be used to pad sequences with different</span>
+<span class="sd">            sizes in the same batch. When loading a batch, all sequences will have</span>
+<span class="sd">            the same size. The padding_value is added to the right of each sequence to match the size</span>
+<span class="sd">            of the longest sequence in the batch.</span>
+
+<span class="sd">    .. note:: The **batch_size**, **shuffle**, and **drop_last** parameters will override the</span>
+<span class="sd">        data holder default values. If you want to keep a different value for each data holder,</span>
+<span class="sd">        get its instance in the ``container`` attribute and edit manually.</span>
+
+
+<span class="sd">    Example::</span>
+
+<span class="sd">        &gt;&gt;&gt; tensor1 = torch.Tensor([[1,2,3], [4,5,6], [7,8,9]])</span>
+<span class="sd">        &gt;&gt;&gt; tensor2 = torch.Tensor([[10, 11, 12], [13, 14, 15], [16, 17, 18]])</span>
+
+<span class="sd">        &gt;&gt;&gt; tensor1</span>
+<span class="sd">         1  2  3</span>
+<span class="sd">         4  5  6</span>
+<span class="sd">         7  8  9</span>
+<span class="sd">        [torch.FloatTensor of size 3x3]</span>
+<span class="sd">        &gt;&gt;&gt; tensor2</span>
+<span class="sd">         10  11  12</span>
+<span class="sd">         13  14  15</span>
+<span class="sd">         16  17  18</span>
+<span class="sd">        [torch.FloatTensor of size 3x3]</span>
+
+<span class="sd">        &gt;&gt;&gt; # you can create the dataset passing the data</span>
+<span class="sd">        &gt;&gt;&gt; data = SequentialDataSet([tensor1, tensor2], batch_size=2)</span>
+
+<span class="sd">        &gt;&gt;&gt; # or passing data holders</span>
+<span class="sd">        &gt;&gt;&gt; dh1 = SequentialTensorHolder(tensor1)</span>
+<span class="sd">        &gt;&gt;&gt; dh2 = SequentialTensorHolder(tensor1)</span>
+<span class="sd">        &gt;&gt;&gt; data = SequentialDataSet([dh1, dh2], batch_size=2)</span>
+
+<span class="sd">        &gt;&gt;&gt; batch = next(data)</span>
+<span class="sd">        &gt;&gt;&gt; batch</span>
+<span class="sd">        [((4.0, 7.0), (13.0, 16.0)), ((5.0, 8.0), (14.0, 17.0)), ((6.0, 9.0), (15.0, 18.0))]</span>
+
+<span class="sd">        &gt;&gt;&gt; for timestep, (seq1, seq2) in enumerate(batch, 1):</span>
+<span class="sd">        ...   print(&#39;Current timestep: &#39; + str(timestep))</span>
+<span class="sd">        ...    print((seq1, seq2))</span>
+<span class="sd">        Current timestep: 1</span>
+<span class="sd">        ((4.0, 7.0), (13.0, 16.0))</span>
+<span class="sd">        Current timestep: 2</span>
+<span class="sd">        ((5.0, 8.0), (14.0, 17.0))</span>
+<span class="sd">        Current timestep: 3</span>
+<span class="sd">        ((6.0, 9.0), (15.0, 18.0))</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_AutoHolderClass</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">SequentialAutoHolder</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_AbsDataHolderClass</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">SequentialAbsDataHolder</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_padding_value</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;padding_value&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+        <span class="nb">super</span><span class="p">(</span><span class="n">SequentialDataSet</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">container</span><span class="p">:</span>
+            <span class="n">c</span><span class="o">.</span><span class="n">_padding_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_padding_value</span>
+
+    <span class="k">def</span> <span class="nf">__next__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">batch</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">SequentialDataSet</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__next__</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">zip_longest</span><span class="p">(</span><span class="o">*</span><span class="n">batch</span><span class="p">,</span> <span class="n">fillvalue</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_padding_value</span><span class="p">))</span>
+
+    <span class="nb">next</span> <span class="o">=</span> <span class="fm">__next__</span></div>
+</pre></div>
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Aron Bordin.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

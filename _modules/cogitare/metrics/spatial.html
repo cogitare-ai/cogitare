@@ -1,0 +1,583 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>cogitare.metrics.spatial &mdash; Cogitare 0.1 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/julia.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../../_static/julia.css" type="text/css" />
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="Cogitare 0.1 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+<a href="https://github.com/cogitare-ai/cogitare"><img style="z-index: 1; position: fixed; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="http://docs.cogitare-ai.org/"><img src="../../../_static/logo-line.png" class="logo"></a>
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <p class="caption"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#Model">Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#Data-Loading">Data Loading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#Training">Training</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials.html">Tutorials</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Cogitare</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../model.html">Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../model.html#implementing-a-model">Implementing a Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../model.html#api">API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../sequential_model.html">Sequential Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../sequential_model.html#implementing-a-sequential-model-many-to-many-many-to-one">Implementing a Sequential Model (Many-to-Many, Many-to-One)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sequential_model.html#api">API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../data.html">Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../data.html#absdataholder"><span class="hidden-section">AbsDataHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../data.html#tensorholder"><span class="hidden-section">TensorHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../data.html#numpyholder"><span class="hidden-section">NumpyHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../data.html#callableholder"><span class="hidden-section">CallableHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../data.html#autoholder"><span class="hidden-section">AutoHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../data.html#dataset"><span class="hidden-section">DataSet</span></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../sequential_data.html">Sequential Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../sequential_data.html#sequentialabsdataholder"><span class="hidden-section">SequentialAbsDataHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sequential_data.html#sequentialtensorholder"><span class="hidden-section">SequentialTensorHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sequential_data.html#sequentialnumpyholder"><span class="hidden-section">SequentialNumpyHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sequential_data.html#sequentialcallableholder"><span class="hidden-section">SequentialCallableHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sequential_data.html#sequentialautoholder"><span class="hidden-section">SequentialAutoHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sequential_data.html#sequentialdataset"><span class="hidden-section">SequentialDataSet</span></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../async_data.html">Async Data Loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../plugins.html">Plugins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../plugins.html#custom-plugin">Custom Plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../plugins.html#register-a-plugin">Register a plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../plugins.html#official-plugins">Official Plugins</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../plugins.html#earlystopping"><span class="hidden-section">EarlyStopping</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../plugins.html#evaluator"><span class="hidden-section">Evaluator</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../plugins.html#logger"><span class="hidden-section">Logger</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../plugins.html#plottingmatplotlib"><span class="hidden-section">PlottingMatplotlib</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../plugins.html#progressbar"><span class="hidden-section">ProgressBar</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../monitor.html">Cogitare Monitor</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../monitor.html#how-to-use">How to Use</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../monitor.html#creating-a-custom-plugin">Creating a Custom Plugin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../metrics.html">Metrics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../metrics.html#module-cogitare.metrics.classification">Classification Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../metrics.html#module-cogitare.metrics.spatial">Spatial Metrics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../utils.html">cogitare.utils</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../models/classic.html">Classic Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Extra</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../contribute.html">Contribute</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../contribute.html#contributing-to-cogitare">Contributing to Cogitare</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">Cogitare</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>cogitare.metrics.spatial</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <h1>Source code for cogitare.metrics.spatial</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">cogitare</span> <span class="k">import</span> <span class="n">utils</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+
+
+<div class="viewcode-block" id="cosine_similarity"><a class="viewcode-back" href="../../../metrics.html#cogitare.metrics.spatial.cosine_similarity">[docs]</a><span class="nd">@utils</span><span class="o">.</span><span class="n">tensorfy</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">cosine_similarity</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Computes the Cosine similarity between vectors along a dimension.</span>
+
+<span class="sd">    Consine similarity is defined as:</span>
+
+<span class="sd">        :math:`cosine\_similarity(u, v) = \dfrac{u \cdot v}{max(||u||_2 * ||v||_2, eps)}`</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        u (torch.Tensor): tensor 1</span>
+<span class="sd">        v (torch.Tensor): tensor 2</span>
+<span class="sd">        dim (int): the dimension to compare the vectors.</span>
+<span class="sd">        eps (:obj:`float`): small value to avoid division by zero.</span>
+
+<span class="sd">    Shape:</span>
+<span class="sd">        u (\*, D, \*): where D is the provided dimension ``dim``.</span>
+<span class="sd">        v (\*, D, \*): where D is the provided dimension ``dim``. ``u`` and ``v`` must have the same shape.</span>
+<span class="sd">        output (\*, \*): same as input, withoud the ``dim`` dimension, and squeezed.</span>
+
+<span class="sd">    Example::</span>
+
+<span class="sd">        &gt;&gt;&gt; x1 = torch.Tensor([1, 2, 3])</span>
+<span class="sd">        &gt;&gt;&gt; x2 = torch.Tensor([2, 2, 3])</span>
+<span class="sd">        &gt;&gt;&gt; cosine_similarity(x1, x2, dim=0)</span>
+<span class="sd">         0.9723</span>
+<span class="sd">        [torch.FloatTensor of size 1]</span>
+
+<span class="sd">    Example::</span>
+
+<span class="sd">        &gt;&gt;&gt; a = torch.rand(3, 4, 5)</span>
+<span class="sd">        &gt;&gt;&gt; b = torch.rand(3, 4, 5)</span>
+<span class="sd">        &gt;&gt;&gt; cosine_similarity(a, b, dim=0)</span>
+<span class="sd">         0.9588  0.8099  0.9444  0.6813  0.8883</span>
+<span class="sd">         0.4378  0.9690  0.9900  0.8366  0.8544</span>
+<span class="sd">         0.5790  0.8270  0.9120  0.9115  0.5138</span>
+<span class="sd">         0.4563  0.9510  0.9207  0.6498  0.7282</span>
+<span class="sd">        [torch.FloatTensor of size 4x5]</span>
+<span class="sd">        &gt;&gt;&gt; cosine_similarity(a, b, dim=2)</span>
+<span class="sd">         0.9491  0.7288  0.7040  0.6721</span>
+<span class="sd">         0.6425  0.8440  0.5450  0.5586</span>
+<span class="sd">         0.9114  0.7884  0.6583  0.7154</span>
+<span class="sd">        [torch.FloatTensor of size 3x4]</span>
+
+<span class="sd">    References:</span>
+<span class="sd">        - https://nlp.stanford.edu/IR-book/html/htmledition/dot-products-1.html</span>
+<span class="sd">        - https://en.wikipedia.org/wiki/Cosine_similarity</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="p">((</span><span class="n">u</span><span class="p">,</span> <span class="s1">&#39;u&#39;</span><span class="p">),</span> <span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="s1">&#39;v&#39;</span><span class="p">))</span>
+    <span class="n">utils</span><span class="o">.</span><span class="n">_assert_same_dim</span><span class="p">(</span><span class="o">*</span><span class="n">params</span><span class="p">)</span>
+
+    <span class="n">w12</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">u</span> <span class="o">*</span> <span class="n">v</span><span class="p">,</span> <span class="n">dim</span><span class="p">)</span>
+    <span class="n">w1</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">dim</span><span class="p">)</span>
+    <span class="n">w2</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">dim</span><span class="p">)</span>
+
+    <span class="n">div</span> <span class="o">=</span> <span class="p">(</span><span class="n">w1</span> <span class="o">*</span> <span class="n">w2</span><span class="p">)</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="n">eps</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">(</span><span class="n">w12</span> <span class="o">/</span> <span class="n">div</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="cosine_distance"><a class="viewcode-back" href="../../../metrics.html#cogitare.metrics.spatial.cosine_distance">[docs]</a><span class="k">def</span> <span class="nf">cosine_distance</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Cosine distance is a shortcut for:</span>
+
+<span class="sd">        :math:`cosine\_distance(u, v) = 1.0 - cosine\_similarity(u, v)`</span>
+
+<span class="sd">    Check the :func:`~cogitare.metrics.spatial.cosine\_similarity` for more information.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">cosine_similarity</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="norm_distance"><a class="viewcode-back" href="../../../metrics.html#cogitare.metrics.spatial.norm_distance">[docs]</a><span class="nd">@utils</span><span class="o">.</span><span class="n">tensorfy</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">norm_distance</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Computes the norm distance between vectors along a dimension.</span>
+
+<span class="sd">    The norm distance between two vectors is defined as:</span>
+
+<span class="sd">        :math:`norm\_dist(u, v, p) = \sqrt[p]{max(\sum_i(|u_i - v_i|^p), eps)}`</span>
+
+<span class="sd">    where :math:`p` is defined by the ``norm`` parameter.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        u (torch.Tensor): tensor 1</span>
+<span class="sd">        v (torch.Tensor): tensor 2</span>
+<span class="sd">        dim (int): the dimension to compare the vectors.</span>
+<span class="sd">        norm (:obj:`float`): p-norm</span>
+<span class="sd">        eps (:obj:`float`): small value to avoid division by zero.</span>
+
+<span class="sd">    Shape:</span>
+<span class="sd">        u (\*, D, \*): where D is the provided dimension ``dim``.</span>
+<span class="sd">        v (\*, D, \*): where D is the provided dimension ``dim``. ``u`` and ``v`` must have the same shape.</span>
+<span class="sd">        output (\*, \*): same as input, withoud the ``dim`` dimension, and squeezed.</span>
+
+<span class="sd">    Example::</span>
+
+<span class="sd">        &gt;&gt;&gt; x1 = torch.Tensor([1, 2, 3])</span>
+<span class="sd">        &gt;&gt;&gt; x2 = torch.Tensor([2, 2, 5])</span>
+<span class="sd">        &gt;&gt;&gt; norm_distance(x1, x2, dim=0, norm=1)</span>
+<span class="sd">         3</span>
+<span class="sd">        [torch.FloatTensor of size 1]</span>
+<span class="sd">        &gt;&gt;&gt; norm_distance(x1, x2, dim=0, norm=3)</span>
+<span class="sd">         2.0801</span>
+<span class="sd">        [torch.FloatTensor of size 1]</span>
+
+<span class="sd">    Example::</span>
+
+<span class="sd">        &gt;&gt;&gt; a = torch.rand(3, 4, 5)</span>
+<span class="sd">        &gt;&gt;&gt; b = torch.rand(3, 4, 5)</span>
+<span class="sd">        &gt;&gt;&gt; norm_distance(a, b, dim=1, norm=2)</span>
+<span class="sd">         1.2678  0.8048  1.1087  0.9852  0.5751</span>
+<span class="sd">         0.9778  1.0164  1.1546  0.9549  1.2127</span>
+<span class="sd">         0.8448  0.9415  0.5060  0.9469  0.9281</span>
+<span class="sd">        [torch.FloatTensor of size 3x5]</span>
+
+<span class="sd">    References:</span>
+<span class="sd">        - https://en.wikipedia.org/wiki/Distance</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="p">((</span><span class="n">u</span><span class="p">,</span> <span class="s1">&#39;u&#39;</span><span class="p">),</span> <span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="s1">&#39;v&#39;</span><span class="p">))</span>
+    <span class="n">utils</span><span class="o">.</span><span class="n">_assert_same_dim</span><span class="p">(</span><span class="o">*</span><span class="n">params</span><span class="p">)</span>
+
+    <span class="n">diff</span> <span class="o">=</span> <span class="p">(</span><span class="n">u</span> <span class="o">-</span> <span class="n">v</span><span class="p">)</span><span class="o">.</span><span class="n">abs_</span><span class="p">()</span>
+    <span class="n">diff</span><span class="o">.</span><span class="n">pow_</span><span class="p">(</span><span class="n">norm</span><span class="p">)</span>
+
+    <span class="n">cum</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">diff</span><span class="p">,</span> <span class="n">dim</span><span class="p">)</span><span class="o">.</span><span class="n">clamp_</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="n">eps</span><span class="p">)</span>
+    <span class="n">cum</span><span class="o">.</span><span class="n">pow_</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">norm</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">cum</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="euclidian_distance"><a class="viewcode-back" href="../../../metrics.html#cogitare.metrics.spatial.euclidian_distance">[docs]</a><span class="k">def</span> <span class="nf">euclidian_distance</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The Euclidian distance is a shortcut for :func:`~cogitare.metrics.spatial.norm_distance`</span>
+<span class="sd">    with the norm=2.</span>
+
+<span class="sd">    The Euclidian distance is defined as:</span>
+
+<span class="sd">        :math:`euclidian\_distance(u, v) = \sqrt{max(\sum_i(|u_i - v_i|^2), eps)}`</span>
+
+<span class="sd">    Check the :func:`~cogitare.metrics.spatial.norm\_distance` for more information.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">return</span> <span class="n">norm_distance</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="n">dim</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="n">eps</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="manhattan_distance"><a class="viewcode-back" href="../../../metrics.html#cogitare.metrics.spatial.manhattan_distance">[docs]</a><span class="nd">@utils</span><span class="o">.</span><span class="n">tensorfy</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">manhattan_distance</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The Manhattan Distance (aka :math:`L_1` distance, :math:`\ell_1` norm, taxicab distance, city block distance,</span>
+<span class="sd">    and snake distance) of two vectors can be defined as:</span>
+
+<span class="sd">        :math:`manhattan\_distance(u, v) = \sum_i|u_i - v_i|`</span>
+
+<span class="sd">    This is an optimized version (and equivalent) of using :func:`norm_distance` with ``norm=1``.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        u (torch.Tensor): tensor 1</span>
+<span class="sd">        v (torch.Tensor): tensor 2</span>
+<span class="sd">        dim (int): the dimension to compare the vectors.</span>
+
+<span class="sd">    Shape:</span>
+<span class="sd">        u (\*, D, \*): where D is the provided dimension ``dim``.</span>
+<span class="sd">        v (\*, D, \*): where D is the provided dimension ``dim``. ``u`` and ``v`` must have the same shape.</span>
+<span class="sd">        output (\*, \*): same as input, withoud the ``dim`` dimension, and squeezed.</span>
+
+<span class="sd">    Example::</span>
+
+<span class="sd">        &gt;&gt;&gt; x1 = torch.Tensor([1, 2, 3])</span>
+<span class="sd">        &gt;&gt;&gt; x2 = torch.Tensor([2, 2, 5])</span>
+<span class="sd">        &gt;&gt;&gt; manhattan_distance(x1, x2, dim=0)</span>
+<span class="sd">         3</span>
+<span class="sd">        [torch.FloatTensor of size 1]</span>
+
+<span class="sd">    Example::</span>
+
+<span class="sd">        &gt;&gt;&gt; a = torch.rand(3, 4, 5)</span>
+<span class="sd">        &gt;&gt;&gt; b = torch.rand(3, 4, 5)</span>
+<span class="sd">        &gt;&gt;&gt; manhattan_distance(a, b, dim=2)</span>
+<span class="sd">         2.5895  1.4149  0.9355  1.8885</span>
+<span class="sd">         2.7076  1.8408  1.8399  1.3157</span>
+<span class="sd">         1.2883  2.5685  1.7510  2.0703</span>
+<span class="sd">        [torch.FloatTensor of size 3x4]</span>
+
+<span class="sd">    References:</span>
+<span class="sd">        - https://en.wikipedia.org/wiki/Taxicab_geometry</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="p">((</span><span class="n">u</span><span class="p">,</span> <span class="s1">&#39;u&#39;</span><span class="p">),</span> <span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="s1">&#39;v&#39;</span><span class="p">))</span>
+    <span class="n">utils</span><span class="o">.</span><span class="n">_assert_same_dim</span><span class="p">(</span><span class="o">*</span><span class="n">params</span><span class="p">)</span>
+
+    <span class="n">diff</span> <span class="o">=</span> <span class="p">(</span><span class="n">u</span> <span class="o">-</span> <span class="n">v</span><span class="p">)</span><span class="o">.</span><span class="n">abs_</span><span class="p">()</span>
+    <span class="n">dist</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">diff</span><span class="p">,</span> <span class="n">dim</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">dist</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="braycurtis_distance"><a class="viewcode-back" href="../../../metrics.html#cogitare.metrics.spatial.braycurtis_distance">[docs]</a><span class="nd">@utils</span><span class="o">.</span><span class="n">tensorfy</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">braycurtis_distance</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The Bray-Curtis is defined as:</span>
+
+<span class="sd">        :math:`braycurtis\_distance(u, v) = \dfrac{\sum_i|u_i - v_i|}{max(\sum_i|u_i + v_i|, eps)}`</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        u (torch.Tensor): tensor 1</span>
+<span class="sd">        v (torch.Tensor): tensor 2</span>
+<span class="sd">        dim (int): the dimension to compare the vectors.</span>
+<span class="sd">        eps (:obj:`float`): small value to avoid division by zero.</span>
+
+<span class="sd">    Shape:</span>
+<span class="sd">        u (\*, D, \*): where D is the provided dimension ``dim``.</span>
+<span class="sd">        v (\*, D, \*): where D is the provided dimension ``dim``. ``u`` and ``v`` must have the same shape.</span>
+<span class="sd">        output (\*, \*): same as input, withoud the ``dim`` dimension, and squeezed.</span>
+
+<span class="sd">    Example::</span>
+
+<span class="sd">        &gt;&gt;&gt; x1 = torch.Tensor([1, 2, 3])</span>
+<span class="sd">        &gt;&gt;&gt; x2 = torch.Tensor([2, 2, 5])</span>
+<span class="sd">        &gt;&gt;&gt; braycurtis_distance(x1, x2, dim=0)</span>
+<span class="sd">         0.2000</span>
+<span class="sd">        [torch.FloatTensor of size 1]</span>
+
+<span class="sd">    References:</span>
+<span class="sd">        - http://people.revoledu.com/kardi/tutorial/Similarity/BrayCurtisDistance.html</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="p">((</span><span class="n">u</span><span class="p">,</span> <span class="s1">&#39;u&#39;</span><span class="p">),</span> <span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="s1">&#39;v&#39;</span><span class="p">))</span>
+    <span class="n">utils</span><span class="o">.</span><span class="n">_assert_same_dim</span><span class="p">(</span><span class="o">*</span><span class="n">params</span><span class="p">)</span>
+
+    <span class="n">diff</span> <span class="o">=</span> <span class="p">(</span><span class="n">u</span> <span class="o">-</span> <span class="n">v</span><span class="p">)</span><span class="o">.</span><span class="n">abs_</span><span class="p">()</span>
+    <span class="n">wide</span> <span class="o">=</span> <span class="p">(</span><span class="n">u</span> <span class="o">+</span> <span class="n">v</span><span class="p">)</span><span class="o">.</span><span class="n">abs_</span><span class="p">()</span>
+
+    <span class="n">dist1</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">diff</span><span class="p">,</span> <span class="n">dim</span><span class="p">)</span>
+    <span class="n">dist2</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">wide</span><span class="p">,</span> <span class="n">dim</span><span class="p">)</span><span class="o">.</span><span class="n">clamp_</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="n">eps</span><span class="p">)</span>
+
+    <span class="n">dist</span> <span class="o">=</span> <span class="n">dist1</span> <span class="o">/</span> <span class="n">dist2</span>
+
+    <span class="n">dist</span><span class="o">.</span><span class="n">squeeze_</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">dist</span></div>
+
+
+<div class="viewcode-block" id="canberra_distance"><a class="viewcode-back" href="../../../metrics.html#cogitare.metrics.spatial.canberra_distance">[docs]</a><span class="nd">@utils</span><span class="o">.</span><span class="n">tensorfy</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">canberra_distance</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The Canberra distance between two vectors is defined as:</span>
+
+<span class="sd">        :math:`canberra\_distance(u, v) = \sum_i\dfrac{|u_i - v_i|}{|u_i| + |v_i|}`</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        u (torch.Tensor): tensor 1</span>
+<span class="sd">        v (torch.Tensor): tensor 2</span>
+<span class="sd">        dim (int): the dimension to compare the vectors.</span>
+<span class="sd">        eps (:obj:`float`): small value to avoid division by zero.</span>
+
+<span class="sd">    Shape:</span>
+<span class="sd">        u (\*, D, \*): where D is the provided dimension ``dim``.</span>
+<span class="sd">        v (\*, D, \*): where D is the provided dimension ``dim``. ``u`` and ``v`` must have the same shape.</span>
+<span class="sd">        output (\*, \*): same as input, withoud the ``dim`` dimension, and squeezed.</span>
+
+<span class="sd">    Example::</span>
+
+<span class="sd">        &gt;&gt;&gt; x1 = torch.Tensor([1, 2, 3])</span>
+<span class="sd">        &gt;&gt;&gt; x2 = torch.Tensor([2, 2, 5])</span>
+<span class="sd">        &gt;&gt;&gt; canberra_distance(x1, x2, dim=0)</span>
+<span class="sd">         0.5833</span>
+<span class="sd">        [torch.FloatTensor of size 1]</span>
+
+<span class="sd">    References:</span>
+<span class="sd">        - https://en.wikipedia.org/wiki/Canberra_distance</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="p">((</span><span class="n">u</span><span class="p">,</span> <span class="s1">&#39;u&#39;</span><span class="p">),</span> <span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="s1">&#39;v&#39;</span><span class="p">))</span>
+    <span class="n">utils</span><span class="o">.</span><span class="n">_assert_same_dim</span><span class="p">(</span><span class="o">*</span><span class="n">params</span><span class="p">)</span>
+
+    <span class="n">diff</span> <span class="o">=</span> <span class="p">(</span><span class="n">u</span> <span class="o">-</span> <span class="n">v</span><span class="p">)</span><span class="o">.</span><span class="n">abs_</span><span class="p">()</span>
+    <span class="n">u</span><span class="o">.</span><span class="n">abs_</span><span class="p">()</span>
+    <span class="n">v</span><span class="o">.</span><span class="n">abs_</span><span class="p">()</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">u</span> <span class="o">+</span> <span class="n">v</span> <span class="o">+</span> <span class="n">eps</span>
+
+    <span class="n">coef</span> <span class="o">=</span> <span class="n">diff</span> <span class="o">/</span> <span class="n">s</span>
+
+    <span class="n">dist</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">coef</span><span class="p">,</span> <span class="n">dim</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">dist</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="chebyshev_distance"><a class="viewcode-back" href="../../../metrics.html#cogitare.metrics.spatial.chebyshev_distance">[docs]</a><span class="nd">@utils</span><span class="o">.</span><span class="n">tensorfy</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">chebyshev_distance</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The Chebyshev distance (or Tchebychev distance), maximum metric,</span>
+<span class="sd">    or :math:`\ell\_\inf` (the infinity) norm between two vectors is defined as:</span>
+
+<span class="sd">        :math:`chebyshev\_distance(u, v) = max_i|u_i - v_i|`</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        u (torch.Tensor): tensor 1</span>
+<span class="sd">        v (torch.Tensor): tensor 2</span>
+<span class="sd">        dim (int): the dimension to compare the vectors.</span>
+
+<span class="sd">    Shape:</span>
+<span class="sd">        u (\*, D, \*): where D is the provided dimension ``dim``.</span>
+<span class="sd">        v (\*, D, \*): where D is the provided dimension ``dim``. ``u`` and ``v`` must have the same shape.</span>
+<span class="sd">        output (\*, \*): same as input, withoud the ``dim`` dimension, and squeezed.</span>
+
+<span class="sd">    Example::</span>
+
+<span class="sd">        &gt;&gt;&gt; x1 = torch.Tensor([1, 2, 3])</span>
+<span class="sd">        &gt;&gt;&gt; x2 = torch.Tensor([2, 2, 5])</span>
+<span class="sd">        &gt;&gt;&gt; chebyshev_distance(x1, x2, dim=0)</span>
+<span class="sd">         2</span>
+<span class="sd">        [torch.FloatTensor of size 1]</span>
+
+<span class="sd">    References:</span>
+<span class="sd">        - https://en.wikipedia.org/wiki/Lp_space</span>
+<span class="sd">        - https://en.wikipedia.org/wiki/Chebyshev_distance</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="p">((</span><span class="n">u</span><span class="p">,</span> <span class="s1">&#39;u&#39;</span><span class="p">),</span> <span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="s1">&#39;v&#39;</span><span class="p">))</span>
+    <span class="n">utils</span><span class="o">.</span><span class="n">_assert_same_dim</span><span class="p">(</span><span class="o">*</span><span class="n">params</span><span class="p">)</span>
+
+    <span class="n">diff</span> <span class="o">=</span> <span class="p">(</span><span class="n">u</span> <span class="o">-</span> <span class="n">v</span><span class="p">)</span><span class="o">.</span><span class="n">abs_</span><span class="p">()</span>
+
+    <span class="n">dist</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">diff</span><span class="p">,</span> <span class="n">dim</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">dist</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span></div>
+</pre></div>
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Aron Bordin.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

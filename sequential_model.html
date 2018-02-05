@@ -1,0 +1,1291 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Sequential Model &mdash; Cogitare 0.1 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/julia.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="_static/julia.css" type="text/css" />
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="Cogitare 0.1 documentation" href="index.html"/>
+        <link rel="next" title="Data" href="data.html"/>
+        <link rel="prev" title="Model" href="model.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+<a href="https://github.com/cogitare-ai/cogitare"><img style="z-index: 1; position: fixed; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="http://docs.cogitare-ai.org/"><img src="_static/logo-line.png" class="logo"></a>
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <p class="caption"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#Model">Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#Data-Loading">Data Loading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#Training">Training</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Cogitare</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="model.html">Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="model.html#implementing-a-model">Implementing a Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model.html#api">API</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Sequential Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#implementing-a-sequential-model-many-to-many-many-to-one">Implementing a Sequential Model (Many-to-Many, Many-to-One)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#api">API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="data.html">Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="data.html#absdataholder"><span class="hidden-section">AbsDataHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#tensorholder"><span class="hidden-section">TensorHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#numpyholder"><span class="hidden-section">NumpyHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#callableholder"><span class="hidden-section">CallableHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#autoholder"><span class="hidden-section">AutoHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#dataset"><span class="hidden-section">DataSet</span></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sequential_data.html">Sequential Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sequential_data.html#sequentialabsdataholder"><span class="hidden-section">SequentialAbsDataHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sequential_data.html#sequentialtensorholder"><span class="hidden-section">SequentialTensorHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sequential_data.html#sequentialnumpyholder"><span class="hidden-section">SequentialNumpyHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sequential_data.html#sequentialcallableholder"><span class="hidden-section">SequentialCallableHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sequential_data.html#sequentialautoholder"><span class="hidden-section">SequentialAutoHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sequential_data.html#sequentialdataset"><span class="hidden-section">SequentialDataSet</span></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="async_data.html">Async Data Loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plugins.html">Plugins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="plugins.html#custom-plugin">Custom Plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plugins.html#register-a-plugin">Register a plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plugins.html#official-plugins">Official Plugins</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="plugins.html#earlystopping"><span class="hidden-section">EarlyStopping</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="plugins.html#evaluator"><span class="hidden-section">Evaluator</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="plugins.html#logger"><span class="hidden-section">Logger</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="plugins.html#plottingmatplotlib"><span class="hidden-section">PlottingMatplotlib</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="plugins.html#progressbar"><span class="hidden-section">ProgressBar</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="monitor.html">Cogitare Monitor</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="monitor.html#how-to-use">How to Use</a></li>
+<li class="toctree-l2"><a class="reference internal" href="monitor.html#creating-a-custom-plugin">Creating a Custom Plugin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="metrics.html">Metrics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#module-cogitare.metrics.classification">Classification Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#module-cogitare.metrics.spatial">Spatial Metrics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">cogitare.utils</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="models/classic.html">Classic Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Extra</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="contribute.html">Contribute</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contribute.html#contributing-to-cogitare">Contributing to Cogitare</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Cogitare</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Sequential Model</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/sequential_model.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="sequential-model">
+<h1>Sequential Model<a class="headerlink" href="#sequential-model" title="Permalink to this headline">¶</a></h1>
+<p>Cogitare provides the Sequential Model interface, that allows you to train and evaluate
+sequential models (many-to-many, and many-to-one) easily.</p>
+<img alt="_images/rnn-many-to-many-many-to-one.jpg" src="_images/rnn-many-to-many-many-to-one.jpg" />
+<p>SequentialModel is an extension of <a class="reference internal" href="model.html#cogitare.Model" title="cogitare.Model"><code class="xref py py-class docutils literal"><span class="pre">Model</span></code></a>. It’s recommended
+to read the <a class="reference internal" href="model.html#cogitare.Model" title="cogitare.Model"><code class="xref py py-class docutils literal"><span class="pre">Model</span></code></a> docs first.</p>
+<div class="section" id="implementing-a-sequential-model-many-to-many-many-to-one">
+<h2>Implementing a Sequential Model (Many-to-Many, Many-to-One)<a class="headerlink" href="#implementing-a-sequential-model-many-to-many-many-to-one" title="Permalink to this headline">¶</a></h2>
+<p>To implement a sequential model, you must extend the <a class="reference internal" href="#cogitare.SequentialModel" title="cogitare.SequentialModel"><code class="xref py py-class docutils literal"><span class="pre">cogitare.SequentialModel</span></code></a> class and
+implement the <a class="reference internal" href="#cogitare.SequentialModel.forward" title="cogitare.SequentialModel.forward"><code class="xref py py-meth docutils literal"><span class="pre">cogitare.SequentialModel.forward()</span></code></a>, <a class="reference internal" href="#cogitare.SequentialModel.loss" title="cogitare.SequentialModel.loss"><code class="xref py py-meth docutils literal"><span class="pre">cogitare.SequentialModel.loss()</span></code></a>, and
+<a class="reference internal" href="#cogitare.SequentialModel.get_initial_state" title="cogitare.SequentialModel.get_initial_state"><code class="xref py py-meth docutils literal"><span class="pre">cogitare.SequentialModel.get_initial_state()</span></code></a> methods.</p>
+<p>The forward method will receive the batch of samples at the current timestep and the current hidden state.
+In this way, it is necessary to implement the forward pass through the network in this method,
+and then return the output and the new hidden state of the net.</p>
+<p>The loss method will receive the output of the <a class="reference internal" href="#cogitare.SequentialModel.forward" title="cogitare.SequentialModel.forward"><code class="xref py py-meth docutils literal"><span class="pre">cogitare.SequentialModel.forward()</span></code></a>
+and the batch received from iterator, apply a loss function, compute and return
+it.</p>
+<p>As a simple example, to implement a <cite>RNN-Char</cite> that generates text char by
+char, it can be implemented as follows:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">nltk</span>
+<span class="kn">from</span> <span class="nn">cogitare</span> <span class="k">import</span> <span class="n">SequentialModel</span>
+<span class="kn">from</span> <span class="nn">cogitare.data</span> <span class="k">import</span> <span class="n">SequentialDataSet</span>
+<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
+<span class="kn">from</span> <span class="nn">torch.autograd</span> <span class="k">import</span> <span class="n">Variable</span>
+<span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="nn">F</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torch.optim</span> <span class="k">as</span> <span class="nn">optim</span>
+<span class="kn">import</span> <span class="nn">cogitare</span>
+
+<span class="n">cogitare</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">RNNChar</span><span class="p">(</span><span class="n">SequentialModel</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dict_size</span><span class="p">,</span> <span class="n">embedding_size</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">,</span>
+                 <span class="n">dropout</span><span class="p">,</span> <span class="n">use_cuda</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">RNNChar</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hidden_size</span> <span class="o">=</span> <span class="n">hidden_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">embedding_size</span> <span class="o">=</span> <span class="n">embedding_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">use_cuda</span> <span class="o">=</span> <span class="n">use_cuda</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span> <span class="o">=</span> <span class="n">dropout</span>
+
+        <span class="c1"># char embedding</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">embedding</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span><span class="n">dict_size</span><span class="p">,</span> <span class="n">embedding_size</span><span class="p">)</span>
+        <span class="c1"># char embedding -&gt; rnn</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rnn</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LSTMCell</span><span class="p">(</span><span class="n">embedding_size</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">)</span>
+        <span class="c1"># rnn output -&gt; next-char prediction</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">h2o</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">dict_size</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_initial_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">):</span>
+        <span class="n">v1</span> <span class="o">=</span> <span class="n">Variable</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">batch</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">))</span>
+        <span class="n">v2</span> <span class="o">=</span> <span class="n">Variable</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">batch</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_cuda</span><span class="p">:</span>
+            <span class="n">v1</span> <span class="o">=</span> <span class="n">v1</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+            <span class="n">v2</span> <span class="o">=</span> <span class="n">v2</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">v1</span><span class="p">,</span> <span class="n">v2</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">prev_hidden</span><span class="p">,</span> <span class="n">timestep</span><span class="p">,</span> <span class="n">seqlen</span><span class="p">):</span>
+        <span class="c1"># seq is a tuple with (x_data_t, y_data_t)</span>
+        <span class="c1"># we forward the x value</span>
+        <span class="n">seq</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">seq</span> <span class="o">=</span> <span class="n">Variable</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">LongTensor</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">seq</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">cuda</span><span class="p">:</span>
+            <span class="n">seq</span> <span class="o">=</span> <span class="n">seq</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+
+        <span class="c1"># get the char embedding, compute the output and the new hidden</span>
+        <span class="c1"># states</span>
+        <span class="n">i2e</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">embedding</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">i2e</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">dropout</span><span class="p">(</span><span class="n">i2e</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dropout</span><span class="p">)</span>
+        <span class="n">ot</span><span class="p">,</span> <span class="n">ht</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rnn</span><span class="p">(</span><span class="n">i2e</span><span class="p">,</span> <span class="n">prev_hidden</span><span class="p">)</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">h2o</span><span class="p">(</span><span class="n">ot</span><span class="p">)</span>
+
+        <span class="c1"># returns the prediction and the new hidden state</span>
+        <span class="k">return</span> <span class="n">F</span><span class="o">.</span><span class="n">log_softmax</span><span class="p">(</span><span class="n">output</span><span class="p">),</span> <span class="p">(</span><span class="n">ot</span><span class="p">,</span> <span class="n">ht</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">loss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">sample</span><span class="p">,</span> <span class="n">hidden</span><span class="p">,</span> <span class="n">timestep</span><span class="p">,</span> <span class="n">seqlen</span><span class="p">):</span>
+        <span class="c1"># here, we are using a Many-to-One RNN. If you want to use</span>
+        <span class="c1"># Many-to-Many, just remove the following if</span>
+        <span class="k">if</span> <span class="n">timestep</span> <span class="o">!=</span> <span class="n">seqlen</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="c1"># get expected output, where sample is (x_data_t, y_data_t)</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="n">sample</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="n">Variable</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">LongTensor</span><span class="p">(</span><span class="n">expected</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">batch_size</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">cuda</span><span class="p">:</span>
+            <span class="n">expected</span> <span class="o">=</span> <span class="n">expected</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+
+        <span class="c1"># returns the loss at the current timestep</span>
+        <span class="k">return</span> <span class="n">F</span><span class="o">.</span><span class="n">nll_loss</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Notice that in the implementation above, it expects that each batch
+is composed of a tuple (x_data_t, y_data_t). It will be called for each
+timestep for each batch in the dataset.</p>
+<p>Also, the loss function only returns a value when it is in the last timestep (
+when timestep == seqlen). So it will behave as a Many-to-One model. If you want
+a Many-to-Many, remove the if from the code above and return the loss for each
+input.</p>
+<p>To load the cada, it’s recommended to use the
+<a class="reference internal" href="sequential_data.html#cogitare.data.SequentialDataSet" title="cogitare.data.SequentialDataSet"><code class="xref py py-class docutils literal"><span class="pre">cogitare.data.SequentialDataSet</span></code></a>. It can be used as follows:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">SEQ_LEN</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">USE_CUDA</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">BATCH_SIZE</span> <span class="o">=</span> <span class="mi">32</span>
+
+
+<span class="k">def</span> <span class="nf">get_sample</span><span class="p">(</span><span class="n">idx</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">raw</span><span class="p">[</span><span class="n">idx</span><span class="p">:</span><span class="n">idx</span> <span class="o">+</span> <span class="n">SEQ_LEN</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">get_output</span><span class="p">(</span><span class="n">idx</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">raw</span><span class="p">[</span><span class="n">idx</span> <span class="o">+</span> <span class="n">SEQ_LEN</span><span class="p">]]</span> <span class="o">*</span> <span class="n">SEQ_LEN</span>
+
+
+<span class="c1"># load the data from nltk</span>
+<span class="n">corpus</span> <span class="o">=</span> <span class="n">nltk</span><span class="o">.</span><span class="n">corpus</span><span class="o">.</span><span class="n">gutenberg</span><span class="o">.</span><span class="n">raw</span><span class="p">()</span>
+<span class="n">raw</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">bytearray</span><span class="p">(</span><span class="n">corpus</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf8&#39;</span><span class="p">))</span>
+<span class="n">total_samples</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span> <span class="o">-</span> <span class="n">SEQ_LEN</span> <span class="o">-</span> <span class="mi">1</span>
+
+<span class="n">ds</span> <span class="o">=</span> <span class="n">SequentialDataSet</span><span class="p">([</span><span class="n">get_sample</span><span class="p">,</span> <span class="n">get_output</span><span class="p">],</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">BATCH_SIZE</span><span class="p">,</span> <span class="n">drop_last</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                       <span class="n">total_samples</span><span class="o">=</span><span class="n">total_samples</span><span class="p">)</span>
+
+<span class="c1"># split the data into two datasets</span>
+<span class="n">ds_train</span><span class="p">,</span> <span class="n">ds_test</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="mf">0.9</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now, to train the model:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">rnn</span><span class="o">.</span><span class="n">parameters</span><span class="p">())</span>
+<span class="n">rnn</span><span class="o">.</span><span class="n">register_default_plugins</span><span class="p">()</span>
+
+<span class="n">rnn</span> <span class="o">=</span> <span class="n">RNNChar</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">USE_CUDA</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">USE_CUDA</span><span class="p">:</span>
+    <span class="n">rnn</span> <span class="o">=</span> <span class="n">rnn</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+<span class="n">rnn</span><span class="o">.</span><span class="n">learn</span><span class="p">(</span><span class="n">ds_train</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">ds_test</span><span class="p">,</span> <span class="n">max_epochs</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">rnn</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;model.pt&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Model trainined!&#39;</span><span class="p">)</span>
+<span class="nb">input</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>To use this model latter, you can load it from disk using:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">rnn</span> <span class="o">=</span> <span class="n">RNNChar</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">USE_CUDA</span><span class="p">)</span>
+<span class="n">rnn</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;model.pt&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>and make new predictions using:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">output</span> <span class="o">=</span> <span class="n">rnn</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="api">
+<h2>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="cogitare.SequentialModel">
+<em class="property">class </em><code class="descclassname">cogitare.</code><code class="descname">SequentialModel</code><a class="reference internal" href="_modules/cogitare/core/sequential_model.html#SequentialModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cogitare.SequentialModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">cogitare.core.model.Model</span></code></p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This module is experimental and its interface may change in future releases.</p>
+</div>
+<p>SequentialModel is an extension of <a class="reference internal" href="model.html#cogitare.Model" title="cogitare.Model"><code class="xref py py-class docutils literal"><span class="pre">Model</span></code></a> that includes support for sequential
+models. It’s designed to work with RNNs, such as LSTM and GRUs, and can be easily used for any
+model that operates over timestep per timestep.</p>
+<p>If you are using a RNN, but passing the whole sequence as input, you should consider using
+the <a class="reference internal" href="model.html#cogitare.Model" title="cogitare.Model"><code class="xref py py-class docutils literal"><span class="pre">Model</span></code></a> interface. This interface is desined for timestep per timestep
+and can be used for Many-to-Many models and for Many-to-One.</p>
+<p>While training, you can use plugins to watch and interact with the model.
+The plugin works like an event mechanism, you register a callback function to
+a specific event, and then you gain access to some variables of the model at
+specific steps of the training process.
+Check the <a class="reference internal" href="model.html#cogitare.Model.register_plugin" title="cogitare.Model.register_plugin"><code class="xref py py-meth docutils literal"><span class="pre">register_plugin()</span></code></a> for more information about the
+available events and variables that the model can interact with.</p>
+<p>Methods that your model must implement:</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>forward</strong> (data, hidden, timestep, seqlen): receives the data at
+the current timestep, the hidden state, the current timestep, and the sequence size;</li>
+<li><strong>loss</strong> (output, data, hidden, timestep, seqlen): returns the loss
+at the current timestep;</li>
+<li><strong>get_initial_state</strong> (self, batch): start the RNN hidden state.</li>
+</ul>
+</div></blockquote>
+<p>Expected input on <a class="reference internal" href="model.html#cogitare.Model.learn" title="cogitare.Model.learn"><code class="xref py py-meth docutils literal"><span class="pre">learn()</span></code></a>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>dataset</strong> : an iterator, that returns one batch of samples per
+iteration. Each bach is an iterator, containing data for each timestep.
+The batch can be of any type (list, numpy array, tensor, string, etcs).
+It is recommended to wrap your dataset using
+the <a class="reference internal" href="sequential_data.html#cogitare.data.SequentialDataSet" title="cogitare.data.SequentialDataSet"><code class="xref py py-class docutils literal"><span class="pre">SequentialDataSet</span></code></a> object,
+that provides a high-performance data loading interface.</li>
+</ul>
+</div></blockquote>
+<dl class="method">
+<dt id="cogitare.SequentialModel.add_module">
+<code class="descname">add_module</code><span class="sig-paren">(</span><em>name</em>, <em>module</em><span class="sig-paren">)</span><a class="headerlink" href="#cogitare.SequentialModel.add_module" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a child module to the current module.</p>
+<p>The module can be accessed as an attribute using the given name.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cogitare.SequentialModel.apply_register_plugins">
+<code class="descname">apply_register_plugins</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cogitare.SequentialModel.apply_register_plugins" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates and definetily register all plugins added by <a class="reference internal" href="model.html#cogitare.Model.register_plugin" title="cogitare.Model.register_plugin"><code class="xref py py-meth docutils literal"><span class="pre">register_plugin()</span></code></a> with
+<cite>postpone=True</cite>.</p>
+<p>This method is automatically executed when starting the <a class="reference internal" href="model.html#cogitare.Model.learn" title="cogitare.Model.learn"><code class="xref py py-meth docutils literal"><span class="pre">learn()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cogitare.SequentialModel.children">
+<code class="descname">children</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cogitare.SequentialModel.children" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an iterator over immediate children modules.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cogitare.SequentialModel.cpu">
+<code class="descname">cpu</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cogitare.SequentialModel.cpu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Moves all model parameters and buffers to the CPU.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cogitare.SequentialModel.cuda">
+<code class="descname">cuda</code><span class="sig-paren">(</span><em>device_id=None</em><span class="sig-paren">)</span><a class="headerlink" href="#cogitare.SequentialModel.cuda" title="Permalink to this definition">¶</a></dt>
+<dd><p>Moves all model parameters and buffers to the GPU.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>device_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a><em>, </em><em>optional</em>) – if specified, all parameters will be
+copied to that device</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cogitare.SequentialModel.double">
+<code class="descname">double</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cogitare.SequentialModel.double" title="Permalink to this definition">¶</a></dt>
+<dd><p>Casts all parameters and buffers to double datatype.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cogitare.SequentialModel.eval">
+<code class="descname">eval</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cogitare.SequentialModel.eval" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the module in evaluation mode.</p>
+<p>This has any effect only on modules such as Dropout or BatchNorm.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cogitare.SequentialModel.evaluate">
+<code class="descname">evaluate</code><span class="sig-paren">(</span><em>dataset</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cogitare/core/sequential_model.html#SequentialModel.evaluate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cogitare.SequentialModel.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterate over batches in the dataset and returns a list of the of losses of each batch.</p>
+<p>This method does not affect training variables and can be used to evaluate the
+model performance in a different data (such as validation and test sets).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>dataset</strong> – batch-timestep iterator</li>
+<li><strong>args/kwargs</strong> – <a class="reference internal" href="#cogitare.SequentialModel.forward" title="cogitare.SequentialModel.forward"><code class="xref py py-meth docutils literal"><span class="pre">forward()</span></code></a> arguments. If provided, the
+forward will receive these parameters.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><em>output (list)</em> – the losses in the provided batches, one loss per batch.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cogitare.SequentialModel.evaluate_with_metrics">
+<code class="descname">evaluate_with_metrics</code><span class="sig-paren">(</span><em>dataset</em>, <em>metrics</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#cogitare.SequentialModel.evaluate_with_metrics" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterate over batches in the dataset using metrics defined in the <code class="docutils literal"><span class="pre">metrics</span></code>
+argument, and then return a dict mapping {matric_name -&gt; list of results}.</p>
+<p>This method does not affect training variables and can be used to evaluate the
+model performance in a different data (such as validation and test sets).</p>
+<p>The <code class="docutils literal"><span class="pre">metrics</span></code> must be defined as:</p>
+<blockquote>
+<div><ul class="simple">
+<li>key: a name for this metric. The metric name must follow variable naming convention.</li>
+<li>value: a callable object, that accepts two parameters as input. The first parameter
+will be the model output, and the second parameter will be the batch data.</li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>dataset</strong> – batch iterator</li>
+<li><strong>metrics</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.6)"><em>dict</em></a>) – a dict mapping metric name to a callable.</li>
+<li><strong>args/kwargs</strong> – <a class="reference internal" href="model.html#cogitare.Model.forward" title="cogitare.Model.forward"><code class="xref py py-meth docutils literal"><span class="pre">forward()</span></code></a> arguments. If provided, the
+forward will receive these parameters.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><em>output (dict)</em> – a dict mapping the metric name with a list containing the metric
+output for each batch in the dataset.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">metrics</span> <span class="o">=</span> <span class="p">{</span>
+<span class="gp">... </span>    <span class="s1">&#39;loss&#39;</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">metric_loss</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s1">&#39;precision&#39;</span><span class="p">:</span> <span class="n">metrics</span><span class="o">.</span><span class="n">precision</span>
+<span class="gp">... </span><span class="p">}</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">evaluate_with_metrics</span><span class="p">(</span><span class="n">validation_dataset</span><span class="p">,</span> <span class="n">metrics</span><span class="p">)</span>
+<span class="go">{&#39;loss&#39;: [1.0, 0.8, 0.9], &#39;precision&#39;: [0.6, 0.55, 0.58]}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cogitare.SequentialModel.float">
+<code class="descname">float</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cogitare.SequentialModel.float" title="Permalink to this definition">¶</a></dt>
+<dd><p>Casts all parameters and buffers to float datatype.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cogitare.SequentialModel.forward">
+<code class="descname">forward</code><span class="sig-paren">(</span><em>data</em>, <em>hidden</em>, <em>timestep</em>, <em>seqlen</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cogitare/core/sequential_model.html#SequentialModel.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cogitare.SequentialModel.forward" title="Permalink to this definition">¶</a></dt>
+<dd><div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">When developing a Model, the class must implement this method.</p>
+</div>
+<p>The method receive four parameters, the data obtained by the timestep iterator,
+the hidden state at the current timestep, the timestep, and the leghth of the sequence.</p>
+<p>It must return a tuple with the model output after forwarding the data and the new hidden state.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> – this is the data got from iterating over the timesteps, got from
+iterating over the batches in the dataset provided in the
+<a class="reference internal" href="model.html#cogitare.Model.learn" title="cogitare.Model.learn"><code class="xref py py-meth docutils literal"><span class="pre">learn()</span></code></a> method. Its type and shape depend exclusively on
+the input dataset, no transformations or type checking are made during training.
+For most models, this will be a tuple containing <code class="docutils literal"><span class="pre">(x_data_t,</span> <span class="pre">y_data_t)</span></code>, but can be
+anything.</li>
+<li><strong>hidden</strong> (<a class="reference external" href="http://pytorch.org/docs/master/autograd.html#torch.autograd.Variable" title="(in PyTorch vmaster (0.4.0a0+b08101e ))"><em>torch.autograd.Variable</em></a>) – the hidden state at the current timestep. If this is the first timestep,
+the hidden state is got from <a class="reference internal" href="#cogitare.SequentialModel.get_initial_state" title="cogitare.SequentialModel.get_initial_state"><code class="xref py py-meth docutils literal"><span class="pre">get_initial_state()</span></code></a>. Otherwise, it is got
+from the <a class="reference internal" href="#cogitare.SequentialModel.forward" title="cogitare.SequentialModel.forward"><code class="xref py py-meth docutils literal"><span class="pre">forward()</span></code></a> returned value.</li>
+<li><strong>timestep</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – indicates the current timestem (from 1 to seqlen)</li>
+<li><strong>seqlen</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – the number of timesteps in the sequence.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><p><em>(output, hidden)</em> – the data after processing the input data, and the new hidden state.</p>
+<p>Usually, these are <a class="reference external" href="http://pytorch.org/docs/master/autograd.html#torch.autograd.Variable" title="(in PyTorch vmaster (0.4.0a0+b08101e ))"><code class="xref py py-class docutils literal"><span class="pre">torch.autograd.Variable</span></code></a>.</p>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cogitare.SequentialModel.forward_seq">
+<code class="descname">forward_seq</code><span class="sig-paren">(</span><em>sequence</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cogitare/core/sequential_model.html#SequentialModel.forward_seq"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cogitare.SequentialModel.forward_seq" title="Permalink to this definition">¶</a></dt>
+<dd><p>Forward a whole sequence in the model, and return a list of the output
+at each timestep.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sequence</strong> (<em>iterable</em>) – an iterable with each item being the data for
+the current timestep.</td>
+</tr>
+</tbody>
+</table>
+<p>Retuns:</p>
+<blockquote>
+<div>output (iterable): a list with the <a class="reference internal" href="#cogitare.SequentialModel.forward" title="cogitare.SequentialModel.forward"><code class="xref py py-meth docutils literal"><span class="pre">forward()</span></code></a> output for each timestep.</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="cogitare.SequentialModel.get_initial_state">
+<code class="descname">get_initial_state</code><span class="sig-paren">(</span><em>batch</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cogitare/core/sequential_model.html#SequentialModel.get_initial_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cogitare.SequentialModel.get_initial_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the initial state of the RNN.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>batch</strong> – the current batch.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>state (torch.autograd.Variable)</em> – the initial state.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cogitare.SequentialModel.half">
+<code class="descname">half</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cogitare.SequentialModel.half" title="Permalink to this definition">¶</a></dt>
+<dd><p>Casts all parameters and buffers to half datatype.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cogitare.SequentialModel.learn">
+<code class="descname">learn</code><span class="sig-paren">(</span><em>dataset</em>, <em>optimizer</em>, <em>validation_dataset=None</em>, <em>max_epochs=50</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cogitare/core/sequential_model.html#SequentialModel.learn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cogitare.SequentialModel.learn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Optimize the model parameters using the dataset. This function use the algorithm:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="n">max_epochs</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+            <span class="c1"># forward the data</span>
+            <span class="n">hidden</span> <span class="o">=</span> <span class="n">get_initial_state</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+            <span class="n">seqlen</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">batch</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+            <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">timestep</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="n">output</span><span class="p">,</span> <span class="n">hidden</span> <span class="o">=</span> <span class="n">forward</span><span class="p">(</span><span class="n">timestep</span><span class="p">,</span> <span class="n">hidden</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">seqlen</span><span class="p">)</span>
+                <span class="n">error</span> <span class="o">=</span> <span class="n">loss</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">timestep</span><span class="p">,</span> <span class="n">hidden</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">seqlen</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">error</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="c1"># optimize the parameters</span>
+                    <span class="n">backward</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+                    <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">validation_dataset</span><span class="p">:</span>
+            <span class="n">evaluate_model</span><span class="p">(</span><span class="n">validation_dataset</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">StopTraining</span><span class="p">:</span>
+        <span class="c1"># stop the training process if request by a plugin</span>
+</pre></div>
+</div>
+<p>If the <code class="docutils literal"><span class="pre">validation_dataset</span></code> is present, it can be used by plugins to evaluate the
+validation/test loss/error during training.</p>
+<p>To achieve a better performance, and have access to everyday dataset manipulation
+features, it’s recommended to use the <a class="reference internal" href="sequential_data.html#cogitare.data.SequentialDataSet" title="cogitare.data.SequentialDataSet"><code class="xref py py-class docutils literal"><span class="pre">SequentialDataSet</span></code></a> class. It
+provides a interface that loads batches using multiple threads/processes
+and provides useful tasks such as data splitting, async data loading, shuffling, and more. For
+sequential data with variable length, it can automatically pad the sequences such that all of them
+have the same length.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>dataset</strong> (<em>iterator</em>) – an iterator that returns one batch per iteration.
+Each batch is an iterator, where each item is a sequence. To have a better
+performance and a easy to use interface, it is recommended to
+use the <a class="reference internal" href="sequential_data.html#cogitare.data.SequentialDataSet" title="cogitare.data.SequentialDataSet"><code class="xref py py-class docutils literal"><span class="pre">SequentialDataSet</span></code></a>.</li>
+<li><strong>optimizer</strong> (<a class="reference external" href="http://pytorch.org/docs/master/optim.html#module-torch.optim" title="(in PyTorch vmaster (0.4.0a0+b08101e ))"><em>torch.optim</em></a>) – the instance of a <a class="reference external" href="http://pytorch.org/docs/master/optim.html#torch.optim.Optimizer" title="(in PyTorch vmaster (0.4.0a0+b08101e ))"><code class="xref py py-class docutils literal"><span class="pre">torch.optim.Optimizer</span></code></a> object.</li>
+<li><strong>validation_dataset</strong> (<em>iterator</em><em>, </em><em>optional</em>) – if provided, must have the same
+caracteristics that the <code class="docutils literal"><span class="pre">dataset</span></code>. This may be used by the model and
+by plugins to evaluate the model performance during training.</li>
+<li><strong>max_epochs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – the number of epochs before ending the training procedure.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><em>status (bool)</em> – False if stopped by <a class="reference internal" href="utils.html#cogitare.utils.StopTraining" title="cogitare.utils.StopTraining"><code class="xref py py-class docutils literal"><span class="pre">StopTraining</span></code></a>. True otherwise.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cogitare.SequentialModel.load">
+<code class="descname">load</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#cogitare.SequentialModel.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load the model parameters using <a class="reference external" href="http://pytorch.org/docs/master/torch.html#torch.load" title="(in PyTorch vmaster (0.4.0a0+b08101e ))"><code class="xref py py-func docutils literal"><span class="pre">torch.load()</span></code></a> from a given path.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> – path of the serialized state_dict.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cogitare.SequentialModel.load_state_dict">
+<code class="descname">load_state_dict</code><span class="sig-paren">(</span><em>state_dict</em><span class="sig-paren">)</span><a class="headerlink" href="#cogitare.SequentialModel.load_state_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copies parameters and buffers from <a class="reference internal" href="#cogitare.SequentialModel.state_dict" title="cogitare.SequentialModel.state_dict"><code class="xref py py-attr docutils literal"><span class="pre">state_dict</span></code></a> into
+this module and its descendants. The keys of <a class="reference internal" href="#cogitare.SequentialModel.state_dict" title="cogitare.SequentialModel.state_dict"><code class="xref py py-attr docutils literal"><span class="pre">state_dict</span></code></a> must
+exactly match the keys returned by this module’s <a class="reference internal" href="#cogitare.SequentialModel.state_dict" title="cogitare.SequentialModel.state_dict"><code class="xref py py-func docutils literal"><span class="pre">state_dict()</span></code></a>
+function.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>state_dict</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.6)"><em>dict</em></a>) – A dict containing parameters and
+persistent buffers.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cogitare.SequentialModel.loss">
+<code class="descname">loss</code><span class="sig-paren">(</span><em>output</em>, <em>data</em>, <em>hidden</em>, <em>timestep</em>, <em>seqlen</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cogitare/core/sequential_model.html#SequentialModel.loss"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cogitare.SequentialModel.loss" title="Permalink to this definition">¶</a></dt>
+<dd><div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">When developing a Model, the class must implement this method.</p>
+</div>
+<p>It will receive the output and the hidden state of the <a class="reference internal" href="model.html#cogitare.Model.forward" title="cogitare.Model.forward"><code class="xref py py-meth docutils literal"><span class="pre">forward()</span></code></a> method,
+with the the data obtained by the timestep iterator (the same used in forward),
+and must return the model loss considering the model output and expected output.</p>
+<p>If the model is Many-to-Many, it should return a valid loss for each timestep.</p>
+<p>If the model is Many-to-One, it should return a valid loss in the last timestep (
+when timestep == seqlen), and return None otherwise.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>output</strong> – the <a class="reference internal" href="#cogitare.SequentialModel.forward" title="cogitare.SequentialModel.forward"><code class="xref py py-meth docutils literal"><span class="pre">forward()</span></code></a> output</li>
+<li><strong>data</strong> – this is the data got from iterating over the timesteps, got from
+iterating over the batches in the dataset provided in the
+<a class="reference internal" href="model.html#cogitare.Model.learn" title="cogitare.Model.learn"><code class="xref py py-meth docutils literal"><span class="pre">learn()</span></code></a> method. Its type and shape depend exclusively on
+the input dataset, no transformations or type checking are made during training.
+For most models, this will be a tuple containing <code class="docutils literal"><span class="pre">(x_data_t,</span> <span class="pre">y_data_t)</span></code>, but can be
+anything.</li>
+<li><strong>hidden</strong> (<a class="reference external" href="http://pytorch.org/docs/master/autograd.html#torch.autograd.Variable" title="(in PyTorch vmaster (0.4.0a0+b08101e ))"><em>torch.autograd.Variable</em></a>) – the hidden state at the current timestep. If this is the first timestep,
+the hidden state is got from <a class="reference internal" href="#cogitare.SequentialModel.get_initial_state" title="cogitare.SequentialModel.get_initial_state"><code class="xref py py-meth docutils literal"><span class="pre">get_initial_state()</span></code></a>. Otherwise, it is got
+from the <a class="reference internal" href="#cogitare.SequentialModel.forward" title="cogitare.SequentialModel.forward"><code class="xref py py-meth docutils literal"><span class="pre">forward()</span></code></a> returned value.</li>
+<li><strong>timestep</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – indicates the current timestem (from 1 to seqlen)</li>
+<li><strong>seqlen</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – the number of timesteps in the sequence.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><em>loss (torch.autograd.Variable, None)</em> – the model loss. The loss will be used to backpropagate the errors.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cogitare.SequentialModel.metric_loss">
+<code class="descname">metric_loss</code><span class="sig-paren">(</span><em>output</em>, <em>sample</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#cogitare.SequentialModel.metric_loss" title="Permalink to this definition">¶</a></dt>
+<dd><p>metric_loss is a shortcut to use the model loss as a tranining metric.</p>
+<p>Given the model output and the batch data, the metric_loss returns the
+loss for this specific batch.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>output</strong> – model output</li>
+<li><strong>sample</strong> – batch data</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><em>output (float)</em> – the model loss.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cogitare.SequentialModel.modules">
+<code class="descname">modules</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cogitare.SequentialModel.modules" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an iterator over all modules in the network.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Duplicate modules are returned only once. In the following
+example, <code class="docutils literal"><span class="pre">l</span></code> will be returned only once.</p>
+<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">l</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">net</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">net</span><span class="o">.</span><span class="n">modules</span><span class="p">()):</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="nb">print</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="s1">&#39;-&gt;&#39;</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>
+<span class="go">0 -&gt; Sequential (</span>
+<span class="go">  (0): Linear (2 -&gt; 2)</span>
+<span class="go">  (1): Linear (2 -&gt; 2)</span>
+<span class="go">)</span>
+<span class="go">1 -&gt; Linear (2 -&gt; 2)</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cogitare.SequentialModel.named_children">
+<code class="descname">named_children</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cogitare.SequentialModel.named_children" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an iterator over immediate children modules, yielding both
+the name of the module as well as the module itself.</p>
+<p class="rubric">Example</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">module</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">named_children</span><span class="p">():</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;conv4&#39;</span><span class="p">,</span> <span class="s1">&#39;conv5&#39;</span><span class="p">]:</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="nb">print</span><span class="p">(</span><span class="n">module</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cogitare.SequentialModel.named_modules">
+<code class="descname">named_modules</code><span class="sig-paren">(</span><em>memo=None</em>, <em>prefix=''</em><span class="sig-paren">)</span><a class="headerlink" href="#cogitare.SequentialModel.named_modules" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an iterator over all modules in the network, yielding
+both the name of the module as well as the module itself.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Duplicate modules are returned only once. In the following
+example, <code class="docutils literal"><span class="pre">l</span></code> will be returned only once.</p>
+<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">l</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">net</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">net</span><span class="o">.</span><span class="n">named_modules</span><span class="p">()):</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="nb">print</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="s1">&#39;-&gt;&#39;</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>
+<span class="go">0 -&gt; (&#39;&#39;, Sequential (</span>
+<span class="go">  (0): Linear (2 -&gt; 2)</span>
+<span class="go">  (1): Linear (2 -&gt; 2)</span>
+<span class="go">))</span>
+<span class="go">1 -&gt; (&#39;0&#39;, Linear (2 -&gt; 2))</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cogitare.SequentialModel.named_parameters">
+<code class="descname">named_parameters</code><span class="sig-paren">(</span><em>memo=None</em>, <em>prefix=''</em><span class="sig-paren">)</span><a class="headerlink" href="#cogitare.SequentialModel.named_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an iterator over module parameters, yielding both the
+name of the parameter as well as the parameter itself</p>
+<p class="rubric">Example</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">param</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">named_parameters</span><span class="p">():</span>
+<span class="gp">&gt;&gt;&gt; </span>   <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;bias&#39;</span><span class="p">]:</span>
+<span class="gp">&gt;&gt;&gt; </span>       <span class="nb">print</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">size</span><span class="p">())</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cogitare.SequentialModel.parameters">
+<code class="descname">parameters</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cogitare.SequentialModel.parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an iterator over module parameters.</p>
+<p>This is typically passed to an optimizer.</p>
+<p class="rubric">Example</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">():</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">data</span><span class="p">),</span> <span class="n">param</span><span class="o">.</span><span class="n">size</span><span class="p">())</span>
+<span class="go">&lt;class &#39;torch.FloatTensor&#39;&gt; (20L,)</span>
+<span class="go">&lt;class &#39;torch.FloatTensor&#39;&gt; (20L, 1L, 5L, 5L)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cogitare.SequentialModel.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#cogitare.SequentialModel.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calls the forward on the provided data, but without affecting/using training
+variables.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>args/kwargs</strong> – <a class="reference internal" href="model.html#cogitare.Model.forward" title="cogitare.Model.forward"><code class="xref py py-meth docutils literal"><span class="pre">forward()</span></code></a> arguments. If provided, the
+forward will receive these parameters.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>output</em> – the <a class="reference internal" href="model.html#cogitare.Model.forward" title="cogitare.Model.forward"><code class="xref py py-meth docutils literal"><span class="pre">forward()</span></code></a> output.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cogitare.SequentialModel.register_backward_hook">
+<code class="descname">register_backward_hook</code><span class="sig-paren">(</span><em>hook</em><span class="sig-paren">)</span><a class="headerlink" href="#cogitare.SequentialModel.register_backward_hook" title="Permalink to this definition">¶</a></dt>
+<dd><p>Registers a backward hook on the module.</p>
+<p>The hook will be called every time the gradients with respect to module
+inputs are computed. The hook should have the following signature:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">hook</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">grad_input</span><span class="p">,</span> <span class="n">grad_output</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span> <span class="ow">or</span> <span class="kc">None</span>
+</pre></div>
+</div>
+<p>The <code class="xref py py-attr docutils literal"><span class="pre">grad_input</span></code> and <code class="xref py py-attr docutils literal"><span class="pre">grad_output</span></code> may be tuples if the
+module has multiple inputs or outputs. The hook should not modify its
+arguments, but it can optionally return a new gradient with respect to
+input that will be used in place of <code class="xref py py-attr docutils literal"><span class="pre">grad_input</span></code> in subsequent
+computations.</p>
+<p>This function returns a handle with a method <code class="docutils literal"><span class="pre">handle.remove()</span></code>
+that removes the hook from the module.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cogitare.SequentialModel.register_buffer">
+<code class="descname">register_buffer</code><span class="sig-paren">(</span><em>name</em>, <em>tensor</em><span class="sig-paren">)</span><a class="headerlink" href="#cogitare.SequentialModel.register_buffer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a persistent buffer to the module.</p>
+<p>This is typically used to register a buffer that should not to be
+considered a model parameter. For example, BatchNorm’s <code class="docutils literal"><span class="pre">running_mean</span></code>
+is not a parameter, but is part of the persistent state.</p>
+<p>Buffers can be accessed as attributes using given names.</p>
+<p class="rubric">Example</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="bp">self</span><span class="o">.</span><span class="n">register_buffer</span><span class="p">(</span><span class="s1">&#39;running_mean&#39;</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_features</span><span class="p">))</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cogitare.SequentialModel.register_default_plugins">
+<code class="descname">register_default_plugins</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cogitare.SequentialModel.register_default_plugins" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method registers a set o common plugins to let you debug the model training.</p>
+<p>Plugins included:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Progress bar per batch and epoch</li>
+<li>Plot training and validation losses (if validation_dataset is present)</li>
+<li>Log training loss</li>
+</ul>
+</div></blockquote>
+<p>If you want to have these plugins on training, just use this method before
+<a class="reference internal" href="model.html#cogitare.Model.learn" title="cogitare.Model.learn"><code class="xref py py-meth docutils literal"><span class="pre">learn()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cogitare.SequentialModel.register_forward_hook">
+<code class="descname">register_forward_hook</code><span class="sig-paren">(</span><em>hook</em><span class="sig-paren">)</span><a class="headerlink" href="#cogitare.SequentialModel.register_forward_hook" title="Permalink to this definition">¶</a></dt>
+<dd><p>Registers a forward hook on the module.</p>
+<p>The hook will be called every time <a class="reference internal" href="#cogitare.SequentialModel.forward" title="cogitare.SequentialModel.forward"><code class="xref py py-func docutils literal"><span class="pre">forward()</span></code></a> computes an output.
+It should have the following signature:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">hook</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+</pre></div>
+</div>
+<p>The hook should not modify the input or output.
+This function returns a handle with a method <code class="docutils literal"><span class="pre">handle.remove()</span></code>
+that removes the hook from the module.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cogitare.SequentialModel.register_forward_pre_hook">
+<code class="descname">register_forward_pre_hook</code><span class="sig-paren">(</span><em>hook</em><span class="sig-paren">)</span><a class="headerlink" href="#cogitare.SequentialModel.register_forward_pre_hook" title="Permalink to this definition">¶</a></dt>
+<dd><p>Registers a forward pre-hook on the module.</p>
+<p>The hook will be called before <a class="reference internal" href="#cogitare.SequentialModel.forward" title="cogitare.SequentialModel.forward"><code class="xref py py-func docutils literal"><span class="pre">forward()</span></code></a> is invoked.
+It should have the following signature:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">hook</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="nb">input</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+</pre></div>
+</div>
+<p>The hook should not modify the input.
+This function returns a handle with a method <code class="docutils literal"><span class="pre">handle.remove()</span></code>
+that removes the hook from the module.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cogitare.SequentialModel.register_parameter">
+<code class="descname">register_parameter</code><span class="sig-paren">(</span><em>name</em>, <em>param</em><span class="sig-paren">)</span><a class="headerlink" href="#cogitare.SequentialModel.register_parameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a parameter to the module.</p>
+<p>The parameter can be accessed as an attribute using given name.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cogitare.SequentialModel.register_plugin">
+<code class="descname">register_plugin</code><span class="sig-paren">(</span><em>plugin</em>, <em>hook</em>, <em>override=False</em>, <em>postpone=True</em><span class="sig-paren">)</span><a class="headerlink" href="#cogitare.SequentialModel.register_plugin" title="Permalink to this definition">¶</a></dt>
+<dd><p>You can use this to register a plugin to a specific event of the model.</p>
+<p>For each hook, the plugins will be called in the same order that they
+were registered.</p>
+<p>You can register (hook) a plugin to some specific events that may occur
+during training:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="15%" />
+<col width="8%" />
+<col width="9%" />
+<col width="4%" />
+<col width="7%" />
+<col width="10%" />
+<col width="10%" />
+<col width="6%" />
+<col width="6%" />
+<col width="6%" />
+<col width="7%" />
+<col width="13%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">hook X parameter</th>
+<th class="head">max_epochs</th>
+<th class="head">num_batches</th>
+<th class="head">model</th>
+<th class="head">optimizer</th>
+<th class="head">current_batch</th>
+<th class="head">current_epoch</th>
+<th class="head">sample</th>
+<th class="head">output</th>
+<th class="head">loss</th>
+<th class="head">loss_mean</th>
+<th class="head">validation_dataset</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>on_start</td>
+<td>OK</td>
+<td>OK</td>
+<td>OK</td>
+<td>OK</td>
+<td>0</td>
+<td>0</td>
+<td>None</td>
+<td>None</td>
+<td>None</td>
+<td>None</td>
+<td>OK</td>
+</tr>
+<tr class="row-odd"><td>on_start_epoch</td>
+<td>OK</td>
+<td>OK</td>
+<td>OK</td>
+<td>OK</td>
+<td>0</td>
+<td>OK</td>
+<td>None</td>
+<td>None</td>
+<td>None</td>
+<td>None</td>
+<td>OK</td>
+</tr>
+<tr class="row-even"><td>on_start_batch</td>
+<td>OK</td>
+<td>OK</td>
+<td>OK</td>
+<td>OK</td>
+<td>OK</td>
+<td>OK</td>
+<td>OK</td>
+<td>None</td>
+<td>OK</td>
+<td>OK</td>
+<td>OK</td>
+</tr>
+<tr class="row-odd"><td>before_backward</td>
+<td>OK</td>
+<td>OK</td>
+<td>OK</td>
+<td>OK</td>
+<td>OK</td>
+<td>OK</td>
+<td>OK</td>
+<td>OK</td>
+<td>OK</td>
+<td>None</td>
+<td>OK</td>
+</tr>
+<tr class="row-even"><td>before_step</td>
+<td>OK</td>
+<td>OK</td>
+<td>OK</td>
+<td>OK</td>
+<td>OK</td>
+<td>OK</td>
+<td>OK</td>
+<td>OK</td>
+<td>OK</td>
+<td>None</td>
+<td>OK</td>
+</tr>
+<tr class="row-odd"><td>on_end_batch</td>
+<td>OK</td>
+<td>OK</td>
+<td>OK</td>
+<td>OK</td>
+<td>OK</td>
+<td>OK</td>
+<td>OK</td>
+<td>OK</td>
+<td>OK</td>
+<td>None</td>
+<td>OK</td>
+</tr>
+<tr class="row-even"><td>on_end_epoch</td>
+<td>OK</td>
+<td>OK</td>
+<td>OK</td>
+<td>OK</td>
+<td>0</td>
+<td>OK</td>
+<td>None</td>
+<td>None</td>
+<td>OK</td>
+<td>OK</td>
+<td>OK</td>
+</tr>
+<tr class="row-odd"><td>on_stop_training</td>
+<td>OK</td>
+<td>OK</td>
+<td>OK</td>
+<td>OK</td>
+<td>depends</td>
+<td>depends</td>
+<td>depends</td>
+<td>depends</td>
+<td>depends</td>
+<td>depends</td>
+<td>OK</td>
+</tr>
+<tr class="row-even"><td>on_end</td>
+<td>OK</td>
+<td>OK</td>
+<td>OK</td>
+<td>OK</td>
+<td>depends</td>
+<td>depends</td>
+<td>depends</td>
+<td>depends</td>
+<td>depends</td>
+<td>depends</td>
+<td>OK</td>
+</tr>
+</tbody>
+</table>
+<p>The value of some of the model states depends on the execution of the model. The
+<strong>on_stop_training</strong>, for example, can be execute at any position of the learnining
+algorithm, so the valiables in the model state will depend on its current position.</p>
+<p>The value returned by the plugin is stored in model state as: <code class="docutils literal"><span class="pre">hook</span> <span class="pre">+</span> <span class="pre">'_'</span> <span class="pre">+</span> <span class="pre">plugin_name</span></code>.
+If the return value is a dict, the state will have: <code class="docutils literal"><span class="pre">hook</span> <span class="pre">+</span> <span class="pre">'_'</span> <span class="pre">+</span> <span class="pre">plugin_name</span> <span class="pre">+</span> <span class="pre">'_'</span> <span class="pre">+</span> <span class="pre">key</span></code> for each key of the
+return key, and a <code class="docutils literal"><span class="pre">hook</span> <span class="pre">+</span> <span class="pre">'_'</span> <span class="pre">+</span> <span class="pre">plugin_name</span> <span class="pre">+</span> <span class="pre">'__dict'</span></code> with the whole dict. Where the <code class="docutils literal"><span class="pre">plugin_name</span></code>
+if the function name, or the <code class="docutils literal"><span class="pre">name</span></code> attribute if using the <code class="xref py py-class docutils literal"><span class="pre">PluginInterface</span></code>.</p>
+<p>For example, if your plugin named Sample returns <code class="docutils literal"><span class="pre">{a:</span> <span class="pre">3,</span> <span class="pre">b:</span> <span class="pre">5,</span> <span class="pre">c:</span> <span class="pre">&quot;cogitare&quot;}</span></code>, another plugin can make use
+of this variables as follows:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">my_plugin1</span><span class="p">(</span><span class="n">on_end_bach_Sample_a</span><span class="p">,</span> <span class="n">on_end_bach_Sample_b</span><span class="p">,</span> <span class="n">on_end_bach_Sample__dict</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">on_end_bach_Sample_a</span> <span class="o">+</span> <span class="n">on_end_bach_Sample_b</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">on_end_bach_Sample__dict</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>or:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">my_plugin2</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;on_end_bach_Sample_a&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">model</span><span class="o">.</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;on_end_bach_Sample_b&#39;</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;on_end_bach_Sample__dict&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>plugin</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#callable" title="(in Python v3.6)"><em>callable</em></a>) – a function to be called. The parameters will be sent
+was described above</li>
+<li><strong>hook</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – the event to watch, as described above.</li>
+<li><strong>override</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a>) – if True, override a plugin at a specific hook if it has the
+same name. If False, raises an exception.</li>
+<li><strong>postpone</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a>) – if True, creates the instance of the module only when
+starting the learning step, or when manually calling <a class="reference internal" href="model.html#cogitare.Model.apply_register_plugins" title="cogitare.Model.apply_register_plugins"><code class="xref py py-meth docutils literal"><span class="pre">apply_register_plugins()</span></code></a>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cogitare.SequentialModel.save">
+<code class="descname">save</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#cogitare.SequentialModel.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save the model parameters using <a class="reference external" href="http://pytorch.org/docs/master/torch.html#torch.save" title="(in PyTorch vmaster (0.4.0a0+b08101e ))"><code class="xref py py-func docutils literal"><span class="pre">torch.save()</span></code></a> to a given path.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> – path to save the model.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cogitare.SequentialModel.state_dict">
+<code class="descname">state_dict</code><span class="sig-paren">(</span><em>destination=None</em>, <em>prefix=''</em><span class="sig-paren">)</span><a class="headerlink" href="#cogitare.SequentialModel.state_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a dictionary containing a whole state of the module.</p>
+<p>Both parameters and persistent buffers (e.g. running averages) are
+included. Keys are corresponding parameter and buffer names.</p>
+<p class="rubric">Example</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">module</span><span class="o">.</span><span class="n">state_dict</span><span class="p">()</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+<span class="go">[&#39;bias&#39;, &#39;weight&#39;]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cogitare.SequentialModel.train">
+<code class="descname">train</code><span class="sig-paren">(</span><em>mode=True</em><span class="sig-paren">)</span><a class="headerlink" href="#cogitare.SequentialModel.train" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the module in training mode.</p>
+<p>This has any effect only on modules such as Dropout or BatchNorm.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cogitare.SequentialModel.zero_grad">
+<code class="descname">zero_grad</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cogitare.SequentialModel.zero_grad" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets gradients of all model parameters to zero.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="data.html" class="btn btn-neutral float-right" title="Data" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="model.html" class="btn btn-neutral" title="Model" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Aron Bordin.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,541 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>cogitare.core.sequential_model &mdash; Cogitare 0.1 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/julia.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../../_static/julia.css" type="text/css" />
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="Cogitare 0.1 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+<a href="https://github.com/cogitare-ai/cogitare"><img style="z-index: 1; position: fixed; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="http://docs.cogitare-ai.org/"><img src="../../../_static/logo-line.png" class="logo"></a>
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <p class="caption"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#Model">Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#Data-Loading">Data Loading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#Training">Training</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials.html">Tutorials</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Cogitare</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../model.html">Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../model.html#implementing-a-model">Implementing a Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../model.html#api">API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../sequential_model.html">Sequential Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../sequential_model.html#implementing-a-sequential-model-many-to-many-many-to-one">Implementing a Sequential Model (Many-to-Many, Many-to-One)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sequential_model.html#api">API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../data.html">Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../data.html#absdataholder"><span class="hidden-section">AbsDataHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../data.html#tensorholder"><span class="hidden-section">TensorHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../data.html#numpyholder"><span class="hidden-section">NumpyHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../data.html#callableholder"><span class="hidden-section">CallableHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../data.html#autoholder"><span class="hidden-section">AutoHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../data.html#dataset"><span class="hidden-section">DataSet</span></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../sequential_data.html">Sequential Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../sequential_data.html#sequentialabsdataholder"><span class="hidden-section">SequentialAbsDataHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sequential_data.html#sequentialtensorholder"><span class="hidden-section">SequentialTensorHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sequential_data.html#sequentialnumpyholder"><span class="hidden-section">SequentialNumpyHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sequential_data.html#sequentialcallableholder"><span class="hidden-section">SequentialCallableHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sequential_data.html#sequentialautoholder"><span class="hidden-section">SequentialAutoHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sequential_data.html#sequentialdataset"><span class="hidden-section">SequentialDataSet</span></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../async_data.html">Async Data Loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../plugins.html">Plugins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../plugins.html#custom-plugin">Custom Plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../plugins.html#register-a-plugin">Register a plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../plugins.html#official-plugins">Official Plugins</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../plugins.html#earlystopping"><span class="hidden-section">EarlyStopping</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../plugins.html#evaluator"><span class="hidden-section">Evaluator</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../plugins.html#logger"><span class="hidden-section">Logger</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../plugins.html#plottingmatplotlib"><span class="hidden-section">PlottingMatplotlib</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../plugins.html#progressbar"><span class="hidden-section">ProgressBar</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../monitor.html">Cogitare Monitor</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../monitor.html#how-to-use">How to Use</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../monitor.html#creating-a-custom-plugin">Creating a Custom Plugin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../metrics.html">Metrics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../metrics.html#module-cogitare.metrics.classification">Classification Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../metrics.html#module-cogitare.metrics.spatial">Spatial Metrics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../utils.html">cogitare.utils</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../models/classic.html">Classic Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Extra</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../contribute.html">Contribute</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../contribute.html#contributing-to-cogitare">Contributing to Cogitare</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">Cogitare</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>cogitare.core.sequential_model</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <h1>Source code for cogitare.core.sequential_model</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">abc</span> <span class="k">import</span> <span class="n">ABCMeta</span><span class="p">,</span> <span class="n">abstractmethod</span>
+<span class="kn">from</span> <span class="nn">six</span> <span class="k">import</span> <span class="n">add_metaclass</span>
+<span class="kn">from</span> <span class="nn">cogitare.core.model</span> <span class="k">import</span> <span class="n">Model</span>
+<span class="kn">from</span> <span class="nn">cogitare.utils</span> <span class="k">import</span> <span class="n">not_training</span><span class="p">,</span> <span class="n">training</span>
+
+
+<div class="viewcode-block" id="SequentialModel"><a class="viewcode-back" href="../../../sequential_model.html#cogitare.SequentialModel">[docs]</a><span class="nd">@add_metaclass</span><span class="p">(</span><span class="n">ABCMeta</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">SequentialModel</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    .. warning:: This module is experimental and its interface may change in future releases.</span>
+
+<span class="sd">    SequentialModel is an extension of :class:`~cogitare.Model` that includes support for sequential</span>
+<span class="sd">    models. It&#39;s designed to work with RNNs, such as LSTM and GRUs, and can be easily used for any</span>
+<span class="sd">    model that operates over timestep per timestep.</span>
+
+<span class="sd">    If you are using a RNN, but passing the whole sequence as input, you should consider using</span>
+<span class="sd">    the :class:`~cogitare.Model` interface. This interface is desined for timestep per timestep</span>
+<span class="sd">    and can be used for Many-to-Many models and for Many-to-One.</span>
+
+<span class="sd">    While training, you can use plugins to watch and interact with the model.</span>
+<span class="sd">    The plugin works like an event mechanism, you register a callback function to</span>
+<span class="sd">    a specific event, and then you gain access to some variables of the model at</span>
+<span class="sd">    specific steps of the training process.</span>
+<span class="sd">    Check the :meth:`~cogitare.Model.register_plugin` for more information about the</span>
+<span class="sd">    available events and variables that the model can interact with.</span>
+
+<span class="sd">    Methods that your model must implement:</span>
+
+<span class="sd">        - **forward** (data, hidden, timestep, seqlen): receives the data at</span>
+<span class="sd">          the current timestep, the hidden state, the current timestep, and the sequence size;</span>
+<span class="sd">        - **loss** (output, data, hidden, timestep, seqlen): returns the loss</span>
+<span class="sd">          at the current timestep;</span>
+<span class="sd">        - **get_initial_state** (self, batch): start the RNN hidden state.</span>
+
+<span class="sd">    Expected input on :meth:`~cogitare.Model.learn`:</span>
+
+<span class="sd">        - **dataset** : an iterator, that returns one batch of samples per</span>
+<span class="sd">          iteration. Each bach is an iterator, containing data for each timestep.</span>
+<span class="sd">          The batch can be of any type (list, numpy array, tensor, string, etcs).</span>
+<span class="sd">          It is recommended to wrap your dataset using</span>
+<span class="sd">          the :class:`~cogitare.data.SequentialDataSet` object,</span>
+<span class="sd">          that provides a high-performance data loading interface.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">valid_hooks</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">valid_hooks</span> <span class="o">+</span> <span class="p">(</span><span class="s1">&#39;on_start_timestep&#39;</span><span class="p">,</span> <span class="s1">&#39;on_end_timestep&#39;</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SequentialModel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+<div class="viewcode-block" id="SequentialModel.get_initial_state"><a class="viewcode-back" href="../../../sequential_model.html#cogitare.SequentialModel.get_initial_state">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">get_initial_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the initial state of the RNN.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            batch: the current batch.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            state (torch.autograd.Variable): the initial state.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="SequentialModel.forward_seq"><a class="viewcode-back" href="../../../sequential_model.html#cogitare.SequentialModel.forward_seq">[docs]</a>    <span class="k">def</span> <span class="nf">forward_seq</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sequence</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Forward a whole sequence in the model, and return a list of the output</span>
+<span class="sd">        at each timestep.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            sequence (iterable): an iterable with each item being the data for</span>
+<span class="sd">              the current timestep.</span>
+
+<span class="sd">        Retuns:</span>
+
+<span class="sd">            output (iterable): a list with the :meth:`~cogitare.SequentialModel.forward` output for each timestep.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">outputs</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">hidden</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_initial_state</span><span class="p">([</span><span class="n">sequence</span><span class="p">])</span>
+        <span class="n">seqlen</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sequence</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">timestep</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">sequence</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">output</span><span class="p">,</span> <span class="n">hidden</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">hidden</span><span class="p">,</span> <span class="n">timestep</span><span class="p">,</span> <span class="n">seqlen</span><span class="p">)</span>
+
+            <span class="n">outputs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">outputs</span></div>
+
+<div class="viewcode-block" id="SequentialModel.forward"><a class="viewcode-back" href="../../../sequential_model.html#cogitare.SequentialModel.forward">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">hidden</span><span class="p">,</span> <span class="n">timestep</span><span class="p">,</span> <span class="n">seqlen</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        .. note:: When developing a Model, the class must implement this method.</span>
+
+<span class="sd">        The method receive four parameters, the data obtained by the timestep iterator,</span>
+<span class="sd">        the hidden state at the current timestep, the timestep, and the leghth of the sequence.</span>
+
+<span class="sd">        It must return a tuple with the model output after forwarding the data and the new hidden state.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            data: this is the data got from iterating over the timesteps, got from</span>
+<span class="sd">                iterating over the batches in the dataset provided in the</span>
+<span class="sd">                :meth:`~cogitare.Model.learn` method. Its type and shape depend exclusively on</span>
+<span class="sd">                the input dataset, no transformations or type checking are made during training.</span>
+<span class="sd">                For most models, this will be a tuple containing ``(x_data_t, y_data_t)``, but can be</span>
+<span class="sd">                anything.</span>
+<span class="sd">            hidden (torch.autograd.Variable): the hidden state at the current timestep. If this is the first timestep,</span>
+<span class="sd">                the hidden state is got from :meth:`~cogitare.SequentialModel.get_initial_state`. Otherwise, it is got</span>
+<span class="sd">                from the :meth:`~cogitare.SequentialModel.forward` returned value.</span>
+<span class="sd">            timestep (int): indicates the current timestem (from 1 to seqlen)</span>
+<span class="sd">            seqlen (int): the number of timesteps in the sequence.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (output, hidden): the data after processing the input data, and the new hidden state.</span>
+
+<span class="sd">            Usually, these are :class:`torch.autograd.Variable`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="SequentialModel.loss"><a class="viewcode-back" href="../../../sequential_model.html#cogitare.SequentialModel.loss">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">loss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">hidden</span><span class="p">,</span> <span class="n">timestep</span><span class="p">,</span> <span class="n">seqlen</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        .. note:: When developing a Model, the class must implement this method.</span>
+
+<span class="sd">        It will receive the output and the hidden state of the :meth:`~cogitare.Model.forward` method,</span>
+<span class="sd">        with the the data obtained by the timestep iterator (the same used in forward),</span>
+<span class="sd">        and must return the model loss considering the model output and expected output.</span>
+
+<span class="sd">        If the model is Many-to-Many, it should return a valid loss for each timestep.</span>
+
+<span class="sd">        If the model is Many-to-One, it should return a valid loss in the last timestep (</span>
+<span class="sd">        when timestep == seqlen), and return None otherwise.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            output: the :meth:`~cogitare.SequentialModel.forward` output</span>
+<span class="sd">            data: this is the data got from iterating over the timesteps, got from</span>
+<span class="sd">                iterating over the batches in the dataset provided in the</span>
+<span class="sd">                :meth:`~cogitare.Model.learn` method. Its type and shape depend exclusively on</span>
+<span class="sd">                the input dataset, no transformations or type checking are made during training.</span>
+<span class="sd">                For most models, this will be a tuple containing ``(x_data_t, y_data_t)``, but can be</span>
+<span class="sd">                anything.</span>
+<span class="sd">            hidden (torch.autograd.Variable): the hidden state at the current timestep. If this is the first timestep,</span>
+<span class="sd">                the hidden state is got from :meth:`~cogitare.SequentialModel.get_initial_state`. Otherwise, it is got</span>
+<span class="sd">                from the :meth:`~cogitare.SequentialModel.forward` returned value.</span>
+<span class="sd">            timestep (int): indicates the current timestem (from 1 to seqlen)</span>
+<span class="sd">            seqlen (int): the number of timesteps in the sequence.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            loss (torch.autograd.Variable, None): the model loss. The loss will be used to backpropagate the errors.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+    <span class="k">def</span> <span class="nf">_forward_batch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch_num</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">):</span>
+        <span class="n">seqlen</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+        <span class="n">losses</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">total_loss</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;num_timesteps&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">seqlen</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;losses_timestep&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">losses</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;current_timestep&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+        <span class="n">hidden</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_initial_state</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">timestep</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;current_timestep&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">timestep</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;sample_at_timestep&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">hook</span><span class="p">(</span><span class="s1">&#39;on_start_timestep&#39;</span><span class="p">)</span>
+
+            <span class="n">output</span><span class="p">,</span> <span class="n">hidden</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">hidden</span><span class="p">,</span> <span class="n">timestep</span><span class="p">,</span> <span class="n">seqlen</span><span class="p">)</span>
+
+            <span class="n">loss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">hidden</span><span class="p">,</span> <span class="n">timestep</span><span class="p">,</span> <span class="n">seqlen</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">loss</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">total_loss</span> <span class="o">+=</span> <span class="n">loss</span>
+                <span class="n">losses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loss</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;output_at_timestep&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">output</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">hook</span><span class="p">(</span><span class="s1">&#39;on_end_timestep&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;output&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">output</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">hook</span><span class="p">(</span><span class="s1">&#39;before_backward&#39;</span><span class="p">)</span>
+        <span class="n">total_loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hook</span><span class="p">(</span><span class="s1">&#39;before_step&#39;</span><span class="p">)</span>
+        <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">losses</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">losses</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_start_learn_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">validation_dataset</span><span class="p">,</span> <span class="n">max_epochs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SequentialModel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">_start_learn_state</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span>
+                                                        <span class="n">validation_dataset</span><span class="p">,</span> <span class="n">max_epochs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;num_timesteps&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                           <span class="s1">&#39;losses_timestep&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                           <span class="s1">&#39;current_timestep&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                           <span class="s1">&#39;sample_at_timestep&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                           <span class="s1">&#39;output_at_timestep&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">})</span>
+
+<div class="viewcode-block" id="SequentialModel.evaluate"><a class="viewcode-back" href="../../../sequential_model.html#cogitare.SequentialModel.evaluate">[docs]</a>    <span class="nd">@not_training</span>
+    <span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Iterate over batches in the dataset and returns a list of the of losses of each batch.</span>
+
+<span class="sd">        This method does not affect training variables and can be used to evaluate the</span>
+<span class="sd">        model performance in a different data (such as validation and test sets).</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            dataset: batch-timestep iterator</span>
+<span class="sd">            args/kwargs: :meth:`~cogitare.SequentialModel.forward` arguments. If provided, the</span>
+<span class="sd">                forward will receive these parameters.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            output (list): the losses in the provided batches, one loss per batch.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">losses</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">dataset</span><span class="p">:</span>
+
+            <span class="n">hidden</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_initial_state</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+            <span class="n">seqlen</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+            <span class="n">losses_batch</span> <span class="o">=</span> <span class="p">[]</span>
+
+            <span class="k">for</span> <span class="n">timestep</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="n">output</span><span class="p">,</span> <span class="n">hidden</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">hidden</span><span class="p">,</span> <span class="n">timestep</span><span class="p">,</span> <span class="n">seqlen</span><span class="p">)</span>
+                <span class="n">loss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">hidden</span><span class="p">,</span> <span class="n">timestep</span><span class="p">,</span> <span class="n">seqlen</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">loss</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">losses_batch</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loss</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+            <span class="n">losses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">losses_batch</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">losses_batch</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">losses</span></div>
+
+<div class="viewcode-block" id="SequentialModel.learn"><a class="viewcode-back" href="../../../sequential_model.html#cogitare.SequentialModel.learn">[docs]</a>    <span class="nd">@training</span>
+    <span class="k">def</span> <span class="nf">learn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">validation_dataset</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_epochs</span><span class="o">=</span><span class="mi">50</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Optimize the model parameters using the dataset. This function use the algorithm::</span>
+
+<span class="sd">            for epoch in max_epochs:</span>
+<span class="sd">                try:</span>
+<span class="sd">                    for batch in data:</span>
+<span class="sd">                        # forward the data</span>
+<span class="sd">                        hidden = get_initial_state(batch)</span>
+<span class="sd">                        seqlen = len(batch[0])</span>
+
+<span class="sd">                        for idx, timestep in enumerate(batch, 1):</span>
+<span class="sd">                            output, hidden = forward(timestep, hidden, idx, seqlen)</span>
+<span class="sd">                            error = loss(output, timestep, hidden, idx, seqlen)</span>
+
+<span class="sd">                            if error is not None:</span>
+<span class="sd">                                # optimize the parameters</span>
+<span class="sd">                                backward(error)</span>
+<span class="sd">                                optimizer.step()</span>
+
+<span class="sd">                    if validation_dataset:</span>
+<span class="sd">                        evaluate_model(validation_dataset)</span>
+<span class="sd">                except StopTraining:</span>
+<span class="sd">                    # stop the training process if request by a plugin</span>
+
+<span class="sd">        If the ``validation_dataset`` is present, it can be used by plugins to evaluate the</span>
+<span class="sd">        validation/test loss/error during training.</span>
+
+<span class="sd">        To achieve a better performance, and have access to everyday dataset manipulation</span>
+<span class="sd">        features, it&#39;s recommended to use the :class:`~cogitare.data.SequentialDataSet` class. It</span>
+<span class="sd">        provides a interface that loads batches using multiple threads/processes</span>
+<span class="sd">        and provides useful tasks such as data splitting, async data loading, shuffling, and more. For</span>
+<span class="sd">        sequential data with variable length, it can automatically pad the sequences such that all of them</span>
+<span class="sd">        have the same length.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            dataset (iterator): an iterator that returns one batch per iteration.</span>
+<span class="sd">                Each batch is an iterator, where each item is a sequence. To have a better</span>
+<span class="sd">                performance and a easy to use interface, it is recommended to</span>
+<span class="sd">                use the :class:`~cogitare.data.SequentialDataSet`.</span>
+<span class="sd">            optimizer (torch.optim): the instance of a :class:`torch.optim.Optimizer` object.</span>
+<span class="sd">            validation_dataset (iterator, optional): if provided, must have the same</span>
+<span class="sd">                caracteristics that the ``dataset``. This may be used by the model and</span>
+<span class="sd">                by plugins to evaluate the model performance during training.</span>
+<span class="sd">            max_epochs (int): the number of epochs before ending the training procedure.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            status (bool): False if stopped by :class:`~cogitare.utils.StopTraining`. True otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">SequentialModel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">learn</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">validation_dataset</span><span class="p">,</span> <span class="n">max_epochs</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Aron Bordin.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

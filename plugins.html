@@ -1,0 +1,588 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Plugins &mdash; Cogitare 0.1 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/julia.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="_static/julia.css" type="text/css" />
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="Cogitare 0.1 documentation" href="index.html"/>
+        <link rel="next" title="Cogitare Monitor" href="monitor.html"/>
+        <link rel="prev" title="Async Data Loader" href="async_data.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+<a href="https://github.com/cogitare-ai/cogitare"><img style="z-index: 1; position: fixed; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="http://docs.cogitare-ai.org/"><img src="_static/logo-line.png" class="logo"></a>
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <p class="caption"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#Model">Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#Data-Loading">Data Loading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#Training">Training</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Cogitare</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="model.html">Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="model.html#implementing-a-model">Implementing a Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model.html#api">API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sequential_model.html">Sequential Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sequential_model.html#implementing-a-sequential-model-many-to-many-many-to-one">Implementing a Sequential Model (Many-to-Many, Many-to-One)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sequential_model.html#api">API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="data.html">Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="data.html#absdataholder"><span class="hidden-section">AbsDataHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#tensorholder"><span class="hidden-section">TensorHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#numpyholder"><span class="hidden-section">NumpyHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#callableholder"><span class="hidden-section">CallableHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#autoholder"><span class="hidden-section">AutoHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#dataset"><span class="hidden-section">DataSet</span></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sequential_data.html">Sequential Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sequential_data.html#sequentialabsdataholder"><span class="hidden-section">SequentialAbsDataHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sequential_data.html#sequentialtensorholder"><span class="hidden-section">SequentialTensorHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sequential_data.html#sequentialnumpyholder"><span class="hidden-section">SequentialNumpyHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sequential_data.html#sequentialcallableholder"><span class="hidden-section">SequentialCallableHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sequential_data.html#sequentialautoholder"><span class="hidden-section">SequentialAutoHolder</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sequential_data.html#sequentialdataset"><span class="hidden-section">SequentialDataSet</span></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="async_data.html">Async Data Loader</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Plugins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#custom-plugin">Custom Plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#register-a-plugin">Register a plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#official-plugins">Official Plugins</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#earlystopping"><span class="hidden-section">EarlyStopping</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#evaluator"><span class="hidden-section">Evaluator</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#logger"><span class="hidden-section">Logger</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#plottingmatplotlib"><span class="hidden-section">PlottingMatplotlib</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#progressbar"><span class="hidden-section">ProgressBar</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="monitor.html">Cogitare Monitor</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="monitor.html#how-to-use">How to Use</a></li>
+<li class="toctree-l2"><a class="reference internal" href="monitor.html#creating-a-custom-plugin">Creating a Custom Plugin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="metrics.html">Metrics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#module-cogitare.metrics.classification">Classification Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#module-cogitare.metrics.spatial">Spatial Metrics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">cogitare.utils</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="models/classic.html">Classic Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Extra</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="contribute.html">Contribute</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contribute.html#contributing-to-cogitare">Contributing to Cogitare</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Cogitare</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Plugins</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/plugins.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="plugins">
+<h1>Plugins<a class="headerlink" href="#plugins" title="Permalink to this headline">¶</a></h1>
+<p>Plugins are high-level objects (any callable object, such as classes with
+<code class="docutils literal"><span class="pre">__call__</span></code>, user defined functions, and lambdas) that are used to inspect the
+model during training, to provide feedbacks to the user, and to interact with the model.</p>
+<p>For example, you can register a plugin to  plot train and validation loss
+during each epoch, along with an early stopping algorithm that watches the
+validation loss and saves/stops the model if the loss is not decreasing.</p>
+<p>We start by exemplifying who to use your plugin and then describe the
+plugins already implemented in Cogitare.</p>
+<p>If you have a plugin implementation/idea/request, contributions are welcome!</p>
+<div class="section" id="custom-plugin">
+<h2>Custom Plugin<a class="headerlink" href="#custom-plugin" title="Permalink to this headline">¶</a></h2>
+<p>To use your plugin with Cogitare, you just need to provide a callable
+object when registering the plugin.</p>
+<p>For example, if you want to apply a grad clipping, you can use:</p>
+<p>Example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">norm</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">clip_grad_norm</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="mf">1.0</span><span class="p">)</span>
+
+<span class="n">model</span><span class="o">.</span><span class="n">register_plugin</span><span class="p">(</span><span class="n">norm</span><span class="p">,</span> <span class="s1">&#39;before_step&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="register-a-plugin">
+<h2>Register a plugin<a class="headerlink" href="#register-a-plugin" title="Permalink to this headline">¶</a></h2>
+<p>To register a plugin, use the <a class="reference internal" href="model.html#cogitare.Model.register_plugin" title="cogitare.Model.register_plugin"><code class="xref py py-meth docutils literal"><span class="pre">cogitare.Model.register_plugin()</span></code></a> method.</p>
+<p>Check the <a class="reference internal" href="model.html#cogitare.Model.register_plugin" title="cogitare.Model.register_plugin"><code class="xref py py-meth docutils literal"><span class="pre">register_plugin()</span></code></a> docs for more details about
+the available events to watch, and which variables are available per event.</p>
+</div>
+<div class="section" id="official-plugins">
+<h2>Official Plugins<a class="headerlink" href="#official-plugins" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="earlystopping">
+<h3><span class="hidden-section">EarlyStopping</span><a class="headerlink" href="#earlystopping" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="cogitare.plugins.EarlyStopping">
+<em class="property">class </em><code class="descclassname">cogitare.plugins.</code><code class="descname">EarlyStopping</code><span class="sig-paren">(</span><em>max_tries</em>, <em>path</em>, <em>name='on_end_epoch_Evaluator_loss'</em>, <em>func=&lt;function mean&gt;</em>, <em>min_delta=1e-08</em>, <em>mode='min'</em>, <em>restore_checkpoint=True</em>, <em>freq=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cogitare/plugins/early_stopping.html#EarlyStopping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cogitare.plugins.EarlyStopping" title="Permalink to this definition">¶</a></dt>
+<dd><p>This plugin provides the early stopping algorithm.</p>
+<p>During training, it will check the validation loss and if after <code class="docutils literal"><span class="pre">max_tries</span></code>
+epochs the validation loss does not decrease, the training stops.</p>
+<p>The parameters with the best score found is saved in disk using <a class="reference external" href="http://pytorch.org/docs/master/torch.html#torch.save" title="(in PyTorch vmaster (0.4.0a0+b08101e ))"><code class="xref py py-func docutils literal"><span class="pre">torch.save()</span></code></a> in the
+provided <code class="docutils literal"><span class="pre">path</span></code>.</p>
+<p>When stopping, the plugin will automatically restore the model to the best checkpoint. If
+you don’t want to have this feature, set <code class="docutils literal"><span class="pre">restore_checkpoint=False</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>max_tries</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – number of epochs before stopping the training</li>
+<li><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – path to save the best model</li>
+<li><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – the name of the variable used to use as a metric. As default,
+get the loss in the validation dataset.</li>
+<li><strong>func</strong> (<em>callabe</em>) – function to apply in the incoming data (useful for computing
+the mean/norm/min/max of vectors to use as a metric, and defaults
+on <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.mean.html#numpy.mean" title="(in NumPy v1.14)"><code class="xref py py-func docutils literal"><span class="pre">numpy.mean()</span></code></a>.</li>
+<li><strong>restore_checkpoint</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a>) – if True,  restore the model parameters after stopping by
+early-stopping.</li>
+<li><strong>min_delta</strong> – the minimum difference between losses to consider as an improviment.</li>
+<li><strong>mode</strong> (<em>'min'</em><em> or </em><em>'max'</em>) – if <code class="docutils literal"><span class="pre">min</span></code>, consider that this is a minimization problem, so the
+loss should decrease to the model improve. If ‘max’, consider the opposite behavior.</li>
+<li><strong>freq</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – the frequency to execute this model. The model will execute at each <code class="docutils literal"><span class="pre">freq</span></code> call.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">metrics</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;loss&#39;</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">metric_loss</span><span class="p">,</span>
+    <span class="s1">&#39;precision&#39;</span><span class="p">:</span> <span class="n">precision</span>
+<span class="p">}</span>
+<span class="n">ev</span> <span class="o">=</span> <span class="n">Evaluator</span><span class="p">(</span><span class="n">validation_dataset</span><span class="p">,</span> <span class="n">metrics</span><span class="p">)</span>
+
+<span class="c1"># by default, the EarlyStopping uses the Evaluator &quot;loss&quot; metric.</span>
+<span class="n">early</span> <span class="o">=</span> <span class="n">EarlyStopping</span><span class="p">(</span><span class="n">max_tries</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s1">&#39;/tmp/model.pt&#39;</span><span class="p">)</span>
+
+<span class="c1"># to use a different metric, use:</span>
+<span class="n">early</span> <span class="o">=</span> <span class="n">EarlyStopping</span><span class="p">(</span><span class="n">max_tries</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s1">&#39;/tmp/model.pt&#39;</span><span class="p">,</span>
+                      <span class="n">name</span><span class="o">=</span><span class="s1">&#39;on_end_batch_Evaluator_precision&#39;</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">register_plugin</span><span class="p">([</span><span class="n">ev</span><span class="p">,</span> <span class="n">early</span><span class="p">],</span> <span class="s1">&#39;on_end_epoch&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="evaluator">
+<h3><span class="hidden-section">Evaluator</span><a class="headerlink" href="#evaluator" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="cogitare.plugins.Evaluator">
+<em class="property">class </em><code class="descclassname">cogitare.plugins.</code><code class="descname">Evaluator</code><span class="sig-paren">(</span><em>dataset</em>, <em>metrics</em>, <em>freq=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cogitare/plugins/evaluator.html#Evaluator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cogitare.plugins.Evaluator" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Evaluator plugin is a shortcut to evaluate the model performance
+during training throught different metrics using the
+<a class="reference internal" href="model.html#cogitare.Model.evaluate_with_metrics" title="cogitare.Model.evaluate_with_metrics"><code class="xref py py-meth docutils literal"><span class="pre">cogitare.Model.evaluate_with_metrics()</span></code></a> method.</p>
+<p>The results of the metrics are stored in the model state, and can be displayed
+using plots, logs, and etc.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>dataset</strong> – the dataset to evaluate the model. Must have the same caracteristics that
+the training dataset, used in <a class="reference internal" href="model.html#cogitare.Model.learn" title="cogitare.Model.learn"><code class="xref py py-meth docutils literal"><span class="pre">cogitare.Model.learn()</span></code></a>.</li>
+<li><strong>metrics</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.6)"><em>dict</em></a>) – a dict mapping from {metric_name: metric_function}. A metric function
+receives two parameters: (the model output, the dataset batch)</li>
+<li><strong>freq</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – the frequency to execute this model. The model will execute at each <code class="docutils literal"><span class="pre">freq</span></code> call.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><em>output (dict)</em> – a dict mapping metric_name -&gt; to a list with the metric result for each batch.
+This is the <a class="reference internal" href="model.html#cogitare.Model.evaluate_with_metrics" title="cogitare.Model.evaluate_with_metrics"><code class="xref py py-meth docutils literal"><span class="pre">cogitare.Model.evaluate_with_metrics()</span></code></a> output.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">metrics</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;loss&#39;</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">metric_loss</span><span class="p">,</span>
+    <span class="s1">&#39;precision&#39;</span><span class="p">:</span> <span class="n">precision</span>
+<span class="p">}</span>
+
+<span class="n">plugin</span> <span class="o">=</span> <span class="n">Evaluator</span><span class="p">(</span><span class="n">validation_dataset</span><span class="p">,</span> <span class="n">metrics</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">register_plugin</span><span class="p">(</span><span class="n">plugin</span><span class="p">,</span> <span class="s1">&#39;on_end_batch&#39;</span><span class="p">)</span>
+
+<span class="c1"># ... if you want to plot these results</span>
+<span class="n">plot</span> <span class="o">=</span> <span class="n">PlottingMatplotlib</span><span class="p">()</span>
+<span class="n">plot</span><span class="o">.</span><span class="n">add_variable</span><span class="p">(</span><span class="s1">&#39;on_end_batch_Evaluator_loss&#39;</span><span class="p">,</span> <span class="s1">&#39;Loss&#39;</span><span class="p">)</span>
+<span class="n">plot</span><span class="o">.</span><span class="n">add_variable</span><span class="p">(</span><span class="s1">&#39;on_end_batch_Evaluator_precision&#39;</span><span class="p">,</span> <span class="s1">&#39;Precision&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="logger">
+<h3><span class="hidden-section">Logger</span><a class="headerlink" href="#logger" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="cogitare.plugins.Logger">
+<em class="property">class </em><code class="descclassname">cogitare.plugins.</code><code class="descname">Logger</code><span class="sig-paren">(</span><em>title='[Logger]'</em>, <em>msg='Loss: {loss_mean:.6f}'</em>, <em>show_time=True</em>, <em>output_file=None</em>, <em>freq=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cogitare/plugins/logger.html#Logger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cogitare.plugins.Logger" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Logger plugin prints in the stdout (and in a file, optionally), a value from the
+model state.</p>
+<p>For example, it can be used to print the training error during each batch or epoch,
+or just print the number of samples processed so far.</p>
+<p>By default, it will print the loss error on the training data, but it can be configured using the
+<code class="docutils literal"><span class="pre">msg</span></code> parameter.</p>
+<img alt="_images/plugins.png" src="_images/plugins.png" />
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>title</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – title that appears at the beginning of the message.</li>
+<li><strong>msg</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – string with the message formatting. You can use this parameter
+to customize the logging variable and format. The message must be compatible with
+<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str.format" title="(in Python v3.6)"><code class="xref py py-meth docutils literal"><span class="pre">str.format()</span></code></a>, and it has access to the model state variable.</li>
+<li><strong>show_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a>) – if True, appends the running time at the end of the message.</li>
+<li><strong>output</strong> (<em>file</em>) – if provided, write the log message in the file.</li>
+<li><strong>freq</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – the frequency to execute this model. The model will execute at each <code class="docutils literal"><span class="pre">freq</span></code> call.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Examples:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">logger1</span> <span class="o">=</span> <span class="n">Logger</span><span class="p">()</span>
+<span class="n">logger2</span> <span class="o">=</span> <span class="n">Logger</span><span class="p">(</span><span class="n">msg</span><span class="o">=</span><span class="s1">&#39;Batch loss: </span><span class="si">{loss_mean:.6f}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">logger3</span> <span class="o">=</span> <span class="n">Logger</span><span class="p">(</span><span class="n">msg</span><span class="o">=</span><span class="s1">&#39;Validation loss: </span><span class="si">{on_end_batch_Evalualor_loss:.6f}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="n">model</span><span class="o">.</span><span class="n">register_plugin</span><span class="p">([</span><span class="n">logger1</span><span class="p">,</span> <span class="n">logger3</span><span class="p">],</span> <span class="s1">&#39;on_end_epoch&#39;</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">register_plugin</span><span class="p">(</span><span class="n">logger2</span><span class="p">,</span> <span class="s1">&#39;on_end_batch&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="plottingmatplotlib">
+<h3><span class="hidden-section">PlottingMatplotlib</span><a class="headerlink" href="#plottingmatplotlib" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="cogitare.plugins.PlottingMatplotlib">
+<em class="property">class </em><code class="descclassname">cogitare.plugins.</code><code class="descname">PlottingMatplotlib</code><span class="sig-paren">(</span><em>style='ggplot'</em>, <em>xlabel='Epochs'</em>, <em>ylabel='Loss'</em>, <em>title='Training loss per epoch'</em>, <em>legend_pos='upper right'</em>, <em>file_name=None</em>, <em>freq=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cogitare/plugins/plotting.html#PlottingMatplotlib"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cogitare.plugins.PlottingMatplotlib" title="Permalink to this definition">¶</a></dt>
+<dd><p>This plugin is a matplotlib interface to plot the training state, such as the
+training and validation error during the training process.</p>
+<p>It’s useful to monitor the model performance, overfitting, generalization, and so on.</p>
+<a class="reference external image-reference" href="_static/plugin_matplotlib.png"><img alt="_images/plugin_matplotlib.png" src="_images/plugin_matplotlib.png" /></a>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>style</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – matplotlib style</li>
+<li><strong>xlabel</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – label in the x-axis</li>
+<li><strong>ylabel</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – label in the y-axis</li>
+<li><strong>title</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – plot title</li>
+<li><strong>legend_pos</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – position of the label legends</li>
+<li><strong>file_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – if set, save the plot image in the specified path.</li>
+<li><strong>freq</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – the frequency to execute this model. The model will execute at each <code class="docutils literal"><span class="pre">freq</span></code> call.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">plot</span> <span class="o">=</span> <span class="n">PlottingMatplotlib</span><span class="p">()</span>
+<span class="c1"># plot the training error with the std</span>
+<span class="n">plot</span><span class="o">.</span><span class="n">add_variable</span><span class="p">(</span><span class="s1">&#39;loss&#39;</span><span class="p">,</span> <span class="s1">&#39;Loss&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">use_std</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1"># plot the validation error without std</span>
+<span class="n">plot</span><span class="o">.</span><span class="n">add_variable</span><span class="p">(</span><span class="s1">&#39;on_end_batch_Evaluator_loss&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;Validation&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">use_std</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="n">model</span><span class="o">.</span><span class="n">register_plugin</span><span class="p">(</span><span class="n">plot</span><span class="p">,</span> <span class="s1">&#39;on_end_epoch&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="cogitare.plugins.PlottingMatplotlib.add_variable">
+<code class="descname">add_variable</code><span class="sig-paren">(</span><em>name</em>, <em>label</em>, <em>style='.-'</em>, <em>color=None</em>, <em>use_std=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cogitare/plugins/plotting.html#PlottingMatplotlib.add_variable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cogitare.plugins.PlottingMatplotlib.add_variable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register a varible to be plotted.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – the name of a state variable to plot. Read the <a class="reference internal" href="model.html#cogitare.Model.register_plugin" title="cogitare.Model.register_plugin"><code class="xref py py-meth docutils literal"><span class="pre">cogitare.Model.register_plugin()</span></code></a>
+for available names. This variable must return a numeric value or a list of them.</li>
+<li><strong>label</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – the label displayed in the plot</li>
+<li><strong>style</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – line style (check matplotlib for more information).</li>
+<li><strong>color</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – line color. If not defined, matplotlib will use a collor from its pallete.</li>
+<li><strong>use_std</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a>) – if True, plots the standard deviation of the variable defined
+by <code class="docutils literal"><span class="pre">name</span></code>. To compute the std, the <code class="docutils literal"><span class="pre">name</span></code> variable must be a list.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># plot the loss error with the std</span>
+<span class="n">plot</span><span class="o">.</span><span class="n">add_variable</span><span class="p">(</span><span class="s1">&#39;loss&#39;</span><span class="p">,</span> <span class="s1">&#39;Loss&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="progressbar">
+<h3><span class="hidden-section">ProgressBar</span><a class="headerlink" href="#progressbar" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="cogitare.plugins.ProgressBar">
+<em class="property">class </em><code class="descclassname">cogitare.plugins.</code><code class="descname">ProgressBar</code><span class="sig-paren">(</span><em>monitor='epoch'</em>, <em>desc=None</em>, <em>freq=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cogitare/plugins/progress_bar.html#ProgressBar"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cogitare.plugins.ProgressBar" title="Permalink to this definition">¶</a></dt>
+<dd><p>This plugin adds a <a class="reference external" href="https://github.com/tqdm/tqdm">tqdm</a> progress bar to monitor the progress
+of the batch/epoch iterations.</p>
+<p>By default, the progress bar is set up to monitor epoch progress,
+but you can switch to batch iteration using the <code class="docutils literal"><span class="pre">monitor</span></code> variable.</p>
+<p>It’s recommended to use this plugin at the <strong>on_end_epoch</strong> and the <strong>on_end_bactch</strong> hooks
+since the batch/epoch count is updated at this point.</p>
+<img alt="_images/plugins.png" src="_images/plugins.png" />
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>monitor</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – the state to be monitored. Must be <code class="docutils literal"><span class="pre">epoch</span></code> or <code class="docutils literal"><span class="pre">batch</span></code>.</li>
+<li><strong>desc</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – the name of the progress bar. If not provided, the monitor name
+will be used.</li>
+<li><strong>freq</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – the frequency to execute this model. The model will execute at each <code class="docutils literal"><span class="pre">freq</span></code> call.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Examples:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">bar1</span> <span class="o">=</span> <span class="n">ProgressBar</span><span class="p">()</span>
+<span class="n">bar2</span> <span class="o">=</span> <span class="n">ProgressBar</span><span class="p">(</span><span class="n">monitor</span><span class="o">=</span><span class="s1">&#39;batch&#39;</span><span class="p">)</span>
+
+<span class="n">model</span><span class="o">.</span><span class="n">register_plugin</span><span class="p">(</span><span class="n">bar1</span><span class="p">,</span> <span class="s1">&#39;on_end_epoch&#39;</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">register_plugin</span><span class="p">(</span><span class="n">bar2</span><span class="p">,</span> <span class="s1">&#39;on_end_batch&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="monitor.html" class="btn btn-neutral float-right" title="Cogitare Monitor" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="async_data.html" class="btn btn-neutral" title="Async Data Loader" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Aron Bordin.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
