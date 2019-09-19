@@ -2,6 +2,8 @@
 
 <h3 align="center"><b>Cogitare</b> is a Modern, Fast, and Modular Deep Learning and Machine Learning framework for Python. A friendly interface for beginners and a powerful toolset for experts.</h3>
 
+<h3 align="center"><b>Cogitare</b> is built on top of PyTorch.</h3>
+
 <p align="center">
   <a href="http://docs.cogitare-ai.org/">Documentation</a> •
   <a href="http://tutorials.cogitare-ai.org/">Tutorials</a> •
@@ -24,9 +26,6 @@
 	</a>
 </p>
 
-	
-[![Build Status](https://travis-ci.org/cogitare-ai/cogitare.svg?branch=master)](https://travis-ci.org/cogitare-ai/cogitare)
-[![codecov](https://codecov.io/gh/cogitare-ai/cogitare/branch/master/graph/badge.svg)](https://codecov.io/gh/cogitare-ai/cogitare)
 
 # 1. About
 
