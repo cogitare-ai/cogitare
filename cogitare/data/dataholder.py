@@ -185,7 +185,7 @@ class AbsDataHolder(object):
         if self._get:
             # use dask
             jobs = load(lambda x: delayed(x, traverse=False))
-            results = compute(jobs, get=self._get)[0]
+            results = compute(jobs, scheduler=self._get)[0]
         else:
             results = load(_identity)
 

@@ -1,7 +1,6 @@
 from cogitare import SequentialModel
 import torch.optim as optim
 import torch
-from torch.autograd import Variable
 import torch.nn.functional as F
 import torch.nn as nn
 from tests.common import TestCase
@@ -18,13 +17,13 @@ class Model1(SequentialModel):
 
     def get_initial_state(self, batch):
         super(Model1, self).get_initial_state(batch)
-        h0 = Variable(torch.zeros(1, 10))
+        h0 = torch.zeros(1, 10)
 
         return h0
 
     def forward(self, seq, prev_hidden, timestep, seqlen):
         super(Model1, self).forward(seq, prev_hidden, timestep, seqlen)
-        input_data = Variable(seq[0])
+        input_data = seq[0]
         hidden = self.rnn(input_data, prev_hidden)
 
         output = self.out(hidden)
@@ -33,7 +32,7 @@ class Model1(SequentialModel):
 
     def loss(self, output, sample, hidden, timestep, seqlen):
         super(Model1, self).loss(output, sample, hidden, timestep, seqlen)
-        return F.mse_loss(output, Variable(sample[0]), size_average=False)
+        return F.mse_loss(output, sample[0], reduction='sum')
 
 
 class Model2(Model1):
@@ -43,7 +42,7 @@ class Model2(Model1):
             return None
 
         super(Model1, self).loss(output, sample, hidden, timestep, seqlen)
-        return F.mse_loss(output, Variable(sample[0]), size_average=False)
+        return F.mse_loss(output, sample[0], reduction='sum')
 
 
 class TestSequentialModel(TestCase):

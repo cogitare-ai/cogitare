@@ -5,7 +5,6 @@ from cogitare.utils import StopTraining
 import mock
 import pytest
 import torch
-from torch.autograd import Variable
 import torch.nn as nn
 import torch.nn.functional as F
 from tests.common import TestCase
@@ -22,11 +21,11 @@ class Model1(Model):
 
     def forward(self, data):
         super(Model1, self).forward(data)
-        return torch.mul(self.p, Variable(data[0]))
+        return torch.mul(self.p, data[0])
 
     def loss(self, output, data):
         super(Model1, self).loss(output, data)
-        return F.mse_loss(output, Variable(data[1]), size_average=False)
+        return F.mse_loss(output, data[1], reduction='sum')
 
 
 class TestModel(TestCase):
@@ -41,7 +40,7 @@ class TestModel(TestCase):
         loss = model.loss(output, self.data[0])
         output2 = model.predict(self.data[0])
 
-        assert abs(loss.data[0] - 56) < 0.001
+        assert abs(loss.item() - 56) < 0.001
         self.assertEqual(output, output2)
 
         assert sum(model.evaluate(self.data[:1])) == 56
@@ -125,7 +124,7 @@ class TestModel(TestCase):
         output = model(self.data[0])
         loss = model.loss(output, self.data[0])
 
-        self.assertEqual(loss.data[0], model.metric_loss(output, self.data[0]))
+        self.assertEqual(loss.item(), model.metric_loss(output, self.data[0]))
 
     @mock.patch('torch.load', return_value=None)
     def test_load(self, tload):

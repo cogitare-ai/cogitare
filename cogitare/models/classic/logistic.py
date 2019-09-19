@@ -40,13 +40,13 @@ class LogisticRegression(Model):
             self.cuda()
 
     def forward(self, sample):
-        x = utils.to_variable(sample[0], use_cuda=self.use_cuda)
+        x = utils.to_tensor(sample[0], use_cuda=self.use_cuda)
         x = x.view(x.size(0), -1)
         data = F.dropout(x, self.arguments['dropout'])
         out = self.linear(data)
         return F.log_softmax(out, dim=1)
 
     def loss(self, output, sample):
-        expected = utils.to_variable(sample[1], torch.LongTensor, self.use_cuda)
+        expected = utils.to_tensor(sample[1], torch.LongTensor, self.use_cuda)
 
         return F.nll_loss(output, expected)

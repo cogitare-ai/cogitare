@@ -314,7 +314,7 @@ metrics = model.evaluate_with_metrics(data_validation, {'loss': model.metric_los
 metrics_mean = {'loss': 0, 'accuracy': 0}
 for loss, acc in zip(metrics['loss'], metrics['accuracy']):
     metrics_mean['loss'] += loss
-    metrics_mean['accuracy'] += acc.data[0]
+    metrics_mean['accuracy'] += acc.item()
 
 qtd = len(metrics['loss'])
 

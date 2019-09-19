@@ -1,5 +1,4 @@
 import torch
-from torch.autograd import Variable
 import logging
 import coloredlogs
 from itertools import repeat
@@ -138,7 +137,11 @@ def _training_mode(func, mode):
         assert isinstance(self, Module)
         default = self.training
         self.train(mode)
-        value = func(self, *args, **kwargs)
+        if not mode:
+            with torch.no_grad():
+                value = func(self, *args, **kwargs)
+        else:
+            value = func(self, *args, **kwargs)
         self.train(default)
 
         return value
@@ -267,7 +270,6 @@ def to_tensor(data, dtype=None, use_cuda=None):
         list: _list_to_tensor,
         tuple: _list_to_tensor,
         np.ndarray: torch.from_numpy,
-        Variable: lambda x: x
     }
 
     if type(data) in converter:
@@ -279,34 +281,6 @@ def to_tensor(data, dtype=None, use_cuda=None):
 
     tensor = _convert_tensor(tensor, dtype, use_cuda)
 
-    return tensor
-
-
-def to_variable(data, dtype=None, use_cuda=None, **kwargs):
-    """Similar to :func:`~cogitare.utils.to_tensor`, this function converts
-    the ``data`` o a :class:`torch.autograd.Variable`.
-
-    If first convert the data to tensor using :func:`to_tensor`, and then cast it to a
-    variable.
-
-    Args:
-        data: the data to convert.
-        dtype: a tensor class to use as the type of the data
-        use_cuda (bool): if True, move the tensor to cuda.
-        kwargs: extra parameters to the Variable class.
-
-    Example:
-
-        >>> a = [[1, 2,3], [4, 5, 6]]
-        >>> to_variable(a)
-        Variable containing:
-         1  2  3
-         4  5  6
-        [torch.LongTensor of size 2x3]
-    """
-    tensor = to_tensor(data, dtype=dtype, use_cuda=use_cuda)
-    if not isinstance(tensor, Variable):
-        tensor = Variable(tensor, **kwargs)
     return tensor
 
 
@@ -351,3 +325,11 @@ def _ntuple(item, n):
     if isinstance(item, (list, tuple)):
         return item
     return tuple(repeat(item, n))
+
+
+def _squeeze(item):
+    item = item.squeeze()
+    if item.dim() == 0:
+        item = item.reshape(-1)
+
+    return item

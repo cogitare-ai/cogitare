@@ -9,7 +9,7 @@ from py3nvml import py3nvml
 def _nmvl_call(func):
     try:
         return func()
-    except Exception as e:
+    except Exception:
         return None
 
 
@@ -45,7 +45,7 @@ def gpu_status():
         }
 
         return nvidia
-    except Exception as e:
+    except Exception:
         return None
 
 

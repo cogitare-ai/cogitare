@@ -44,7 +44,7 @@ def filter_labels(y, labels):
     mapping = torch.zeros(y.size()).byte()
 
     for label in labels:
-        mapping = mapping | y.eq(label)
+        mapping = mapping | y.eq(label).byte()
 
     return mapping
 
@@ -118,4 +118,4 @@ def accuracy(prediction, expected, labels=None):
         correct = torch.sum(eq, 1).float()
         result = correct / (mask.sum(1).float())
 
-    return result.squeeze()
+    return utils._squeeze(result)

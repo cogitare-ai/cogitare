@@ -54,7 +54,7 @@ class SequentialModel(Model):
             batch: the current batch.
 
         Returns:
-            state (torch.autograd.Variable): the initial state.
+            state (torch.Tensor): the initial state.
         """
         pass
 
@@ -99,7 +99,7 @@ class SequentialModel(Model):
                 the input dataset, no transformations or type checking are made during training.
                 For most models, this will be a tuple containing ``(x_data_t, y_data_t)``, but can be
                 anything.
-            hidden (torch.autograd.Variable): the hidden state at the current timestep. If this is the first timestep,
+            hidden (torch.Tensor): the hidden state at the current timestep. If this is the first timestep,
                 the hidden state is got from :meth:`~cogitare.SequentialModel.get_initial_state`. Otherwise, it is got
                 from the :meth:`~cogitare.SequentialModel.forward` returned value.
             timestep (int): indicates the current timestem (from 1 to seqlen)
@@ -108,7 +108,7 @@ class SequentialModel(Model):
         Returns:
             (output, hidden): the data after processing the input data, and the new hidden state.
 
-            Usually, these are :class:`torch.autograd.Variable`.
+            Usually, these are :class:`torch.Tensor`.
         """
         pass
 
@@ -134,14 +134,14 @@ class SequentialModel(Model):
                 the input dataset, no transformations or type checking are made during training.
                 For most models, this will be a tuple containing ``(x_data_t, y_data_t)``, but can be
                 anything.
-            hidden (torch.autograd.Variable): the hidden state at the current timestep. If this is the first timestep,
+            hidden (torch.Tensor): the hidden state at the current timestep. If this is the first timestep,
                 the hidden state is got from :meth:`~cogitare.SequentialModel.get_initial_state`. Otherwise, it is got
                 from the :meth:`~cogitare.SequentialModel.forward` returned value.
             timestep (int): indicates the current timestem (from 1 to seqlen)
             seqlen (int): the number of timesteps in the sequence.
 
         Returns:
-            loss (torch.autograd.Variable, None): the model loss. The loss will be used to backpropagate the errors.
+            loss (torch.Tensor, None): the model loss. The loss will be used to backpropagate the errors.
         """
         pass
 
@@ -167,7 +167,7 @@ class SequentialModel(Model):
 
             if loss is not None:
                 total_loss += loss
-                losses.append(loss.data[0])
+                losses.append(loss.data.item())
 
             self.state['output_at_timestep'] = output
             self.hook('on_end_timestep')
@@ -218,7 +218,7 @@ class SequentialModel(Model):
                 loss = self.loss(output, data, hidden, timestep, seqlen)
 
                 if loss is not None:
-                    losses_batch.append(loss.data[0])
+                    losses_batch.append(loss.data.item())
 
             losses.append(sum(losses_batch) / len(losses_batch))
 

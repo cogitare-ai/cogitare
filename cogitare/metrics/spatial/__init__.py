@@ -59,7 +59,7 @@ def cosine_similarity(u, v, dim=1, eps=1e-8):
 
     div = (w1 * w2).clamp(min=eps)
 
-    return (w12 / div).squeeze()
+    return utils._squeeze(w12 / div)
 
 
 def cosine_distance(*args, **kwargs):
@@ -127,7 +127,7 @@ def norm_distance(u, v, dim=1, norm=1, eps=1e-8):
     cum = torch.sum(diff, dim).clamp_(min=eps)
     cum.pow_(1.0 / norm)
 
-    return cum.squeeze()
+    return utils._squeeze(cum)
 
 
 def euclidian_distance(u, v, dim=1, eps=1e-8):
@@ -190,7 +190,7 @@ def manhattan_distance(u, v, dim=1):
     diff = (u - v).abs_()
     dist = torch.sum(diff, dim)
 
-    return dist.squeeze()
+    return utils._squeeze(dist)
 
 
 @utils.tensorfy(0, 1)
@@ -232,9 +232,7 @@ def braycurtis_distance(u, v, dim=1, eps=1e-8):
 
     dist = dist1 / dist2
 
-    dist.squeeze_()
-
-    return dist
+    return utils._squeeze(dist)
 
 
 @utils.tensorfy(0, 1)
@@ -277,7 +275,7 @@ def canberra_distance(u, v, dim=1, eps=1e-8):
 
     dist = torch.sum(coef, dim)
 
-    return dist.squeeze()
+    return utils._squeeze(dist)
 
 
 @utils.tensorfy(0, 1)
@@ -316,4 +314,4 @@ def chebyshev_distance(u, v, dim=1):
 
     dist, _ = torch.max(diff, dim)
 
-    return dist.squeeze()
+    return utils._squeeze(dist)

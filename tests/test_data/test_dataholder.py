@@ -181,7 +181,7 @@ class TestNumpyHolder(TestCase, _DataHolderAbs):
         return NumpyHolder
 
     data = np.random.rand(100, 32)
-    _data = data
+    _data = torch.from_numpy(data)
     kwargs = {}
 
 

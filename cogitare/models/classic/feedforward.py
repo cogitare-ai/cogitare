@@ -83,11 +83,11 @@ class FeedForward(Model):
         return nn.Sequential(*layers)
 
     def forward(self, sample):
-        x = utils.to_variable(sample[0], use_cuda=self.use_cuda)
+        x = utils.to_tensor(sample[0], use_cuda=self.use_cuda)
         x = x.view(x.size(0), -1)
 
         return self._mlp(x)
 
     def loss(self, output, sample):
-        expected = utils.to_variable(sample[1], use_cuda=self.use_cuda)
+        expected = utils.to_tensor(sample[1], use_cuda=self.use_cuda)
         return self.loss_function(output, expected)

@@ -72,7 +72,7 @@ class Model(nn.Module):
                 anything.
 
         Returns:
-            output: the data after processing the input data. Usually, this is a :class:`torch.autograd.Variable`.
+            output: the data after processing the input data. Usually, this is a :class:`torch.Tensor`.
         """
         pass
 
@@ -98,7 +98,7 @@ class Model(nn.Module):
                 anything.
 
         Returns:
-            loss (torch.autograd.Variable, None): the model loss. The loss will be used to backpropagate the errors.
+            loss (torch.Tensor, None): the model loss. The loss will be used to backpropagate the errors.
         """
         pass
 
@@ -252,12 +252,15 @@ class Model(nn.Module):
         self.state['output'] = output
 
         self.hook('before_backward')
+        loss_value = None
         if loss is not None and self.training:
             loss.backward()
             self.hook('before_step')
             optimizer.step()
 
-            return loss.data[0]
+            loss_value = loss.item()
+        del loss
+        return loss_value
 
     def _start_learn_state(self, dataset, optimizer, validation_dataset, max_epochs):
         self._logger.info('Model: \n\n{}\n'.format(repr(self)))
@@ -339,10 +342,8 @@ class Model(nn.Module):
             for epoch in range(1, max_epochs + 1):
                 self.state['current_epoch'] = epoch
                 self.state['current_batch'] = 0
-                self.state['loss'] = None
-                self.state['loss_mean'] = None
-                self.state['sample'] = None
-                self.state['output'] = None
+                del self.state['loss']
+                del self.state['loss_mean']
 
                 self.hook('on_start_epoch')
                 losses = []
@@ -350,7 +351,11 @@ class Model(nn.Module):
 
                 for idx, sample in enumerate(dataset, 1):
                     self.state['current_batch'] = idx
+                    if 'sample' in self.state:
+                        del self.state['sample']
                     self.state['sample'] = sample
+                    if 'output' in self.state:
+                        del self.state['output']
                     self.state['output'] = None
                     self.hook('on_start_batch')
 
@@ -359,14 +364,25 @@ class Model(nn.Module):
 
                     self.hook('on_end_batch')
 
+                    del self.state['sample']
+                    del self.state['output']
+                    del sample
+                    del loss
+
                 self.state['current_batch'] = 0
-                self.state['sample'] = None
-                self.state['output'] = None
+                if 'sample' in self.state:
+                    del self.state['sample']
+                if 'output' in self.state:
+                    del self.state['output']
+
                 self.state['loss_mean'] = np.mean(self.state['loss'])
 
                 self.hook('on_end_epoch')
 
             status = True
+
+            del self.state['loss']
+            del losses
         except StopTraining:
             self.hook('on_stop_training')
             status = False
@@ -374,6 +390,7 @@ class Model(nn.Module):
 
         self._requires_register_default = original_register_default
         self.hook('on_end')
+        self.state.clear()
 
         self._logger.info('Training finished')
         return status
@@ -408,7 +425,7 @@ class Model(nn.Module):
             output (float): the model loss.
         """
         loss = self.loss(output, sample, *args, **kwargs)
-        return loss.data[0]
+        return loss.item()
 
     @not_training
     def evaluate(self, dataset, *args, **kwargs):
