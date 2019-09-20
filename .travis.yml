@@ -22,12 +22,12 @@ services:
 
 script:
     - tox
-    - travis-sphinx build
+    - travis-sphinx build -n
 
 after_success:
     - codecov
     - flake8 cogitare/
-    - travis-sphinx -n deploy
+    - travis-sphinx deploy
 
 cache:
   directories:
