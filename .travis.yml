@@ -27,7 +27,7 @@ script:
 after_success:
     - codecov
     - flake8 cogitare/
-    - travis-sphinx deploy
+    - travis-sphinx -n deploy
 
 cache:
   directories:
