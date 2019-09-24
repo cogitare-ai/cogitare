@@ -39,7 +39,7 @@ class DataSet(object):
     def _AbsDataHolderClass(self):
         return AbsDataHolder
 
-    def __init__(self, data, batch_size=1, shuffle=True, drop_last=False, total_samples=None):
+    def __init__(self, data, batch_size=1, shuffle=True, drop_last=False, total_samples=None, **kwargs):
         utils.assert_raise(isinstance(data, (list, tuple)), ValueError,
                            '"data" must be a list or a tuple')
 
@@ -48,7 +48,7 @@ class DataSet(object):
         self._drop_last = drop_last
         self._total_samples = total_samples
 
-        self._container = self._create_container(data)
+        self._container = self._create_container(data, **kwargs)
 
         l0 = len(self._container[0])
         for c in self._container[1:]:
@@ -61,7 +61,7 @@ class DataSet(object):
 
         self.reset()
 
-    def _create_container(self, data):
+    def _create_container(self, data, **kwargs):
         container = []
         for d in data:
             if isinstance(d, self._AbsDataHolderClass):
@@ -72,7 +72,7 @@ class DataSet(object):
                     d.total_samples = self._total_samples
             else:
                 d = self._AutoHolderClass(d, batch_size=self._batch_size, shuffle=self._shuffle,
-                                          drop_last=self._drop_last, total_samples=self._total_samples)
+                                          drop_last=self._drop_last, total_samples=self._total_samples, **kwargs)
 
             container.append(d)
 

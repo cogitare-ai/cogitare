@@ -30,6 +30,7 @@ setup(
     author_email='aron.bordin@gmail.com',
     keywords=['deep learning', 'framework', 'PyTorch'],
     packages=find_packages(exclude=('tests', 'tests.*')),
+    extras_require={':python_version == "2.7"': ['futures']},
     install_requires=[
         'six>=1.11.0',
         'numpy>=1.17.2',
@@ -38,7 +39,6 @@ setup(
         'dask>=2.4.0',
         'toolz>=0.10.0',
         'cloudpickle>=1.2.2',
-        'futures>=3.1.1',
         'coloredlogs>=10.0',
         'humanize>=0.5.1',
         'torch>=1.2.0',
